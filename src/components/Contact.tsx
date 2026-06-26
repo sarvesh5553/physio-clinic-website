@@ -10,7 +10,7 @@ interface ContactInfo {
 }
 
 interface FormData {
-  name: string;
+  fullname: string;
   email: string;
   phone: string;
   address: string;
@@ -36,7 +36,7 @@ const ContactInfoCard = ({ icon, title, content }: ContactInfo) => (
 
 export default function Contact() {
   const [formData, setFormData] = useState<FormData>({
-    name: "",
+    fullname: "",
     email: "",
     phone: "",
     address: "",
@@ -51,7 +51,7 @@ export default function Contact() {
   };
 
   const validateForm = () => {
-    if (!formData.name.trim()) return "Please enter your full name";
+    if (!formData.fullname.trim()) return "Please enter your full name";
     if (!formData.email.trim()) return "Please enter your email address";
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) return "Please enter a valid email";
     if (!formData.phone.trim()) return "Please enter your phone number";
@@ -75,22 +75,56 @@ export default function Contact() {
     setStatus({ type: null, message: "" });
 
     try {
-      // Simulate API call - Replace with your actual API endpoint
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      
-      setStatus({
-        type: "success",
-        message: "✓ Appointment request received! We'll contact you shortly.",
-      });
-      setFormData({ name: "", email: "", phone: "", concern: "" });
-      
-      // Auto-clear success message
-      setTimeout(() => setStatus({ type: null, message: "" }), 5000);
-    } catch {
-      setStatus({ type: "error", message: "Failed to submit. Please try again." });
-    } finally {
-      setLoading(false);
-    }
+  const response = await fetch("/api/appoint", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      fullName: formData.fullname,
+      email: formData.email,
+      phone: formData.phone,
+      address: formData.address,
+      concern: formData.concern,
+    }),
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.message || "Something went wrong");
+  }
+
+  setStatus({
+    type: "success",
+    message: "✓ Appointment request received! We'll contact you shortly.",
+  });
+
+  setFormData({
+    fullname: "",
+    email: "",
+    phone: "",
+    address: "",
+    concern: "",
+  });
+
+  setTimeout(() => {
+    setStatus({
+      type: null,
+      message: "",
+    });
+  }, 5000);
+} catch (error) {
+  setStatus({
+    type: "error",
+    message:
+      error instanceof Error
+        ? error.message
+        : "Failed to submit appointment.",
+  });
+} finally {
+  setLoading(false);
+}
   };
 
   return (
@@ -169,14 +203,14 @@ export default function Contact() {
               <form onSubmit={handleSubmit} className="space-y-2 md:space-y-2.5 flex flex-col">
                 {/* Name Field */}
                 <div>
-                  <label htmlFor="name" className="block text-sm font-semibold text-slate-900 mb-2">
+                  <label htmlFor="fullname" className="block text-sm font-semibold text-slate-900 mb-2">
                     Full Name <span className="text-teal-600">*</span>
                   </label>
                   <input
-                    id="name"
-                    name="name"
+                    id="fullname"
+                    name="fullname"
                     type="text"
-                    value={formData.name}
+                    value={formData.fullname}
                     onChange={handleChange}
                     placeholder="John Doe"
                     className="w-full px-4 py-3 rounded-lg border border-slate-200 bg-white text-slate-900 placeholder-slate-400 text-sm transition-all duration-200 focus:outline-none focus:border-teal-500 focus:ring-2 focus:ring-teal-100"
