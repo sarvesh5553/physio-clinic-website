@@ -13,6 +13,7 @@ interface FormData {
   name: string;
   email: string;
   phone: string;
+  address: string;
   concern: string;
 }
 
@@ -38,6 +39,7 @@ export default function Contact() {
     name: "",
     email: "",
     phone: "",
+    address: "",
     concern: "",
   });
   const [loading, setLoading] = useState(false);
@@ -54,6 +56,8 @@ export default function Contact() {
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) return "Please enter a valid email";
     if (!formData.phone.trim()) return "Please enter your phone number";
     if (!/^\d{10,}$/.test(formData.phone.replace(/\D/g, ""))) return "Please enter a valid phone number";
+    if (!formData.address.trim())
+    return "Please enter your residential address";
     if (!formData.concern.trim()) return "Please describe your concern";
     return null;
   };
@@ -210,6 +214,27 @@ export default function Contact() {
                     onChange={handleChange}
                     placeholder="+91 98765 43210"
                     className="w-full px-4 py-3 rounded-lg border border-slate-200 bg-white text-slate-900 placeholder-slate-400 text-sm transition-all duration-200 focus:outline-none focus:border-teal-500 focus:ring-2 focus:ring-teal-100"
+                    disabled={loading}
+                  />
+                </div>
+
+                {/* Address */}
+                <div>
+                  <label
+                    htmlFor="address"
+                    className="block text-sm font-semibold text-slate-900 mb-2">
+                    Residential Address{" "}
+                    <span className="text-teal-600">*</span>
+                  </label>
+
+                  <textarea
+                   id="address"
+                    name="address"
+                    value={formData.address}
+                    onChange={handleChange}
+                    placeholder="Enter your complete residential address"
+                    rows={1}
+                    className="w-full px-4 py-3 rounded-lg border border-slate-200 bg-white text-slate-900 placeholder-slate-400 text-sm resize-none transition-all duration-200 focus:outline-none focus:border-teal-500 focus:ring-2 focus:ring-teal-100"
                     disabled={loading}
                   />
                 </div>

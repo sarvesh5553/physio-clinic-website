@@ -69,11 +69,10 @@ export default function Footer() {
 
             <div className="space-y-3 text-slate-300">
               <div className="flex items-center gap-3">
-                <FaPhoneAlt className="text-teal-400 flex-shrink-0" size={16} />
+                <FaPhoneAlt className="text-teal-400 flex-shrink-4" size={16} />
                 <a
                   href="tel:+919322518895"
-                  className="hover:text-teal-400 transition-colors text-sm md:text-base"
-                >
+                  className="hover:text-teal-400 transition-colors text-sm md:text-base">
                   +91 93225 18895
                 </a>
               </div>
@@ -82,8 +81,7 @@ export default function Footer() {
                 <FaEnvelope className="text-teal-400 flex-shrink-0 mt-0.5" size={16} />
                 <a
                   href="mailto:drbhagyashrisalunkept@gmail.com"
-                  className="hover:text-teal-400 transition-colors text-sm md:text-base break-all"
-                >
+                  className="hover:text-teal-400 transition-colors text-sm md:text-base break-all">
                   drbhagyashrisalunkept@gmail.com
                 </a>
               </div>
