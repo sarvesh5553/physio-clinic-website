@@ -8,11 +8,10 @@ import {
   Trash2,
   X,
   AlertTriangle,
-  ChevronDown,
-  Calendar,
   FileText,
   CheckCircle2,
   Clock,
+  Zap,
 } from 'lucide-react';
 
 // Types
@@ -78,14 +77,14 @@ const StatusBadge: React.FC<{ status: 'published' | 'draft' }> = ({ status }) =>
   const isPublished = status === 'published';
   return (
     <span
-      className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${
+      className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold ${
         isPublished
-          ? 'bg-teal-50 text-teal-700'
-          : 'bg-gray-100 text-gray-600'
+          ? 'bg-teal-50 text-teal-700 border border-teal-200'
+          : 'bg-gray-100 text-gray-600 border border-gray-200'
       }`}
     >
       <div
-        className={`w-2 h-2 rounded-full ${
+        className={`w-1.5 h-1.5 rounded-full ${
           isPublished ? 'bg-teal-600' : 'bg-gray-400'
         }`}
       />
@@ -94,19 +93,19 @@ const StatusBadge: React.FC<{ status: 'published' | 'draft' }> = ({ status }) =>
   );
 };
 
-// Stat Card Component
-const StatCard: React.FC<{ label: string; value: string | number; icon: React.ReactNode }> = ({
+// Compact Stat Card Component
+const StatCard: React.FC<{ label: string; value: number | string; icon: React.ReactNode }> = ({
   label,
   value,
   icon,
 }) => (
-  <div className="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
-    <div className="flex items-start justify-between">
-      <div>
-        <p className="text-gray-600 text-sm font-medium mb-2">{label}</p>
-        <p className="text-3xl font-bold text-gray-900">{value}</p>
+  <div className="bg-white rounded-2xl p-4 border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300 group">
+    <div className="flex items-center justify-between gap-3">
+      <div className="min-w-0">
+        <p className="text-gray-600 text-xs font-semibold mb-1 uppercase tracking-wide">{label}</p>
+        <p className="text-2xl font-bold text-gray-900">{value}</p>
       </div>
-      <div className="p-3 bg-gradient-to-br from-teal-50 to-cyan-50 rounded-xl">
+      <div className="p-2.5 bg-gradient-to-br from-teal-50 to-cyan-50 rounded-xl group-hover:shadow-md transition-shadow">
         {icon}
       </div>
     </div>
@@ -265,111 +264,66 @@ const DeleteConfirmation: React.FC<{
 // FAQ Admin Card Component
 const FAQAdminCard: React.FC<{
   faq: FAQ;
+  isExpanded: boolean;
+  onToggle: () => void;
   onEdit: (id: string) => void;
   onDelete: (id: string) => void;
-}> = ({ faq, onEdit, onDelete }) => (
-  <div className="bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all p-5 group">
-    <div className="flex items-start gap-4">
+}> = ({ faq, isExpanded, onToggle, onEdit, onDelete }) => (
+  <div className="bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all overflow-hidden">
+    <div
+      onClick={onToggle}
+      className="flex items-start justify-between gap-4 p-5 cursor-pointer hover:bg-gray-50 transition-colors group"
+    >
       <div className="flex-1 min-w-0">
-        <h3 className="font-semibold text-gray-900 text-sm mb-2 line-clamp-2">
+        <h3 className="font-semibold text-gray-900 text-sm mb-2 line-clamp-2 group-hover:text-teal-600 transition-colors">
           {faq.question}
         </h3>
-        <p className="text-gray-600 text-xs line-clamp-2 mb-3">
-          {faq.answer}
-        </p>
-        <StatusBadge status={faq.status} />
+        {!isExpanded && (
+          <p className="text-gray-600 text-xs line-clamp-1">
+            {faq.answer}
+          </p>
+        )}
       </div>
       <div className="flex gap-2 flex-shrink-0 ml-auto">
         <button
-          onClick={() => onEdit(faq.id)}
+          onClick={(e) => {
+            e.stopPropagation();
+            onEdit(faq.id);
+          }}
           className="p-2 hover:bg-teal-50 rounded-lg transition-colors"
         >
           <Edit2 className="w-4 h-4 text-gray-600 hover:text-teal-600" />
         </button>
         <button
-          onClick={() => onDelete(faq.id)}
+          onClick={(e) => {
+            e.stopPropagation();
+            onDelete(faq.id);
+          }}
           className="p-2 hover:bg-red-50 rounded-lg transition-colors"
         >
           <Trash2 className="w-4 h-4 text-gray-600 hover:text-red-600" />
         </button>
       </div>
     </div>
-  </div>
-);
 
-// Website Preview - Accordion Component
-const AccordionItem: React.FC<{
-  faq: FAQ;
-  isOpen: boolean;
-  onToggle: () => void;
-}> = ({ faq, isOpen, onToggle }) => (
-  <div className="border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all">
-    <button
-      onClick={onToggle}
-      className="w-full px-6 py-4 flex items-center justify-between hover:bg-gray-50 transition-colors text-left"
-    >
-      <span className="font-medium text-gray-900">{faq.question}</span>
-      <ChevronDown
-        className={`w-5 h-5 text-teal-600 flex-shrink-0 transition-transform ${
-          isOpen ? 'rotate-180' : ''
-        }`}
-      />
-    </button>
-    {isOpen && (
-      <div className="px-6 py-4 border-t border-gray-200 bg-gray-50">
-        <p className="text-gray-700 text-sm leading-relaxed">{faq.answer}</p>
+    {isExpanded && (
+      <div className="px-5 py-4 border-t border-gray-100 bg-gray-50">
+        <div className="space-y-3">
+          <p className="text-gray-700 text-sm leading-relaxed">{faq.answer}</p>
+          <div className="pt-2">
+            <StatusBadge status={faq.status} />
+          </div>
+        </div>
       </div>
     )}
   </div>
 );
 
-// Website Preview Component
-const WebsitePreview: React.FC<{ faqs: FAQ[] }> = ({ faqs }) => {
-  const [openId, setOpenId] = useState<string | null>(null);
-  const publishedFaqs = faqs.filter(faq => faq.status === 'published');
-
-  return (
-    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 mt-12">
-      <div className="max-w-3xl mx-auto">
-        {/* Title */}
-        <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-gray-900 mb-3">
-            Frequently Asked{' '}
-            <span className="bg-gradient-to-r from-teal-600 to-cyan-600 bg-clip-text text-transparent">
-              Questions
-            </span>
-          </h2>
-          <p className="text-gray-600 text-lg">
-            Get answers to common questions about our physiotherapy services and treatment approach.
-          </p>
-        </div>
-
-        {/* Accordions */}
-        <div className="space-y-3">
-          {publishedFaqs.length > 0 ? (
-            publishedFaqs.map((faq) => (
-              <AccordionItem
-                key={faq.id}
-                faq={faq}
-                isOpen={openId === faq.id}
-                onToggle={() => setOpenId(openId === faq.id ? null : faq.id)}
-              />
-            ))
-          ) : (
-            <div className="text-center py-12">
-              <p className="text-gray-500">No published FAQs yet. Add some to display here.</p>
-            </div>
-          )}
-        </div>
-      </div>
-    </div>
-  );
-};
-
 // Main Component
 export default function AdminFaqs() {
   const [faqs, setFaqs] = useState<FAQ[]>(DEMO_FAQS);
   const [searchQuery, setSearchQuery] = useState('');
+  const [expandedId, setExpandedId] = useState<string | null>(null);
   const [modal, setModal] = useState<ModalState>({
     isOpen: false,
     editingId: null,
@@ -456,7 +410,7 @@ export default function AdminFaqs() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen text-gray-500">
       {/* Header */}
       <div className="bg-gradient-to-r from-teal-600 to-cyan-600 text-white pt-8 pb-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -467,27 +421,27 @@ export default function AdminFaqs() {
 
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-6 pb-12">
-        {/* Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        {/* Stats - Compact Grid */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
           <StatCard
             label="Total FAQs"
             value={totalFaqs}
-            icon={<FileText className="w-6 h-6 text-teal-600" />}
+            icon={<FileText className="w-5 h-5 text-teal-600" />}
           />
           <StatCard
-            label="Published FAQs"
+            label="Published"
             value={publishedFaqs}
-            icon={<CheckCircle2 className="w-6 h-6 text-teal-600" />}
+            icon={<CheckCircle2 className="w-5 h-5 text-teal-600" />}
           />
           <StatCard
-            label="Draft FAQs"
+            label="Drafts"
             value={draftFaqs}
-            icon={<Clock className="w-6 h-6 text-teal-600" />}
+            icon={<Clock className="w-5 h-5 text-teal-600" />}
           />
           <StatCard
             label="Last Updated"
             value={lastUpdated}
-            icon={<Calendar className="w-6 h-6 text-teal-600" />}
+            icon={<Zap className="w-5 h-5 text-teal-600" />}
           />
         </div>
 
@@ -502,14 +456,14 @@ export default function AdminFaqs() {
                 placeholder="Search by question or answer..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent outline-none transition-all"
+                className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent outline-none transition-all text-sm"
               />
             </div>
 
             {/* Add Button */}
             <button
               onClick={() => setModal({ isOpen: true, editingId: null })}
-              className="px-4 py-2 bg-gradient-to-r from-teal-500 to-cyan-500 rounded-lg text-white font-medium hover:shadow-lg transition-shadow flex items-center gap-2 whitespace-nowrap"
+              className="px-4 py-2.5 bg-gradient-to-r from-teal-500 to-cyan-500 rounded-lg text-white font-medium hover:shadow-lg transition-shadow flex items-center gap-2 whitespace-nowrap"
             >
               <Plus className="w-5 h-5" />
               <span>Add FAQ</span>
@@ -518,12 +472,14 @@ export default function AdminFaqs() {
         </div>
 
         {/* FAQ Management Cards */}
-        <div className="space-y-4 mb-12">
+        <div className="space-y-3">
           {filteredFaqs.length > 0 ? (
             filteredFaqs.map((faq) => (
               <FAQAdminCard
                 key={faq.id}
                 faq={faq}
+                isExpanded={expandedId === faq.id}
+                onToggle={() => setExpandedId(expandedId === faq.id ? null : faq.id)}
                 onEdit={handleEdit}
                 onDelete={handleDeleteClick}
               />
@@ -539,12 +495,6 @@ export default function AdminFaqs() {
               </p>
             </div>
           )}
-        </div>
-
-        {/* Website Preview */}
-        <div>
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">Website Preview</h2>
-          <WebsitePreview faqs={faqs} />
         </div>
       </div>
 

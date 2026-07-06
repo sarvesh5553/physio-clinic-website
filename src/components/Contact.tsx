@@ -75,7 +75,7 @@ export default function Contact() {
     setStatus({ type: null, message: "" });
 
     try {
-  const response = await fetch("/api/appoint", {
+  const response = await fetch("/api/appointments", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -128,13 +128,15 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="bg-gradient-to-b from-slate-50 via-white to-slate-50 py-5">
+    <section id="contact" className="bg-gradient-to-b from-slate-50 via-white to-slate-50 py-15">
       <div className="max-w-6xl mx-auto px-6">
         {/* Header Section */}
-        <div className="text-center mb-10">
+        {/* Heading */}
+        <div className="text-center mb-12 md:mb-16">
           <div className="inline-flex items-center justify-center mb-4">
-            <div className="absolute inset-0 bg-gradient-to-r from-teal-500/20 to-cyan-500/20 blur-2xl rounded-full"></div>
-            
+            <span className="text-xs font-bold tracking-[0.2em] uppercase text-teal-700 bg-teal-50 px-4 py-2 rounded-full">
+              Book Now
+            </span>
           </div>
 
           <h2 className="text-4xl md:text-5xl font-bold text-slate-900 tracking-tight mb-4">

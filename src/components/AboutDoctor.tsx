@@ -13,8 +13,8 @@ export default function AboutDoctor() {
             <div className="relative">
 
               <img
-                src="/doctor.jpeg"
-                alt="Dr. Bhagyashree Salunke"
+                src="/bhagyashr.png"
+                alt="Dr. Bhagyashri Salunke"
                 className="
                   relative
                   w-full
@@ -105,7 +105,7 @@ export default function AboutDoctor() {
             </span>
 
             <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mt-4">
-              Dr. Bhagyashree{" "}
+              Dr. Bhagyashri{" "}
               <span className="text-teal-600">
                 Salunke
               </span>

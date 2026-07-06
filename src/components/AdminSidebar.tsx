@@ -69,7 +69,7 @@ export default function AdminSidebar() {
           </p>
 
           <h3 className="font-bold text-xl mt-2">
-            Dr. Bhagyashree Salunke
+            Dr. Bhagyashri Salunke
           </h3>
         </div>
       </div>

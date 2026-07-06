@@ -1,6 +1,7 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import AddEditTestimonialModal from "./AddEditTestimonialModal";
+import { useEffect, useMemo, useState } from "react";
 import {
   Search,
   Download,
@@ -10,78 +11,131 @@ import {
   Clock3,
   Pencil,
   Trash2,
+  Plus,
 } from "lucide-react";
+
+interface Testimonial {
+  _id: string;
+  name: string;
+  condition: string;
+  review: string;
+  rating: number;
+  image: {
+    url: string;
+    publicId: string;
+  };
+  isPublished: boolean;
+  createdAt: string;
+}
 
 export default function Testimonials() {
   const [search, setSearch] = useState("");
 
-  const testimonials = [
-    {
-      id: 1,
-      photo: "https://i.pravatar.cc/100?img=1",
-      name: "Rahul Sharma",
-      problem: "Back Pain",
-      rating: 5,
-      date: "22 Jul 2025",
-      status: "Approved",
-    },
-    {
-      id: 2,
-      photo: "https://i.pravatar.cc/100?img=2",
-      name: "Priya Patil",
-      problem: "Neck Pain",
-      rating: 4,
-      date: "23 Jul 2025",
-      status: "Pending",
-    },
-    {
-      id: 3,
-      photo: "https://i.pravatar.cc/100?img=3",
-      name: "Amit Singh",
-      problem: "Sports Injury",
-      rating: 5,
-      date: "24 Jul 2025",
-      status: "Approved",
-    },
-  ];
+ const [loading, setLoading] = useState(true);
+
+const [openModal, setOpenModal] = useState(false);
+
+const [selectedTestimonial, setSelectedTestimonial] =
+  useState<Testimonial | null>(null);
+
+const [testimonials, setTestimonials] = useState<
+  Testimonial[]
+>([]);
+
+  useEffect(() => {
+    fetchTestimonials();
+  }, []);
+
+  const fetchTestimonials = async () => {
+    try {
+      setLoading(true);
+
+      const response = await fetch(
+        "/api/admin/testimonial"
+      );
+
+      const data = await response.json();
+
+      if (data.success) {
+        setTestimonials(data.data);
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDelete = async (id: string) => {
+    const confirmed = confirm(
+      "Delete this testimonial?"
+    );
+
+    if (!confirmed) return;
+
+    try {
+      const response = await fetch(
+        `/api/admin/testimonial/${id}`,
+        {
+          method: "DELETE",
+        }
+      );
+
+      const data = await response.json();
+
+      if (data.success) {
+        fetchTestimonials();
+      } else {
+        alert(data.message);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const filteredTestimonials = useMemo(() => {
     return testimonials.filter((item) =>
-      `${item.name} ${item.problem}`
+      `${item.name} ${item.condition} ${item.review}`
         .toLowerCase()
         .includes(search.toLowerCase())
     );
-  }, [search]);
+  }, [search, testimonials]);
 
   const approved = testimonials.filter(
-    (item) => item.status === "Approved"
+    (item) => item.isPublished
   ).length;
 
   const pending = testimonials.filter(
-    (item) => item.status === "Pending"
+    (item) => !item.isPublished
   ).length;
 
   const averageRating =
-    testimonials.reduce(
-      (acc, item) => acc + item.rating,
-      0
-    ) / testimonials.length;
+    testimonials.length > 0
+      ? testimonials.reduce(
+          (acc, item) => acc + item.rating,
+          0
+        ) / testimonials.length
+      : 0;
 
   const downloadCSV = () => {
     const headers = [
       "Name",
-      "Problem",
+      "Condition",
       "Rating",
-      "Date",
+      "Created",
       "Status",
     ];
 
     const rows = testimonials.map((item) => [
       item.name,
-      item.problem,
+      item.condition,
       item.rating,
-      item.date,
-      item.status,
+      new Date(
+        item.createdAt
+      ).toLocaleDateString(),
+      item.isPublished
+        ? "Approved"
+        : "Pending",
     ]);
 
     const csv = [headers, ...rows]
@@ -92,29 +146,51 @@ export default function Testimonials() {
       type: "text/csv;charset=utf-8;",
     });
 
-    const url = URL.createObjectURL(blob);
+    const url =
+      window.URL.createObjectURL(blob);
 
-    const link = document.createElement("a");
+    const link =
+      document.createElement("a");
+
     link.href = url;
     link.download = "testimonials.csv";
     link.click();
 
     URL.revokeObjectURL(url);
   };
-
-  return (
+    return (
     <div className="p-5">
-
       {/* Header */}
 
-      <div className="bg-gradient-to-r from-[#0EA5A4] to-[#06B6D4] rounded-2xl px-6 py-4 text-white shadow-md">
-        <h1 className="text-3xl font-bold">
-          Testimonials
-        </h1>
+      <div className="bg-gradient-to-r from-[#0EA5A4] to-[#06B6D4] rounded-2xl px-6 py-5 text-white shadow-md">
 
-        <p className="text-sm text-white/90 mt-1">
-          Manage patient testimonials
-        </p>
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+
+          <div>
+
+            <h1 className="text-3xl font-bold">
+              Testimonials
+            </h1>
+
+            <p className="text-sm text-white/90 mt-1">
+              Manage patient testimonials
+            </p>
+
+          </div>
+
+         <button
+  onClick={() => {
+    setSelectedTestimonial(null);
+    setOpenModal(true);
+  }}
+  className="flex items-center justify-center gap-2 bg-white text-[#0EA5A4] px-5 py-2.5 rounded-xl font-semibold hover:bg-slate-100 transition"
+>
+  <Plus size={18} />
+  Add Testimonial
+</button>
+
+        </div>
+
       </div>
 
       {/* Stats */}
@@ -155,7 +231,7 @@ export default function Testimonials() {
         />
 
         <StatCard
-          title="Avg Rating"
+          title="Average Rating"
           value={averageRating.toFixed(1)}
           icon={
             <Star
@@ -171,7 +247,7 @@ export default function Testimonials() {
 
       <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-4 mt-5">
 
-        <div className="flex flex-col lg:flex-row gap-4 justify-between">
+        <div className="flex flex-col lg:flex-row justify-between gap-4">
 
           <div className="relative w-full lg:max-w-lg">
 
@@ -194,8 +270,9 @@ export default function Testimonials() {
 
           <button
             onClick={downloadCSV}
-            className="bg-gradient-to-r from-[#0EA5A4] to-[#06B6D4] text-white px-4 py-2.5 rounded-xl font-semibold"
+            className="flex items-center justify-center gap-2 bg-gradient-to-r from-[#0EA5A4] to-[#06B6D4] text-white px-5 py-2.5 rounded-xl font-semibold"
           >
+            <Download size={18} />
             Download CSV
           </button>
 
@@ -215,131 +292,160 @@ export default function Testimonials() {
 
         </div>
 
-        <div className="overflow-x-auto">
+        {loading ? (
 
-          <table className="w-full">
+          <div className="py-16 text-center text-slate-500">
 
-            <thead className="bg-slate-50">
+            Loading testimonials...
 
-              <tr>
+          </div>
 
-                <th className="px-4 py-3 text-left text-sm font-semibold">
-                  #
-                </th>
+        ) : filteredTestimonials.length === 0 ? (
 
-                <th className="px-4 py-3 text-left text-sm font-semibold">
-                  Photo
-                </th>
+          <div className="py-16 text-center text-slate-500">
 
-                <th className="px-4 py-3 text-left text-sm font-semibold">
-                  Patient
-                </th>
+            No testimonials found.
 
-                <th className="px-4 py-3 text-left text-sm font-semibold">
-                  Problem
-                </th>
+          </div>
 
-                <th className="px-4 py-3 text-left text-sm font-semibold">
-                  Rating
-                </th>
+        ) : (
 
-                <th className="px-4 py-3 text-left text-sm font-semibold">
-                  Date
-                </th>
+          <div className="overflow-x-auto">
 
-                <th className="px-4 py-3 text-left text-sm font-semibold">
-                  Status
-                </th>
+            <table className="w-full">
 
-                <th className="px-4 py-3 text-left text-sm font-semibold">
-                  Actions
-                </th>
+              <thead className="bg-slate-50">
 
-              </tr>
+                <tr>
 
-            </thead>
+                  <th className="px-4 py-3 text-left text-sm font-semibold">
+                    #
+                  </th>
 
-            <tbody>
+                  <th className="px-4 py-3 text-left text-sm font-semibold">
+                    Photo
+                  </th>
 
-              {filteredTestimonials.map(
+                  <th className="px-4 py-3 text-left text-sm font-semibold">
+                    Patient
+                  </th>
+
+                  <th className="px-4 py-3 text-left text-sm font-semibold">
+                    Condition
+                  </th>
+
+                  <th className="px-4 py-3 text-left text-sm font-semibold">
+                    Rating
+                  </th>
+
+                  <th className="px-4 py-3 text-left text-sm font-semibold">
+                    Created
+                  </th>
+
+                  <th className="px-4 py-3 text-left text-sm font-semibold">
+                    Status
+                  </th>
+
+                  <th className="px-4 py-3 text-center text-sm font-semibold">
+                    Actions
+                  </th>
+
+                </tr>
+
+              </thead>
+
+              <tbody>
+                {filteredTestimonials.map(
                 (item, index) => (
                   <tr
-                    key={item.id}
+                    key={item._id}
                     className="border-t hover:bg-slate-50 transition"
                   >
-
                     <td className="px-4 py-3">
                       {index + 1}
                     </td>
 
                     <td className="px-4 py-3">
-
                       <img
-                        src={item.photo}
+                        src={item.image.url}
                         alt={item.name}
-                        className="w-10 h-10 rounded-full object-cover"
+                        className="w-10 h-10 rounded-full object-cover border"
                       />
-
-                    </td>
-
-                    <td className="px-4 py-3 font-medium text-slate-800">
-                      {item.name}
-                    </td>
-
-                    <td className="px-4 py-3 text-slate-600">
-                      {item.problem}
                     </td>
 
                     <td className="px-4 py-3">
+                      <div>
+                        <p className="font-semibold text-slate-800">
+                          {item.name}
+                        </p>
 
-                      <div className="flex gap-1">
-
-                        {[...Array(item.rating)].map(
-                          (_, i) => (
-                            <Star
-                              key={i}
-                              size={14}
-                              className="fill-yellow-400 text-yellow-400"
-                            />
-                          )
-                        )}
-
+                        <p className="text-xs text-slate-500 line-clamp-1">
+                          {item.review}
+                        </p>
                       </div>
-
                     </td>
 
                     <td className="px-4 py-3 text-slate-600">
-                      {item.date}
+                      {item.condition}
                     </td>
 
                     <td className="px-4 py-3">
+                      <div className="flex gap-1">
+                        {Array.from({
+                          length: item.rating,
+                        }).map((_, i) => (
+                          <Star
+                            key={i}
+                            size={14}
+                            className="fill-yellow-400 text-yellow-400"
+                          />
+                        ))}
+                      </div>
+                    </td>
 
+                    <td className="px-4 py-3 text-slate-600">
+                      {new Date(
+                        item.createdAt
+                      ).toLocaleDateString()}
+                    </td>
+
+                    <td className="px-4 py-3">
                       <span
                         className={`px-2.5 py-1 rounded-full text-xs font-semibold ${
-                          item.status === "Approved"
+                          item.isPublished
                             ? "bg-green-100 text-green-700"
                             : "bg-orange-100 text-orange-700"
                         }`}
                       >
-                        {item.status}
+                        {item.isPublished
+                          ? "Approved"
+                          : "Pending"}
                       </span>
-
                     </td>
 
                     <td className="px-4 py-3">
+                      <div className="flex justify-center gap-2">
 
-                      <div className="flex gap-2">
+                      <button
+  onClick={() => {
+    setSelectedTestimonial(item);
+    setOpenModal(true);
+  }}
+  className="p-2 rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-100 transition"
+>
+  <Pencil size={16} />
+</button>
 
-                        <button className="p-2 rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-100">
-                          <Pencil size={16} />
-                        </button>
-
-                        <button className="p-2 rounded-lg bg-red-50 text-red-600 hover:bg-red-100">
+                        <button
+                          onClick={() =>
+                            handleDelete(item._id)
+                          }
+                          className="p-2 rounded-lg bg-red-50 text-red-600 hover:bg-red-100 transition"
+                        >
                           <Trash2 size={16} />
                         </button>
 
                       </div>
-
                     </td>
 
                   </tr>
@@ -352,7 +458,18 @@ export default function Testimonials() {
 
         </div>
 
+      )}
+
       </div>
+            <AddEditTestimonialModal
+        open={openModal}
+        onClose={() => {
+          setOpenModal(false);
+          setSelectedTestimonial(null);
+        }}
+        onSuccess={fetchTestimonials}
+        testimonial={selectedTestimonial}
+      />
 
     </div>
   );

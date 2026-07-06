@@ -44,6 +44,16 @@ export default function ConditionsServices() {
 
   const services = [
     {
+      icon: <Zap className="w-5 h-5" />,
+      title: "Electrotherapy",
+      description: "Advanced technological modalities used to suppress pain and accelerate cellular repair.",
+    },
+    {
+      icon: <HeartPulse className="w-5 h-5" />,
+      title: "Pain Management",
+      description: "Evidence-based clinical approaches for acute and chronic pain relief.",
+    },
+    {
       icon: <Activity className="w-5 h-5" />,
       title: "Manual Therapy",
       description: "Hands-on techniques to reduce pain, improve mobility and restore function.",
@@ -52,6 +62,11 @@ export default function ConditionsServices() {
       icon: <CheckCircle2 className="w-5 h-5" />,
       title: "Exercise Therapy",
       description: "Customized exercise programs to strengthen muscles and improve movement.",
+    },
+    {
+      icon: <Brain className="w-5 h-5" />,
+      title: "Neuro Rehabilitation",
+      description: "Specialized recovery framework designed for neurological conditions.",
     },
     {
       icon: <Dumbbell className="w-5 h-5" />,
@@ -64,15 +79,16 @@ export default function ConditionsServices() {
       description: "Structured recovery programs after orthopedic and joint surgeries.",
     },
     {
-      icon: <Syringe className="w-5 h-5" />,
-      title: "Dry Needling",
-      description: "Targets trigger points and muscle tightness for targeted pain relief.",
-    },
-    {
       icon: <CheckCircle2 className="w-5 h-5" />,
       title: "Posture Correction",
       description: "Assessment and correction of posture-related structural dysfunctions.",
     },
+    {
+      icon: <Syringe className="w-5 h-5" />,
+      title: "Dry Needling",
+      description: "Targets trigger points and muscle tightness for targeted pain relief.",
+    },
+    
     {
       icon: <Layers className="w-5 h-5" />,
       title: "Dry & Wet Cupping",
@@ -82,21 +98,6 @@ export default function ConditionsServices() {
       icon: <BriefcaseMedical className="w-5 h-5" />,
       title: "Kinesio Taping",
       description: "Supports structural joints and muscles while promoting active recovery.",
-    },
-    {
-      icon: <Brain className="w-5 h-5" />,
-      title: "Neuro Rehabilitation",
-      description: "Specialized recovery framework designed for neurological conditions.",
-    },
-    {
-      icon: <HeartPulse className="w-5 h-5" />,
-      title: "Pain Management",
-      description: "Evidence-based clinical approaches for acute and chronic pain relief.",
-    },
-    {
-      icon: <Zap className="w-5 h-5" />,
-      title: "Electrotherapy",
-      description: "Advanced technological modalities used to suppress pain and accelerate cellular repair.",
     },
   ];
 

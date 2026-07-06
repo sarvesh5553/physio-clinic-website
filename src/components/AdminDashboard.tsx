@@ -23,7 +23,7 @@ export default function AdminDashboard() {
         </h1>
 
         <p className="mt-2 text-white/90">
-          Welcome back Dr. Bhagyashree Salunke
+          Welcome back Dr. Bhagyashri Salunke
         </p>
       </div>
 
