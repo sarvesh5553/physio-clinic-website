@@ -8,9 +8,9 @@ export interface IFeedback extends Document {
   name: string;
   condition: string;
   review: string;
-  image: {
-    url: string;
-    publicId: string;
+  image?: {
+    url?: string;
+    publicId?: string;
   };
   rating: number;
   isPublished: boolean;
@@ -38,16 +38,20 @@ const FeedbackSchema = new Schema<IFeedback>(
       trim: true,
     },
 
-image: {
-    url: {
-        type: String,
-        required: true,
+    image: {
+      type: {
+        url: {
+          type: String,
+          required: false,
+        },
+        publicId: {
+          type: String,
+          required: false,
+        },
+      },
+      required: false,
+      _id: false,
     },
-    publicId: {
-        type: String,
-        required: true,
-    },
-},
 
     rating: {
       type: Number,

@@ -9,9 +9,9 @@ export default function Footer() {
   return (
     <footer className="bg-gradient-to-b from-slate-900 to-slate-950 text-white pt-12 md:pt-16 pb-6">
       <div className="max-w-7xl mx-auto px-4 md:px-6">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10 mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-10 mb-8">
           {/* Clinic Info */}
-          <div className="lg:pr-4">
+          <div className="lg:mr-16">
             <h3 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-teal-400 to-cyan-400 bg-clip-text text-transparent mb-4">
               PhysioCare
             </h3>
@@ -62,7 +62,7 @@ export default function Footer() {
           </div>
 
           {/* Contact */}
-          <div>
+          <div className="lg:-ml-6">
             <h4 className="font-semibold text-lg md:text-xl mb-4 text-slate-100">
               Contact Us
             </h4>

@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import {
   Users,
@@ -7,175 +8,242 @@ import {
   CheckCircle,
   TrendingUp,
   ArrowRight,
+  Calendar,
+  Sparkles,
 } from "lucide-react";
+
+interface Appointment {
+  _id: string;
+  fullName: string;
+  phone: string;
+  concern: string;
+  status: string;
+  createdAt: string;
+}
+
+interface DashboardStats {
+  total: number;
+  pending: number;
+  completed: number;
+  success: number;
+}
 
 export default function AdminDashboard() {
   const router = useRouter();
 
+  const [appointments, setAppointments] = useState<Appointment[]>([]);
+  const [stats, setStats] = useState<DashboardStats>({
+    total: 0,
+    pending: 0,
+    completed: 0,
+    success: 0,
+  });
+
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchDashboard = async () => {
+      try {
+        const [appointmentsRes, statsRes] = await Promise.all([
+          fetch("/api/appointments/recent"),
+          fetch("/api/admin/dashboard"),
+        ]);
+
+        const appointmentsData = await appointmentsRes.json();
+        const statsData = await statsRes.json();
+
+        if (appointmentsData.success) {
+          setAppointments(appointmentsData.data || []);
+        }
+
+        if (statsData.success) {
+          setStats(
+            statsData.data || { total: 0, pending: 0, completed: 0, success: 0 }
+          );
+        }
+      } catch (error) {
+        console.error("Failed to load dashboard:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchDashboard();
+  }, []);
+
   return (
-    <div className="p-6">
+    <div className="min-h-screen w-full bg-slate-50 p-5 space-y-4">
 
-      {/* Header */}
+      {/* ── HEADER BANNER ── */}
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-[#0EA5A4] via-[#0D9488] to-[#06B6D4] px-6 py-4 text-white shadow-md">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
+          <div>
+            <div className="inline-flex items-center gap-1.5 bg-white/15 backdrop-blur-md px-2.5 py-0.5 rounded-full text-[11px] font-medium text-white/95 mb-1.5 border border-white/20">
+              <Sparkles size={12} />
+              <span>Admin Portal Overview</span>
+            </div>
+            <h1 className="text-2xl font-bold">Dashboard</h1>
+            <p className="mt-0.5 text-xs text-white/90">
+              Welcome back, <span className="font-semibold text-white">Dr. Bhagyashri Salunke</span>
+            </p>
+          </div>
 
-      <div className="bg-gradient-to-r from-[#0EA5A4] to-[#06B6D4] rounded-3xl px-10 py-6 shadow-md text-white">
-        <h1 className="text-4xl font-bold">
-          Dashboard
-        </h1>
-
-        <p className="mt-2 text-white/90">
-          Welcome back Dr. Bhagyashri Salunke
-        </p>
+          <div className="self-start md:self-auto bg-white/10 backdrop-blur-md px-3 py-1.5 rounded-xl border border-white/20 text-xs font-medium flex items-center gap-2">
+            <Calendar size={14} />
+            <span>
+              {new Date().toLocaleDateString("en-IN", {
+                weekday: "short",
+                day: "2-digit",
+                month: "short",
+                year: "numeric",
+              })}
+            </span>
+          </div>
+        </div>
       </div>
 
-      {/* Stats */}
-
-      <div className="grid lg:grid-cols-4 gap-5 mt-5">
-
+      {/* ── COMPACT DASHBOARD STATS ── */}
+      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
         <StatCard
-          title="Total"
-          value="1"
-          icon={<Users size={30} className="text-[#0EA5A4]" />}
+          title="TOTAL APPOINTMENTS"
+          value={(stats?.total ?? 0).toString()}
+          icon={<Users size={18} className="text-[#0EA5A4]" />}
         />
-
         <StatCard
-          title="Pending"
-          value="1"
-          icon={<Clock3 size={30} className="text-amber-500" />}
+          title="PENDING"
+          value={(stats?.pending ?? 0).toString()}
+          icon={<Clock3 size={18} className="text-amber-500" />}
         />
-
         <StatCard
-          title="Completed"
-          value="0"
-          icon={<CheckCircle size={30} className="text-green-500" />}
+          title="COMPLETED"
+          value={(stats?.completed ?? 0).toString()}
+          icon={<CheckCircle size={18} className="text-emerald-500" />}
         />
-
         <StatCard
-          title="Success"
-          value="0%"
-          icon={<TrendingUp size={30} className="text-sky-500" />}
+          title="SUCCESS RATE"
+          value={`${stats?.success ?? 0}%`}
+          icon={<TrendingUp size={18} className="text-sky-500" />}
         />
-
       </div>
 
-      {/* Quick Actions */}
-
-      <div className="grid lg:grid-cols-3 gap-5 mt-5">
-
+      {/* ── QUICK MANAGEMENT ACTIONS ── */}
+      <div className="grid gap-3 md:grid-cols-2">
         <ManagementCard
-          title="Appointments"
-          description="Manage patient bookings"
+          title="Appointments Management"
+          description="Manage patient bookings, scheduling, and request updates."
           route="/admin/appointments"
         />
-
         <ManagementCard
-          title="Testimonials"
-          description="Manage patient reviews"
+          title="Testimonials Management"
+          description="Manage, reorder, and approve patient feedback and reviews."
           route="/admin/testimonials"
         />
-
-        <ManagementCard
-          title="Services"
-          description="Manage clinic services"
-          route="/admin/services"
-        />
-
       </div>
 
-      {/* Recent Appointments */}
-
-      <div className="bg-white rounded-3xl border border-teal-50 shadow-sm mt-5 overflow-hidden">
-
-        <div className="flex items-center justify-between px-6 py-5 border-b">
-
-          <h2 className="text-2xl font-bold text-black">
-            Recent Appointments
-          </h2>
+      {/* ── RECENT APPOINTMENTS TABLE ── */}
+      <div className="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden">
+        {/* Table Header Controls */}
+        <div className="flex items-center justify-between gap-3 px-5 py-3.5 border-b border-slate-200">
+          <div>
+            <h2 className="text-base font-bold text-slate-800">
+              Recent Appointments
+            </h2>
+            <p className="text-xs text-slate-500">
+              Latest patient booking submissions
+            </p>
+          </div>
 
           <button
             onClick={() => router.push("/admin/appointments")}
-            className="text-[#0EA5A4] font-semibold"
+            className="inline-flex items-center gap-1 text-[#0EA5A4] font-semibold text-xs hover:text-teal-700 transition-colors group"
           >
-            View All →
+            <span>View All</span>
+            <ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform" />
           </button>
-
         </div>
 
-        <table className="w-full">
+        {/* Scrollable Container for Responsive Table */}
+        <div className="overflow-x-auto">
+          <table className="w-full text-left border-collapse min-w-[700px]">
+            <thead className="bg-slate-50 border-b border-slate-200">
+              <tr>
+                <th className="px-4 py-3 text-xs font-bold uppercase text-slate-700">Patient</th>
+                <th className="px-4 py-3 text-xs font-bold uppercase text-slate-700">Phone</th>
+                <th className="px-4 py-3 text-xs font-bold uppercase text-slate-700">Concern</th>
+                <th className="px-4 py-3 text-xs font-bold uppercase text-slate-700">Status</th>
+                <th className="px-4 py-3 text-xs font-bold uppercase text-slate-700">Date</th>
+              </tr>
+            </thead>
 
-          <thead className="bg-[#F6FBFB]">
+            <tbody className="divide-y divide-slate-100">
+              {loading ? (
+                <tr>
+                  <td colSpan={5} className="text-center py-8 text-xs text-slate-500">
+                    <div className="flex items-center justify-center gap-2">
+                      <div className="w-3.5 h-3.5 border-2 border-[#0EA5A4] border-t-transparent rounded-full animate-spin" />
+                      Loading recent appointments...
+                    </div>
+                  </td>
+                </tr>
+              ) : appointments.length === 0 ? (
+                <tr>
+                  <td colSpan={5} className="text-center py-8 text-xs text-slate-500">
+                    No appointments recorded in the last 24 hours.
+                  </td>
+                </tr>
+              ) : (
+                appointments.map((appointment) => (
+                  <tr key={appointment._id} className="hover:bg-slate-50/80 transition">
+                    <td className="px-4 py-3 font-semibold text-slate-800 text-xs">
+                      {appointment.fullName}
+                    </td>
 
-            <tr>
+                    <td className="px-4 py-3 text-slate-600 font-mono text-xs">
+                      {appointment.phone}
+                    </td>
 
-              <th className="text-left p-4 font-semibold text-black">
-                Patient
-              </th>
+                    <td className="px-4 py-3 text-slate-600 text-xs max-w-[200px] truncate">
+                      {appointment.concern}
+                    </td>
 
-              <th className="text-left p-4 font-semibold text-black">
-                Phone
-              </th>
+                    <td className="px-4 py-3">
+                      <span
+                        className={`px-2.5 py-1 rounded-full text-[11px] font-semibold border ${
+                          appointment.status === "Completed"
+                            ? "bg-emerald-50 text-emerald-700 border-emerald-200"
+                            : appointment.status === "Cancelled"
+                            ? "bg-rose-50 text-rose-700 border-rose-200"
+                            : "bg-amber-50 text-amber-700 border-amber-200"
+                        }`}
+                      >
+                        {appointment.status}
+                      </span>
+                    </td>
 
-              <th className="text-left p-4 font-semibold text-black">
-                Concern
-              </th>
-
-              <th className="text-left p-4 font-semibold text-black">
-                Status
-              </th>
-
-              <th className="text-left p-4 font-semibold text-black">
-                Date
-              </th>
-
-            </tr>
-
-          </thead>
-
-          <tbody>
-
-            <tr className="border-t hover:bg-slate-50 transition">
-
-              <td className="p-4 text-black font-medium">
-                Rahul Sharma
-              </td>
-
-              <td className="p-4 text-black">
-                9876543210
-              </td>
-
-              <td className="p-4 text-black">
-                Back Pain
-              </td>
-
-              <td className="p-4">
-
-                <span className="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-sm font-medium">
-                  Pending
-                </span>
-
-              </td>
-
-              <td className="p-4 text-black">
-                22 Jul 2025
-              </td>
-
-            </tr>
-
-          </tbody>
-
-        </table>
-
+                    <td className="px-4 py-3 text-slate-500 text-xs whitespace-nowrap">
+                      {new Date(appointment.createdAt).toLocaleDateString("en-IN", {
+                        day: "2-digit",
+                        month: "short",
+                        year: "numeric",
+                      })}
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
 
-      <div className="text-center text-slate-500 text-sm mt-8">
+      {/* Footer */}
+      <div className="text-center text-slate-400 text-xs py-2">
         © 2025 PhysioCare. All rights reserved.
       </div>
-
     </div>
   );
 }
 
-/* ---------- COMPONENTS ---------- */
-
+/* ── COMPACT STAT CARD COMPONENT ── */
 function StatCard({
   title,
   value,
@@ -186,30 +254,25 @@ function StatCard({
   icon: React.ReactNode;
 }) {
   return (
-    <div className="bg-white rounded-3xl border border-teal-50 shadow-sm p-4">
-
-      <div className="flex justify-between items-center">
-
+    <div className="rounded-xl border border-slate-200 bg-white p-3 shadow-xs">
+      <div className="flex items-center justify-between">
         <div>
-
-          <p className="text-slate-500">
+          <p className="text-[10px] font-bold text-slate-400 tracking-wider">
             {title}
           </p>
-
-          <h3 className="text-2xl font-bold mt-2 text-slate-800">
+          <h3 className="mt-0.5 text-xl font-bold text-slate-800">
             {value}
           </h3>
-
         </div>
-
-        {icon}
-
+        <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-slate-50 border border-slate-100">
+          {icon}
+        </div>
       </div>
-
     </div>
   );
 }
 
+/* ── COMPACT MANAGEMENT CARD COMPONENT ── */
 function ManagementCard({
   title,
   description,
@@ -222,24 +285,23 @@ function ManagementCard({
   const router = useRouter();
 
   return (
-    <div className="bg-white rounded-3xl border border-teal-50 shadow-sm p-5 hover:shadow-md transition">
-
-      <h3 className="text-xl font-bold text-slate-800">
-        {title}
-      </h3>
-
-      <p className="text-slate-500 mt-2">
-        {description}
-      </p>
+    <div className="bg-white rounded-2xl border border-slate-200 shadow-xs p-4 hover:border-teal-300 transition-all flex items-center justify-between gap-4 group">
+      <div>
+        <h3 className="text-base font-bold text-slate-800">
+          {title}
+        </h3>
+        <p className="text-slate-500 text-xs mt-0.5">
+          {description}
+        </p>
+      </div>
 
       <button
         onClick={() => router.push(route)}
-        className="mt-5 text-[#0EA5A4] font-semibold flex items-center gap-2"
+        className="flex items-center gap-1 text-[#0EA5A4] font-bold text-xs hover:gap-1.5 transition-all shrink-0 bg-teal-50 px-3 py-2 rounded-xl"
       >
-        Open
-        <ArrowRight size={16} />
+        <span>Open</span>
+        <ArrowRight size={14} />
       </button>
-
     </div>
   );
 }

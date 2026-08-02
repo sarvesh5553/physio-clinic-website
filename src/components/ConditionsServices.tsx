@@ -3,7 +3,6 @@
 import { useRef } from "react";
 import {
   Activity,
-  Sparkles,
   Dumbbell,
   Building2,
   Syringe,
@@ -13,13 +12,13 @@ import {
   HeartPulse,
   Zap,
   BriefcaseMedical,
-  ChevronLeft,
-  ChevronRight,
+  ChevronUp,
+  ChevronDown,
 } from "lucide-react";
 
 export default function ConditionsServices() {
-  const conditionsRef = useRef<HTMLDivElement>(null);
-  const servicesRef = useRef<HTMLDivElement>(null);
+  const conditionsScrollRef = useRef<HTMLDivElement>(null);
+  const servicesScrollRef = useRef<HTMLDivElement>(null);
 
   const conditions = [
     { title: "Back Pain", image: "/Conditions/backpain.png" },
@@ -44,228 +43,214 @@ export default function ConditionsServices() {
 
   const services = [
     {
-      icon: <Zap className="w-5 h-5" />,
+      icon: <Zap className="w-4 h-4" />,
       title: "Electrotherapy",
       description: "Advanced technological modalities used to suppress pain and accelerate cellular repair.",
     },
     {
-      icon: <HeartPulse className="w-5 h-5" />,
+      icon: <HeartPulse className="w-4 h-4" />,
       title: "Pain Management",
       description: "Evidence-based clinical approaches for acute and chronic pain relief.",
     },
     {
-      icon: <Activity className="w-5 h-5" />,
+      icon: <Activity className="w-4 h-4" />,
       title: "Manual Therapy",
       description: "Hands-on techniques to reduce pain, improve mobility and restore function.",
     },
     {
-      icon: <CheckCircle2 className="w-5 h-5" />,
+      icon: <CheckCircle2 className="w-4 h-4" />,
       title: "Exercise Therapy",
       description: "Customized exercise programs to strengthen muscles and improve movement.",
     },
     {
-      icon: <Brain className="w-5 h-5" />,
+      icon: <Brain className="w-4 h-4" />,
       title: "Neuro Rehabilitation",
       description: "Specialized recovery framework designed for neurological conditions.",
     },
     {
-      icon: <Dumbbell className="w-5 h-5" />,
+      icon: <Dumbbell className="w-4 h-4" />,
       title: "Sports Rehabilitation",
       description: "Helping athletes recover safely and return to peak performance.",
     },
     {
-      icon: <Building2 className="w-5 h-5" />,
+      icon: <Building2 className="w-4 h-4" />,
       title: "Post Surgical Rehab",
       description: "Structured recovery programs after orthopedic and joint surgeries.",
     },
     {
-      icon: <CheckCircle2 className="w-5 h-5" />,
+      icon: <CheckCircle2 className="w-4 h-4" />,
       title: "Posture Correction",
       description: "Assessment and correction of posture-related structural dysfunctions.",
     },
     {
-      icon: <Syringe className="w-5 h-5" />,
+      icon: <Syringe className="w-4 h-4" />,
       title: "Dry Needling",
       description: "Targets trigger points and muscle tightness for targeted pain relief.",
     },
-    
     {
-      icon: <Layers className="w-5 h-5" />,
+      icon: <Layers className="w-4 h-4" />,
       title: "Dry & Wet Cupping",
       description: "Improves local circulation and helps relieve deep muscular tension.",
     },
     {
-      icon: <BriefcaseMedical className="w-5 h-5" />,
+      icon: <BriefcaseMedical className="w-4 h-4" />,
       title: "Kinesio Taping",
       description: "Supports structural joints and muscles while promoting active recovery.",
     },
   ];
 
-  const scrollRight = (ref: React.RefObject<HTMLDivElement | null>) => {
-    ref.current?.scrollBy({ left: 320, behavior: "smooth" });
-  };
-
-  const scrollLeft = (ref: React.RefObject<HTMLDivElement | null>) => {
-    ref.current?.scrollBy({ left: -320, behavior: "smooth" });
+  const scrollVertical = (ref: React.RefObject<HTMLDivElement | null>, direction: "up" | "down") => {
+    if (ref.current) {
+      const scrollAmount = direction === "up" ? -220 : 220;
+      ref.current.scrollBy({ top: scrollAmount, behavior: "smooth" });
+    }
   };
 
   return (
-    <section className="py-14 md:py-16 bg-gradient-to-b from-white via-slate-50/60 to-white overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="py-12 md:py-16 bg-gradient-to-b from-white via-slate-50/60 to-white overflow-hidden">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* ── Section Header ── */}
-        <div className="text-center max-w-5xl mx-auto mb-10">
-          <div className="inline-flex items-center gap-2 bg-teal-50 border border-teal-100/80 px-4 py-1.5 rounded-full mb-3">
-            <Sparkles className="w-3.5 h-3.5 text-teal-600" />
-            <span className="text-xs font-semibold tracking-wider uppercase text-teal-800">
-              Our Expertise &amp; Services
+        <div className="text-center mb-8 md:mb-12">
+          <div className="inline-flex items-center justify-center mb-3">
+            <span className="text-xs font-bold tracking-[0.2em] uppercase text-teal-700 bg-teal-50 px-4 py-1.5 rounded-full">
+              Conditions & Services
             </span>
           </div>
 
-          {/* Fluid clamp() sizing keeps this on one line at every viewport width
-              instead of jumping between fixed breakpoint sizes */}
-          <h2
-            className="font-black text-slate-900 tracking-tight mb-3 whitespace-nowrap"
-            style={{ fontSize: "clamp(1.1rem, 4.1vw, 2.5rem)" }}
-          >
-            Conditions We Treat &amp;{" "}
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-900 mb-3 tracking-tight">
+            <span>Conditions we treat & </span>
             <span className="bg-gradient-to-r from-teal-600 to-cyan-600 bg-clip-text text-transparent">
-              Services We Provide
+              Services we provide
             </span>
           </h2>
-
-          <p className="text-sm sm:text-base text-slate-500 max-w-2xl mx-auto leading-relaxed">
-            Evidence-based physiotherapy treatments designed to relieve pain, restore movement and improve your quality of life.
+          <p className="text-slate-600 max-w-2xl mx-auto text-sm md:text-base leading-relaxed">
+            Evidence-based physiotherapy relieves pain, restores movement, and improves life quality.
           </p>
         </div>
 
-        {/* ── CONDITIONS SECTION ── */}
-        <div className="relative mb-12">
-          <div className="flex items-center justify-between mb-4 px-1">
-            <h3 className="text-lg sm:text-xl font-bold text-slate-900 pl-3 border-l-4 border-teal-500">
-              Conditions We Treat
-            </h3>
-            <span className="hidden sm:inline-block text-xs font-semibold text-teal-700 bg-teal-50 border border-teal-100 px-3 py-1 rounded-full">
-              {conditions.length} Conditions
-            </span>
-            <span className="sm:hidden text-[11px] font-medium text-slate-400">
-              Swipe to explore →
-            </span>
-          </div>
+        {/* ── DUAL COLUMN LAYOUT ── */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6 items-start">
 
-          <div className="relative">
-            {/* Edge fade cues — hint that more content sits off-screen */}
-            <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-8 sm:w-14 bg-gradient-to-r from-white to-transparent z-10" />
-            <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-8 sm:w-14 bg-gradient-to-l from-white to-transparent z-10" />
+          {/* ── LEFT HALF: CONDITIONS WE TREAT (UP TO ANKLE SPRAIN ROW) ── */}
+          <div id="conditions" className="relative bg-white border border-slate-200/80 rounded-2xl p-4 sm:p-5 shadow-sm scroll-mt-24">
+            <div className="flex items-center justify-between mb-4 pb-2.5 border-b border-slate-100">
+              <h3 className="text-base sm:text-lg font-bold text-slate-900 pl-2.5 border-l-4 border-teal-500">
+                Conditions We Treat
+              </h3>
+              <span className="text-xs font-semibold text-teal-700 bg-teal-50 border border-teal-100 px-2.5 py-0.5 rounded-full">
+                {conditions.length} Conditions
+              </span>
+            </div>
 
-            {/* Arrows: always visible at sm+ (not hover-dependent, so they also work on touch laptops/tablets) */}
-            <button
-              type="button"
-              onClick={() => scrollLeft(conditionsRef)}
-              aria-label="Scroll left"
-              className="hidden sm:flex absolute left-0 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-white text-slate-700 shadow-md border border-slate-100 hover:bg-teal-600 hover:text-white items-center justify-center transition-all duration-200"
-            >
-              <ChevronLeft className="w-5 h-5" />
-            </button>
+            {/* Glass Navigation Controls */}
+            <div className="absolute right-6 top-[68px] z-10 flex flex-col gap-1">
+              <button
+                type="button"
+                onClick={() => scrollVertical(conditionsScrollRef, "up")}
+                aria-label="Scroll conditions up"
+                className="w-7 h-7 rounded-full bg-white/80 backdrop-blur-md border border-slate-200 text-slate-600 shadow-sm hover:bg-teal-600 hover:text-white hover:border-teal-600 flex items-center justify-center transition-all"
+              >
+                <ChevronUp className="w-4 h-4" />
+              </button>
+              <button
+                type="button"
+                onClick={() => scrollVertical(conditionsScrollRef, "down")}
+                aria-label="Scroll conditions down"
+                className="w-7 h-7 rounded-full bg-white/80 backdrop-blur-md border border-slate-200 text-slate-600 shadow-sm hover:bg-teal-600 hover:text-white hover:border-teal-600 flex items-center justify-center transition-all"
+              >
+                <ChevronDown className="w-4 h-4" />
+              </button>
+            </div>
 
-            <button
-              type="button"
-              onClick={() => scrollRight(conditionsRef)}
-              aria-label="Scroll right"
-              className="hidden sm:flex absolute right-0 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-white text-slate-700 shadow-md border border-slate-100 hover:bg-teal-600 hover:text-white items-center justify-center transition-all duration-200"
-            >
-              <ChevronRight className="w-5 h-5" />
-            </button>
-
-            {/* Scroll track */}
+            {/* Locked to exactly 3 rows (Ends precisely after Ankle Sprain) */}
             <div
-              ref={conditionsRef}
-              className="flex gap-3 overflow-x-auto scroll-smooth snap-x snap-mandatory [scrollbar-width:none] [&::-webkit-scrollbar]:hidden px-1 py-3"
+              ref={conditionsScrollRef}
+              className="h-[345px] overflow-y-auto scroll-smooth [scrollbar-width:none] [&::-webkit-scrollbar]:hidden pt-1 pb-1"
             >
-              {conditions.map((condition) => (
-                <div
-                  key={condition.title}
-                  className="snap-start group flex-none w-[115px] sm:w-[130px] bg-white border border-slate-100 rounded-xl p-2.5 flex flex-col items-center justify-center text-center transition-all duration-300 hover:border-teal-300 hover:shadow-[0_10px_20px_-8px_rgba(13,148,136,0.18)] hover:-translate-y-0.5"
-                >
-                  <div className="w-full aspect-square rounded-lg bg-slate-50 border border-slate-100/50 flex items-center justify-center p-1.5 transition-all duration-300 group-hover:scale-105 group-hover:bg-gradient-to-br group-hover:from-teal-50 group-hover:to-cyan-50 group-hover:border-teal-100">
-                    <img
-                      src={condition.image}
-                      alt={condition.title}
-                      className="w-full h-full object-contain"
-                    />
-                  </div>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+                {conditions.map((condition) => (
+                  <div
+                    key={condition.title}
+                    className="group bg-white border border-slate-100 rounded-lg p-2 flex flex-col items-center justify-center text-center transition-all duration-300 hover:border-teal-300 hover:shadow-[0_8px_16px_-6px_rgba(13,148,136,0.18)] hover:-translate-y-0.5"
+                  >
+                    <div className="w-full h-14 rounded-md bg-slate-50 border border-slate-100/50 flex items-center justify-center p-1.5 transition-all duration-300 group-hover:scale-105 group-hover:bg-gradient-to-br group-hover:from-teal-50 group-hover:to-cyan-50 group-hover:border-teal-100">
+                      <img
+                        src={condition.image}
+                        alt={condition.title}
+                        className="w-full h-full object-contain"
+                      />
+                    </div>
 
-                  <span className="font-bold text-slate-800 text-[11px] sm:text-xs tracking-tight mt-2.5 group-hover:text-teal-950 transition-colors line-clamp-2 px-0.5">
-                    {condition.title}
-                  </span>
-                </div>
-              ))}
+                    <span className="font-bold text-slate-800 text-[11px] tracking-tight mt-1.5 group-hover:text-teal-950 transition-colors line-clamp-2 px-0.5 leading-tight">
+                      {condition.title}
+                    </span>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
 
-        {/* ── SERVICES SECTION ── */}
-        <div className="relative">
-          <div className="flex items-center justify-between mb-4 px-1">
-            <h3 className="text-lg sm:text-xl font-bold text-slate-900 pl-3 border-l-4 border-cyan-500">
-              Our Services
-            </h3>
-            <span className="hidden sm:inline-block text-xs font-semibold text-cyan-700 bg-cyan-50 border border-cyan-100 px-3 py-1 rounded-full">
-              {services.length} Services
-            </span>
-            <span className="sm:hidden text-[11px] font-medium text-slate-400">
-              Swipe to explore →
-            </span>
-          </div>
+          {/* ── RIGHT HALF: OUR SERVICES (UP TO EXERCISE THERAPY) ── */}
+          <div id="services" className="relative bg-white border border-slate-200/80 rounded-2xl p-4 sm:p-5 shadow-sm scroll-mt-24">
+            <div className="flex items-center justify-between mb-4 pb-2.5 border-b border-slate-100">
+              <h3 className="text-base sm:text-lg font-bold text-slate-900 pl-2.5 border-l-4 border-cyan-500">
+                Our Services
+              </h3>
+              <span className="text-xs font-semibold text-cyan-700 bg-cyan-50 border border-cyan-100 px-2.5 py-0.5 rounded-full">
+                {services.length} Services
+              </span>
+            </div>
 
-          <div className="relative">
-            <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-8 sm:w-14 bg-gradient-to-r from-white to-transparent z-10" />
-            <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-8 sm:w-14 bg-gradient-to-l from-white to-transparent z-10" />
+            {/* Glass Navigation Controls */}
+            <div className="absolute right-6 top-[68px] z-10 flex flex-col gap-1">
+              <button
+                type="button"
+                onClick={() => scrollVertical(servicesScrollRef, "up")}
+                aria-label="Scroll services up"
+                className="w-7 h-7 rounded-full bg-white/80 backdrop-blur-md border border-slate-200 text-slate-600 shadow-sm hover:bg-cyan-600 hover:text-white hover:border-cyan-600 flex items-center justify-center transition-all"
+              >
+                <ChevronUp className="w-4 h-4" />
+              </button>
+              <button
+                type="button"
+                onClick={() => scrollVertical(servicesScrollRef, "down")}
+                aria-label="Scroll services down"
+                className="w-7 h-7 rounded-full bg-white/80 backdrop-blur-md border border-slate-200 text-slate-600 shadow-sm hover:bg-cyan-600 hover:text-white hover:border-cyan-600 flex items-center justify-center transition-all"
+              >
+                <ChevronDown className="w-4 h-4" />
+              </button>
+            </div>
 
-            <button
-              type="button"
-              onClick={() => scrollLeft(servicesRef)}
-              aria-label="Scroll left"
-              className="hidden sm:flex absolute left-0 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-white text-slate-700 shadow-md border border-slate-100 hover:bg-cyan-600 hover:text-white items-center justify-center transition-all duration-200"
-            >
-              <ChevronLeft className="w-5 h-5" />
-            </button>
-
-            <button
-              type="button"
-              onClick={() => scrollRight(servicesRef)}
-              aria-label="Scroll right"
-              className="hidden sm:flex absolute right-0 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-white text-slate-700 shadow-md border border-slate-100 hover:bg-cyan-600 hover:text-white items-center justify-center transition-all duration-200"
-            >
-              <ChevronRight className="w-5 h-5" />
-            </button>
-
+            {/* Locked to exactly 4 items (Ends precisely after Exercise Therapy) */}
             <div
-              ref={servicesRef}
-              className="flex gap-5 overflow-x-auto scroll-smooth snap-x snap-mandatory [scrollbar-width:none] [&::-webkit-scrollbar]:hidden px-1 py-3"
+              ref={servicesScrollRef}
+              className="h-[345px] overflow-y-auto scroll-smooth [scrollbar-width:none] [&::-webkit-scrollbar]:hidden pt-1 pb-1"
             >
-              {services.map((service) => (
-                <div
-                  key={service.title}
-                  className="snap-start group flex-none w-[265px] sm:w-[300px] bg-white border border-slate-200/70 rounded-xl p-5 transition-all duration-300 hover:border-cyan-200 hover:shadow-[0_12px_24px_-10px_rgba(6,182,212,0.12)] hover:-translate-y-0.5 flex flex-col justify-between"
-                >
-                  <div>
-                    <div className="w-9 h-9 rounded-lg bg-cyan-50 text-cyan-600 border border-cyan-100/70 flex items-center justify-center transition-all duration-300 group-hover:bg-gradient-to-br group-hover:from-cyan-500 group-hover:to-teal-600 group-hover:text-white">
+              <div className="flex flex-col gap-2.5">
+                {services.map((service) => (
+                  <div
+                    key={service.title}
+                    className="group bg-white border border-slate-200/70 rounded-lg p-3 transition-all duration-300 hover:border-cyan-200 hover:shadow-[0_8px_16px_-6px_rgba(6,182,212,0.12)] hover:-translate-y-0.5 flex items-start gap-3"
+                  >
+                    <div className="w-8 h-8 shrink-0 rounded-md bg-cyan-50 text-cyan-600 border border-cyan-100/70 flex items-center justify-center transition-all duration-300 group-hover:bg-gradient-to-br group-hover:from-cyan-500 group-hover:to-teal-600 group-hover:text-white">
                       {service.icon}
                     </div>
 
-                    <h4 className="font-bold text-slate-900 text-base mt-4 mb-1.5 tracking-tight group-hover:text-cyan-950 transition-colors">
-                      {service.title}
-                    </h4>
-
-                    <p className="text-xs sm:text-sm text-slate-500 leading-relaxed font-normal line-clamp-3">
-                      {service.description}
-                    </p>
+                    <div>
+                      <h4 className="font-bold text-slate-900 text-sm mb-0.5 tracking-tight group-hover:text-cyan-950 transition-colors">
+                        {service.title}
+                      </h4>
+                      <p className="text-xs text-slate-500 leading-relaxed font-normal">
+                        {service.description}
+                      </p>
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
+
         </div>
 
       </div>

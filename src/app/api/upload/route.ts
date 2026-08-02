@@ -4,18 +4,16 @@ import cloudinary from "@/lib/cloudinary";
 export async function POST(request: Request) {
   try {
     const formData = await request.formData();
-
     const file = formData.get("file") as File;
 
-    if (!file) {
+    // If no file was uploaded, return success with null image data instead of an error
+    if (!file || file.size === 0) {
       return NextResponse.json(
         {
-          success: false,
-          message: "No file uploaded.",
+          success: true,
+          image: null,
         },
-        {
-          status: 400,
-        }
+        { status: 200 }
       );
     }
 
@@ -33,7 +31,6 @@ export async function POST(request: Request) {
           },
           (error, result) => {
             if (error) return reject(error);
-
             resolve(result);
           }
         )
@@ -48,9 +45,7 @@ export async function POST(request: Request) {
           publicId: uploadResult.public_id,
         },
       },
-      {
-        status: 200,
-      }
+      { status: 200 }
     );
   } catch (error) {
     console.error("Upload Error:", error);
@@ -60,9 +55,7 @@ export async function POST(request: Request) {
         success: false,
         message: "Image upload failed.",
       },
-      {
-        status: 500,
-      }
+      { status: 500 }
     );
   }
 }

@@ -7,7 +7,7 @@ const VALID_RATINGS = [1, 2, 3, 4, 5];
 
 /**
  * PATCH
- * Update Testimonial
+ * Update Testimonial (Supports JSON & Multipart Form Data)
  */
 export async function PATCH(
   request: Request,
@@ -15,66 +15,9 @@ export async function PATCH(
 ) {
   try {
     await connectDB();
-
     const { id } = await params;
-    const body = await request.json();
-
-    // Validate image if provided
-    if (
-      body.image &&
-      (!body.image.url || !body.image.publicId)
-    ) {
-      return NextResponse.json(
-        {
-          success: false,
-          message: "Invalid image data.",
-        },
-        { status: 400 }
-      );
-    }
-
-    const updateData: Partial<IFeedback> = {
-      name: body.name?.trim(),
-      condition: body.condition?.trim(),
-      review: body.review?.trim(),
-      image: body.image
-        ? {
-            url: body.image.url,
-            publicId: body.image.publicId,
-          }
-        : undefined,
-      rating:
-        body.rating !== undefined
-          ? Number(body.rating)
-          : undefined,
-      isPublished: body.isPublished,
-    };
-
-    // Remove undefined fields
-    Object.keys(updateData).forEach((key) => {
-      if (
-        updateData[key as keyof typeof updateData] === undefined
-      ) {
-        delete updateData[key as keyof typeof updateData];
-      }
-    });
-
-    // Validate rating
-    if (
-      updateData.rating !== undefined &&
-      !VALID_RATINGS.includes(updateData.rating)
-    ) {
-      return NextResponse.json(
-        {
-          success: false,
-          message: "Rating must be between 1 and 5.",
-        },
-        { status: 400 }
-      );
-    }
 
     const testimonial = await Feedback.findById(id);
-
     if (!testimonial) {
       return NextResponse.json(
         {
@@ -85,42 +28,128 @@ export async function PATCH(
       );
     }
 
-    // Delete old image if a new one is uploaded
-    if (
-      updateData.image &&
-      testimonial.image?.publicId &&
-      testimonial.image.publicId !==
-        updateData.image.publicId
-    ) {
-      await cloudinary.uploader.destroy(
-        testimonial.image.publicId
+    let name: string | undefined;
+    let condition: string | undefined;
+    let review: string | undefined;
+    let rating: number | undefined;
+    let isPublished: boolean | undefined;
+    let newImage = testimonial.image; // Keep existing image by default
+
+    const contentType = request.headers.get("content-type") || "";
+
+    // 1. HANDLE MULTIPART FORM DATA (If editing with file upload)
+    if (contentType.includes("multipart/form-data")) {
+      const formData = await request.formData();
+      name = formData.get("name")?.toString().trim();
+      condition = formData.get("condition")?.toString().trim();
+      review = formData.get("review")?.toString().trim();
+      
+      const rawRating = formData.get("rating");
+      rating = rawRating !== null ? Number(rawRating) : undefined;
+      
+      const rawPublished = formData.get("isPublished");
+      if (rawPublished !== null) {
+        isPublished = rawPublished === "true";
+      }
+
+      const imageFile = formData.get("image");
+
+      // If a new image file is provided, upload it to Cloudinary
+      if (imageFile && imageFile instanceof File && imageFile.size > 0) {
+        const bytes = await imageFile.arrayBuffer();
+        const buffer = Buffer.from(bytes);
+
+        const uploadResult = await new Promise<any>((resolve, reject) => {
+          cloudinary.uploader
+            .upload_stream(
+              {
+                folder: "physiocare/testimonials",
+                resource_type: "image",
+              },
+              (error, result) => {
+                if (error) return reject(error);
+                resolve(result);
+              }
+            )
+            .end(buffer);
+        });
+
+        newImage = {
+          url: uploadResult.secure_url,
+          publicId: uploadResult.public_id,
+        };
+
+        // Delete old image from Cloudinary if it exists and has a different publicId
+        if (testimonial.image?.publicId && testimonial.image.publicId !== newImage.publicId) {
+          await cloudinary.uploader.destroy(testimonial.image.publicId);
+        }
+      }
+    } 
+    // 2. HANDLE JSON PAYLOAD (Standard API updates)
+    else {
+      const body = await request.json();
+      name = body.name?.trim();
+      condition = body.condition?.trim();
+      review = body.review?.trim();
+      rating = body.rating !== undefined ? Number(body.rating) : undefined;
+      isPublished = body.isPublished;
+
+      if (body.image) {
+        if (!body.image.url || !body.image.publicId) {
+          return NextResponse.json(
+            { success: false, message: "Invalid image data." },
+            { status: 400 }
+          );
+        }
+        newImage = {
+          url: body.image.url,
+          publicId: body.image.publicId,
+        };
+
+        if (testimonial.image?.publicId && testimonial.image.publicId !== newImage.publicId) {
+          await cloudinary.uploader.destroy(testimonial.image.publicId);
+        }
+      }
+    }
+
+    // Validate rating if provided
+    if (rating !== undefined && !VALID_RATINGS.includes(rating)) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Rating must be between 1 and 5.",
+        },
+        { status: 400 }
       );
     }
 
-    Object.assign(testimonial, updateData);
+    // Build update payload dynamically
+    const updateData: Partial<IFeedback> = {};
+    if (name !== undefined) updateData.name = name;
+    if (condition !== undefined) updateData.condition = condition;
+    if (review !== undefined) updateData.review = review;
+    if (rating !== undefined) updateData.rating = rating;
+    if (isPublished !== undefined) updateData.isPublished = isPublished;
+    if (newImage !== undefined) updateData.image = newImage;
 
+    Object.assign(testimonial, updateData);
     await testimonial.save();
 
     return NextResponse.json(
       {
         success: true,
-        message:
-          "Testimonial updated successfully.",
+        message: "Testimonial updated successfully.",
         data: testimonial,
       },
       { status: 200 }
     );
   } catch (error) {
-    console.error(
-      "PATCH /api/admin/testimonial/[id]",
-      error
-    );
+    console.error("PATCH /api/admin/testimonial/[id]", error);
 
     return NextResponse.json(
       {
         success: false,
-        message:
-          "Failed to update testimonial.",
+        message: "Failed to update testimonial.",
       },
       { status: 500 }
     );
@@ -137,11 +166,9 @@ export async function DELETE(
 ) {
   try {
     await connectDB();
-
     const { id } = await params;
 
-    const testimonial =
-      await Feedback.findById(id);
+    const testimonial = await Feedback.findById(id);
 
     if (!testimonial) {
       return NextResponse.json(
@@ -155,33 +182,26 @@ export async function DELETE(
 
     // Delete image from Cloudinary
     if (testimonial.image?.publicId) {
-      await cloudinary.uploader.destroy(
-        testimonial.image.publicId
-      );
+      await cloudinary.uploader.destroy(testimonial.image.publicId);
     }
 
-    // Delete testimonial
+    // Delete testimonial from database
     await testimonial.deleteOne();
 
     return NextResponse.json(
       {
         success: true,
-        message:
-          "Testimonial deleted successfully.",
+        message: "Testimonial deleted successfully.",
       },
       { status: 200 }
     );
   } catch (error) {
-    console.error(
-      "DELETE /api/admin/testimonial/[id]",
-      error
-    );
+    console.error("DELETE /api/admin/testimonial/[id]", error);
 
     return NextResponse.json(
       {
         success: false,
-        message:
-          "Failed to delete testimonial.",
+        message: "Failed to delete testimonial.",
       },
       { status: 500 }
     );

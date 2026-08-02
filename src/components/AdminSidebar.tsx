@@ -6,8 +6,6 @@ import {
   LayoutDashboard,
   Calendar,
   MessageSquare,
-  Stethoscope,
-  CircleHelp,
   Globe,
   LogOut,
 } from "lucide-react";
@@ -37,68 +35,57 @@ export default function AdminSidebar() {
       href: "/admin/testimonials",
       icon: <MessageSquare size={20} />,
     },
-    {
-      label: "Services",
-      href: "/admin/services",
-      icon: <Stethoscope size={20} />,
-    },
-    {
-      label: "FAQs",
-      href: "/admin/faqs",
-      icon: <CircleHelp size={20} />,
-    },
   ];
 
   return (
-    <aside className="w-64 bg-white border-r border-teal-100 flex flex-col">
-
-      <div className="p-5 border-b">
-        <h1 className="text-3xl font-bold text-[#0D9488]">
-          PhysioCare
-        </h1>
-
-        <p className="text-slate-500">
-          Admin Panel
-        </p>
-      </div>
-
-      <div className="p-3">
-        <div className="rounded-3xl bg-gradient-to-r from-[#0EA5A4] to-[#06B6D4] text-white p-4">
-          <p className="text-sm opacity-90">
-            Logged In As
-          </p>
-
-          <h3 className="font-bold text-xl mt-2">
-            Dr. Bhagyashri Salunke
-          </h3>
+    // ── FIXED & LOCKED SIDEBAR (Stays on screen while page scrolls) ──
+    <aside className="sticky top-0 h-screen w-64 shrink-0 bg-white border-r border-teal-100 flex flex-col justify-between z-30">
+      
+      {/* Top Header & User Card Container */}
+      <div className="flex flex-col">
+        <div className="p-5 border-b border-teal-50">
+          <h1 className="text-3xl font-bold text-[#0D9488]">PhysioCare</h1>
+          <p className="text-sm text-slate-500 font-medium">Admin Panel</p>
         </div>
+
+        <div className="p-3">
+          <div className="rounded-3xl bg-gradient-to-r from-[#0EA5A4] to-[#06B6D4] text-white p-4 shadow-sm">
+            <p className="text-xs uppercase tracking-wider opacity-80 font-medium">
+              Logged In As
+            </p>
+            <h3 className="font-bold text-lg mt-1 leading-snug">
+              Dr. Bhagyashri Salunke
+            </h3>
+          </div>
+        </div>
+
+        {/* Scrollable Nav Items if Screen is Short */}
+        <nav className="px-3 py-2 space-y-1 overflow-y-auto">
+          {menuItems.map((item) => {
+            const isActive = pathname === item.href;
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`flex items-center gap-3 px-4 py-3.5 rounded-2xl transition font-medium text-sm ${
+                  isActive
+                    ? "bg-gradient-to-r from-teal-50 to-cyan-50 text-[#0EA5A4] font-semibold"
+                    : "text-slate-700 hover:bg-teal-50/60"
+                }`}
+              >
+                {item.icon}
+                <span>{item.label}</span>
+              </Link>
+            );
+          })}
+        </nav>
       </div>
 
-      <nav className="flex-1 px-2 py-2">
-        {menuItems.map((item) => (
-          <Link
-            key={item.href}
-            href={item.href}
-            className={`flex items-center gap-3 px-4 py-4 rounded-2xl mb-2 transition ${
-              pathname === item.href
-                ? "bg-gradient-to-r from-teal-50 to-cyan-50 text-[#0EA5A4]"
-                : "text-slate-700 hover:bg-teal-50"
-            }`}
-          >
-            {item.icon}
-
-            <span className="font-medium">
-              {item.label}
-            </span>
-          </Link>
-        ))}
-      </nav>
-
-      <div className="p-3 border-t">
-
+      {/* Bottom Action Buttons */}
+      <div className="p-3 border-t border-teal-50 bg-white space-y-2.5">
         <button
           onClick={() => router.push("/")}
-          className="w-full bg-gradient-to-r from-[#0EA5A4] to-[#06B6D4] text-white py-3 rounded-2xl font-semibold flex items-center justify-center gap-2"
+          className="w-full bg-gradient-to-r from-[#0EA5A4] to-[#06B6D4] text-white py-2.5 rounded-2xl font-semibold flex items-center justify-center gap-2 text-sm shadow-xs transition hover:opacity-95"
         >
           <Globe size={18} />
           Go To Website
@@ -106,13 +93,13 @@ export default function AdminSidebar() {
 
         <button
           onClick={logout}
-          className="w-full bg-gradient-to-r from-red-500 to-rose-500 text-white py-3 rounded-2xl font-semibold flex items-center justify-center gap-2 mt-3"
+          className="w-full bg-gradient-to-r from-red-500 to-rose-500 text-white py-2.5 rounded-2xl font-semibold flex items-center justify-center gap-2 text-sm shadow-xs transition hover:opacity-95"
         >
           <LogOut size={18} />
           Logout
         </button>
-
       </div>
+
     </aside>
   );
 }

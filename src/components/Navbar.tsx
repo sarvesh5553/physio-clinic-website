@@ -42,11 +42,11 @@ export default function Navbar() {
 
   const navLinks = [
     { href: "#home", label: "Home" },
-    { href: "#services", label: "Services" },
+    { href: "#about", label: "About" },
     { href: "#conditions", label: "Conditions" },
     { href: "#testimonials", label: "Testimonials" },
-    { href: "#faq", label: "FAQ's" },
     { href: "#contact", label: "Contact" },
+    { href: "#faq", label: "FAQ's" },
   ];
 
   return (
