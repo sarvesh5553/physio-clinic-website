@@ -12,7 +12,7 @@ const handleLogin = (e: React.FormEvent) => {
 
 
 
-  if (password === "admin123") {
+  if (password === "Shri5553@") {
 
     localStorage.setItem("admin", "true");
 
@@ -45,10 +45,6 @@ const handleLogin = (e: React.FormEvent) => {
         >
           Login
         </button>
-
-        <p className="text-center text-sm text-slate-500 mt-4">
-          Default Password: <span className="font-semibold">admin123</span>
-        </p>
       </form>
     </div>
   );

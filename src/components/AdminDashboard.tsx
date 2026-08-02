@@ -78,10 +78,7 @@ export default function AdminDashboard() {
       <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-[#0EA5A4] via-[#0D9488] to-[#06B6D4] px-6 py-4 text-white shadow-md">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
           <div>
-            <div className="inline-flex items-center gap-1.5 bg-white/15 backdrop-blur-md px-2.5 py-0.5 rounded-full text-[11px] font-medium text-white/95 mb-1.5 border border-white/20">
-              <Sparkles size={12} />
-              <span>Admin Portal Overview</span>
-            </div>
+            
             <h1 className="text-2xl font-bold">Dashboard</h1>
             <p className="mt-0.5 text-xs text-white/90">
               Welcome back, <span className="font-semibold text-white">Dr. Bhagyashri Salunke</span>

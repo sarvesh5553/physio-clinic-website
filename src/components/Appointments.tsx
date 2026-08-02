@@ -13,6 +13,7 @@ import {
   FileSpreadsheet,
   X,
   Filter,
+  Trash2,
 } from "lucide-react";
 
 interface Appointment {
@@ -53,6 +54,50 @@ export default function AppointmentsPage() {
       console.error("Failed to fetch appointments:", error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  // ── STATUS CHANGE HANDLER ──
+  const handleStatusChange = async (id: string, newStatus: string) => {
+    try {
+      const res = await fetch(`/api/appointments/${id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status: newStatus }),
+      });
+      const data = await res.json();
+
+      if (data.success) {
+        setAppointments((prev) =>
+          prev.map((item) => (item._id === id ? { ...item, status: newStatus } : item))
+        );
+      } else {
+        alert(data.message || "Failed to update status.");
+      }
+    } catch (error) {
+      console.error("Error updating status:", error);
+      alert("Something went wrong while updating the status.");
+    }
+  };
+
+  // ── DELETE HANDLER ──
+  const handleDelete = async (id: string) => {
+    if (!window.confirm("Are you sure you want to delete this appointment?")) return;
+
+    try {
+      const res = await fetch(`/api/appointments/${id}`, {
+        method: "DELETE",
+      });
+      const data = await res.json();
+
+      if (data.success) {
+        setAppointments((prev) => prev.filter((item) => item._id !== id));
+      } else {
+        alert(data.message || "Failed to delete appointment.");
+      }
+    } catch (error) {
+      console.error("Error deleting appointment:", error);
+      alert("Something went wrong while deleting.");
     }
   };
 
@@ -105,10 +150,9 @@ export default function AppointmentsPage() {
     ]);
 
     const csvContent =
-      "data:text/csv;charset=utf-8," +
       [headers.join(","), ...rows.map((e) => e.join(","))].join("\n");
 
-    const encodedUri = encodeURI(csvContent);
+    const encodedUri = "data:text/csv;charset=utf-8," + encodeURIComponent(csvContent);
     const link = document.createElement("a");
     link.setAttribute("href", encodedUri);
     link.setAttribute(
@@ -136,7 +180,7 @@ export default function AppointmentsPage() {
       <div className="rounded-2xl bg-[#0EA5A4] px-6 py-4 text-white shadow-md">
         <h1 className="text-2xl font-bold">Appointments</h1>
         <p className="mt-0.5 text-xs text-white/90">
-          Manage patient bookings and update their treatment status.
+          Manage patient bookings and track treatment status.
         </p>
       </div>
 
@@ -202,7 +246,6 @@ export default function AppointmentsPage() {
           />
         </div>
 
-        {/* ── UPGRADED DOWNLOAD CSV BUTTON ── */}
         <button
           onClick={() => setIsCsvModalOpen(true)}
           className="flex items-center gap-2 bg-[#0EA5A4] text-white px-4 py-2 rounded-xl text-xs font-semibold hover:bg-teal-700 transition shadow-xs w-full sm:w-auto justify-center"
@@ -220,7 +263,7 @@ export default function AppointmentsPage() {
         </div>
 
         <div className="max-h-[400px] overflow-y-auto">
-          <table className="w-full text-left border-collapse min-w-[850px]">
+          <table className="w-full text-left border-collapse min-w-[950px]">
             <thead className="bg-slate-50 border-b border-slate-200 sticky top-0 z-10">
               <tr>
                 <th className="px-4 py-3 text-xs font-bold uppercase text-slate-700">NO</th>
@@ -228,21 +271,22 @@ export default function AppointmentsPage() {
                 <th className="px-4 py-3 text-xs font-bold uppercase text-slate-700">EMAIL</th>
                 <th className="px-4 py-3 text-xs font-bold uppercase text-slate-700">PHONE</th>
                 <th className="px-4 py-3 text-xs font-bold uppercase text-slate-700">ADDRESS</th>
-                <th className="px-4 py-3 text-xs font-bold uppercase text-slate-700 min-w-[260px]">CONCERN</th>
+                <th className="px-4 py-3 text-xs font-bold uppercase text-slate-700 min-w-[200px]">CONCERN</th>
                 <th className="px-4 py-3 text-xs font-bold uppercase text-slate-700">STATUS</th>
                 <th className="px-4 py-3 text-xs font-bold uppercase text-slate-700">DATE</th>
+                <th className="px-4 py-3 text-xs font-bold uppercase text-slate-700 text-center">ACTIONS</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100">
               {loading ? (
                 <tr>
-                  <td colSpan={8} className="text-center py-8 text-xs text-slate-500">
+                  <td colSpan={9} className="text-center py-8 text-xs text-slate-500">
                     Loading appointments...
                   </td>
                 </tr>
               ) : filteredAppointments.length === 0 ? (
                 <tr>
-                  <td colSpan={8} className="text-center py-8 text-xs text-slate-500">
+                  <td colSpan={9} className="text-center py-8 text-xs text-slate-500">
                     No appointments found.
                   </td>
                 </tr>
@@ -254,20 +298,39 @@ export default function AppointmentsPage() {
                     <td className="px-4 py-3 text-slate-600 whitespace-nowrap">{item.email}</td>
                     <td className="px-4 py-3 text-slate-600 font-mono whitespace-nowrap">{item.phone}</td>
                     <td className="px-4 py-3 text-slate-600">{item.address}</td>
-                    <td className="px-4 py-3 text-slate-600 min-w-[260px] whitespace-normal break-words leading-relaxed">
+                    <td className="px-4 py-3 text-slate-600 min-w-[200px] whitespace-normal break-words leading-relaxed">
                       {item.concern}
                     </td>
                     <td className="px-4 py-3 text-slate-600 whitespace-nowrap">
-                      <span className={`px-2 py-1 rounded-full text-[10px] font-bold ${
-                        item.status === 'Confirmed' ? 'bg-sky-50 text-sky-600 border border-sky-100' :
-                        item.status === 'Completed' ? 'bg-emerald-50 text-emerald-600 border border-emerald-100' :
-                        'bg-amber-50 text-amber-600 border border-amber-100'
-                      }`}>
-                        {item.status || 'Pending'}
-                      </span>
+                      <select
+                        aria-label="Update appointment status"
+                        value={item.status || "Pending"}
+                        onChange={(e) => handleStatusChange(item._id, e.target.value)}
+                        className={`px-2.5 py-1 rounded-lg text-xs font-bold outline-none cursor-pointer transition ${
+                          item.status === 'Confirmed' ? 'bg-sky-50 text-sky-600 border border-sky-200' :
+                          item.status === 'Completed' ? 'bg-emerald-50 text-emerald-600 border border-emerald-200' :
+                          'bg-amber-50 text-amber-600 border border-amber-200'
+                        }`}
+                      >
+                        <option value="Pending">Pending</option>
+                        <option value="Confirmed">Confirmed</option>
+                        <option value="Completed">Completed</option>
+                      </select>
                     </td>
                     <td className="px-4 py-3 text-slate-600 whitespace-nowrap">
                       {item.createdAt ? new Date(item.createdAt).toLocaleDateString("en-IN") : "-"}
+                    </td>
+                    <td className="px-4 py-3 text-slate-600 whitespace-nowrap text-center">
+                      <div className="flex items-center justify-center gap-1.5">
+                        <button
+                          aria-label="Delete appointment"
+                          onClick={() => handleDelete(item._id)}
+                          className="p-1.5 bg-red-50 text-red-600 hover:bg-red-100 rounded-lg transition"
+                          title="Delete"
+                        >
+                          <Trash2 size={14} />
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 ))
@@ -281,14 +344,13 @@ export default function AppointmentsPage() {
       {isCsvModalOpen && (
         <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4">
           <div className="bg-white rounded-2xl w-full max-w-md p-5 shadow-2xl relative animate-in fade-in zoom-in-95 duration-150">
-            
-            {/* Modal Header */}
             <div className="flex items-center justify-between border-b border-slate-100 pb-3 mb-4">
               <div className="flex items-center gap-2 text-slate-800">
                 <FileSpreadsheet size={18} className="text-[#0EA5A4]" />
                 <h3 className="text-base font-bold">Export CSV Options</h3>
               </div>
               <button
+                aria-label="Close export modal"
                 onClick={() => setIsCsvModalOpen(false)}
                 className="text-slate-400 hover:text-slate-600 p-1"
               >
@@ -296,7 +358,6 @@ export default function AppointmentsPage() {
               </button>
             </div>
 
-            {/* Filter Mode Options */}
             <div className="space-y-3">
               <label className="text-xs font-bold text-slate-500 uppercase tracking-wider block">
                 Select Export Filter
@@ -343,7 +404,6 @@ export default function AppointmentsPage() {
                 </button>
               </div>
 
-              {/* Dynamic Inputs */}
               {exportType === "patient" && (
                 <div className="pt-2">
                   <label className="text-xs font-semibold text-slate-700 block mb-1">
@@ -388,7 +448,6 @@ export default function AppointmentsPage() {
               )}
             </div>
 
-            {/* Actions */}
             <div className="flex items-center justify-end gap-2 mt-6 pt-3 border-t border-slate-100">
               <button
                 type="button"

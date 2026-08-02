@@ -205,13 +205,6 @@ export default function Navbar() {
             Book Now
           </a>
 
-          <a
-          href="/admin/login"
-          onClick={() => setMenuOpen(false)}
-          className="text-center text-sm text-slate-500 hover:text-teal-600 py-2"
-          >
-          Admin Panel
-          </a>
         </div>
       </div>
     </nav>
