@@ -8,10 +8,10 @@ export default function AdminLayout({
 }) {
   return (
     <AdminAuthGuard>
-      <div className="min-h-screen bg-[#F4F8F8] flex">
+      <div className="min-h-screen bg-[#F4F8F8] flex flex-col lg:flex-row">
         <AdminSidebar />
 
-        <main className="flex-1 overflow-auto">
+        <main className="flex-1 min-w-0 overflow-auto">
           {children}
         </main>
       </div>

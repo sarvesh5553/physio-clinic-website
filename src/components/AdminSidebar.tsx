@@ -9,14 +9,14 @@ import {
   MessageSquare,
   Globe,
   LogOut,
-  PanelLeftClose,
-  PanelLeftOpen,
+  Menu,
+  X,
 } from "lucide-react";
 
 export default function AdminSidebar() {
   const pathname = usePathname();
   const router = useRouter();
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const logout = () => {
     localStorage.removeItem("admin");
@@ -43,38 +43,50 @@ export default function AdminSidebar() {
 
   return (
     <>
-      {/* ── FLOATING TOGGLE BUTTON (Visible when sidebar is hidden to open it) ── */}
-      {!isSidebarOpen && (
+      {/* ── MOBILE TOP NAVBAR (Logo icon only toggle button) ── */}
+      <div className="lg:hidden w-full bg-white border-b border-teal-100 sticky top-0 z-50 shadow-xs flex items-center justify-between px-4 py-3">
+        <div className="flex items-center gap-2">
+          <h1 className="text-xl font-bold text-[#0D9488]">PhysioCare</h1>
+          <span className="text-[10px] bg-teal-50 text-[#0EA5A4] px-2 py-0.5 rounded-full font-bold border border-teal-100">
+            ADMIN
+          </span>
+        </div>
         <button
-          onClick={() => setIsSidebarOpen(true)}
-          className="fixed top-4 left-4 z-50 p-2.5 rounded-2xl bg-white text-slate-700 hover:bg-teal-50 hover:text-[#0EA5A4] shadow-md border border-teal-100 transition flex items-center gap-2 font-medium text-sm"
-          aria-label="Open Admin Sidebar"
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          className="p-2.5 rounded-xl bg-slate-50 text-slate-700 hover:bg-teal-50 hover:text-[#0EA5A4] transition border border-slate-200 flex items-center justify-center"
+          aria-label="Toggle Menu"
         >
-          <PanelLeftOpen size={20} />
-          <span className="hidden sm:inline">Menu</span>
+          {isMobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
         </button>
+      </div>
+
+      {/* ── BACKDROP DIMMER OVERLAY ── */}
+      {isMobileMenuOpen && (
+        <div
+          onClick={() => setIsMobileMenuOpen(false)}
+          className="fixed inset-0 bg-slate-900/40 backdrop-blur-xs z-40 lg:hidden"
+        />
       )}
 
-      {/* ── SIDEBAR (Collapsible / Toggleable via button) ── */}
+      {/* ── SIDEBAR (Drawer overlay on mobile, static column on desktop) ── */}
       <aside
-        className={`sticky top-0 h-screen shrink-0 bg-white border-r border-teal-100 flex flex-col justify-between z-30 transition-all duration-300 ease-in-out overflow-hidden ${
-          isSidebarOpen ? "w-64 opacity-100" : "w-0 opacity-0 border-r-0 pointer-events-none"
+        className={`fixed inset-y-0 left-0 z-50 w-64 shrink-0 bg-white border-r border-teal-100 flex flex-col justify-between transform transition-transform duration-300 ease-in-out lg:translate-x-0 lg:sticky lg:top-0 lg:h-screen ${
+          isMobileMenuOpen ? "translate-x-0 shadow-2xl" : "-translate-x-full"
         }`}
       >
         
         {/* Top Header & User Card Container */}
-        <div className="flex flex-col w-64">
+        <div className="flex flex-col">
           <div className="p-5 border-b border-teal-50 flex items-center justify-between">
             <div>
               <h1 className="text-3xl font-bold text-[#0D9488]">PhysioCare</h1>
               <p className="text-sm text-slate-500 font-medium">Admin Panel</p>
             </div>
             <button
-              onClick={() => setIsSidebarOpen(false)}
-              className="p-2 rounded-xl text-slate-400 hover:text-slate-700 hover:bg-teal-50 transition"
-              aria-label="Close Sidebar"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="lg:hidden p-1.5 rounded-lg text-slate-400 hover:bg-slate-100"
             >
-              <PanelLeftClose size={20} />
+              <X size={20} />
             </button>
           </div>
 
@@ -89,7 +101,7 @@ export default function AdminSidebar() {
             </div>
           </div>
 
-          {/* Scrollable Nav Items if Screen is Short */}
+          {/* Scrollable Nav Items */}
           <nav className="px-3 py-2 space-y-1 overflow-y-auto">
             {menuItems.map((item) => {
               const isActive = pathname === item.href;
@@ -97,6 +109,7 @@ export default function AdminSidebar() {
                 <Link
                   key={item.href}
                   href={item.href}
+                  onClick={() => setIsMobileMenuOpen(false)}
                   className={`flex items-center gap-3 px-4 py-3.5 rounded-2xl transition font-medium text-sm ${
                     isActive
                       ? "bg-gradient-to-r from-teal-50 to-cyan-50 text-[#0EA5A4] font-semibold"
@@ -112,13 +125,16 @@ export default function AdminSidebar() {
         </div>
 
         {/* Bottom Action Buttons */}
-        <div className="p-3 border-t border-teal-50 bg-white space-y-2.5 w-64">
+        <div className="p-3 border-t border-teal-50 bg-white space-y-2.5">
           <button
-            onClick={() => router.push("/")}
+            onClick={() => {
+              setIsMobileMenuOpen(false);
+              router.push("/");
+            }}
             className="w-full bg-gradient-to-r from-[#0EA5A4] to-[#06B6D4] text-white py-2.5 rounded-2xl font-semibold flex items-center justify-center gap-2 text-sm shadow-xs transition hover:opacity-95"
           >
             <Globe size={18} />
-            Go To Website
+            <span>Go To Website</span>
           </button>
 
           <button
@@ -126,7 +142,7 @@ export default function AdminSidebar() {
             className="w-full bg-gradient-to-r from-red-500 to-rose-500 text-white py-2.5 rounded-2xl font-semibold flex items-center justify-center gap-2 text-sm shadow-xs transition hover:opacity-95"
           >
             <LogOut size={18} />
-            Logout
+            <span>Logout</span>
           </button>
         </div>
 
