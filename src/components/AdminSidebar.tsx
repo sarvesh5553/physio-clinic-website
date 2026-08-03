@@ -44,7 +44,7 @@ export default function AdminSidebar() {
   return (
     <>
       {/* ── MOBILE TOP BAR (Visible only on small screens) ── */}
-      <div className="lg:hidden flex items-center justify-between bg-white border-b border-teal-100 px-4 py-3 sticky top-0 z-40 w-full">
+      <div className="lg:hidden flex items-center justify-between bg-white border-b border-teal-100 px-4 py-3 sticky top-0 z-40 w-full shadow-xs">
         <div className="flex items-center gap-2">
           <h1 className="text-xl font-bold text-[#0D9488]">PhysioCare</h1>
           <span className="text-[10px] bg-teal-50 text-[#0EA5A4] px-1.5 py-0.5 rounded font-semibold border border-teal-100">
