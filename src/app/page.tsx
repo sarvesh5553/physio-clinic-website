@@ -13,7 +13,16 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-slate-50">
       <Navbar />
+      
+      {/* 
+        Tip: Make sure inside your components/Hero.tsx file, 
+        your main heading (H1) and introductory paragraphs include terms like:
+        - "Best Physiotherapy in Pune"
+        - "Physiotherapist in Pune"
+        - "Dr. Bhagyashree Salunke"
+      */}
       <Hero />
+      
       <AboutDoctor />
       <ConditionsServices />
       <TreatmentProcess />
