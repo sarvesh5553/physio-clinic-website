@@ -176,11 +176,11 @@ export default function Contact() {
 
               <ContactInfoCard
                 icon={<FaClock size={18} />}
-                title="Online Consultation Hours"
+                title="Consultation Hours (Online / Offline)"
                 content={
                   <div>
                     <p className="font-medium text-slate-900">Mon – Sat</p>
-                    <p className="text-slate-600">4:00 PM – 9:00 PM (Evening)</p>
+                    <p className="text-slate-600">10:00 AM – 08:00 PM  (On OPD basis) </p>
                   </div>
                 }
               />

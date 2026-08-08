@@ -5,6 +5,9 @@ export const metadata: Metadata = {
   title: "PhysioCare - Expert Physiotherapy & Rehabilitation",
   description: "Professional physiotherapy services by Dr. Bhagyashree Salunke",
   viewport: "width=device-width, initial-scale=1, maximum-scale=5",
+  icons: {
+    icon: "/logo.png", // Replace with the actual filename of your logo inside the public folder
+  },
 };
 
 export default function RootLayout({
