@@ -27,11 +27,9 @@ export default function Testimonials() {
   const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const [expandedIds, setExpandedIds] = useState<Record<string, boolean>>(
-    {}
-  );
-
-  const [isMobile, setIsMobile] = useState(false);
+  const [expandedIds, setExpandedIds] = useState<
+    Record<string, boolean>
+  >({});
 
   const viewportRef = useRef<HTMLDivElement | null>(null);
 
@@ -40,33 +38,18 @@ export default function Testimonials() {
   const startScrollLeft = useRef(0);
 
   /* =========================================================
-     MOBILE / DESKTOP
-  ========================================================= */
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-
-    handleResize();
-
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
-  /* =========================================================
      FETCH TESTIMONIALS
   ========================================================= */
 
   useEffect(() => {
     const fetchTestimonials = async () => {
       try {
-        const res = await fetch(`/api/testimonials?t=${Date.now()}`, {
-          cache: "no-store",
-        });
+        const res = await fetch(
+          `/api/testimonials?t=${Date.now()}`,
+          {
+            cache: "no-store",
+          }
+        );
 
         const data = await res.json();
 
@@ -76,7 +59,10 @@ export default function Testimonials() {
           setTestimonials(data);
         }
       } catch (error) {
-        console.error("Failed to load testimonials:", error);
+        console.error(
+          "Failed to load testimonials:",
+          error
+        );
       } finally {
         setLoading(false);
       }
@@ -97,7 +83,7 @@ export default function Testimonials() {
   };
 
   /* =========================================================
-     MOUSE / TOUCH DRAG
+     DRAG / SWIPE
   ========================================================= */
 
   const handlePointerDown = (
@@ -105,8 +91,11 @@ export default function Testimonials() {
   ) => {
     const target = e.target as HTMLElement;
 
-    // Don't start dragging when clicking buttons or links
-    if (target.closest("button") || target.closest("a")) {
+    // Don't activate carousel dragging on buttons
+    if (
+      target.closest("button") ||
+      target.closest("a")
+    ) {
       return;
     }
 
@@ -117,7 +106,8 @@ export default function Testimonials() {
     isDragging.current = true;
 
     startX.current = e.clientX;
-    startScrollLeft.current = viewport.scrollLeft;
+    startScrollLeft.current =
+      viewport.scrollLeft;
 
     viewport.setPointerCapture(e.pointerId);
 
@@ -129,9 +119,12 @@ export default function Testimonials() {
   ) => {
     const viewport = viewportRef.current;
 
-    if (!viewport || !isDragging.current) return;
+    if (!viewport || !isDragging.current) {
+      return;
+    }
 
-    const distance = e.clientX - startX.current;
+    const distance =
+      e.clientX - startX.current;
 
     viewport.scrollLeft =
       startScrollLeft.current - distance;
@@ -148,7 +141,9 @@ export default function Testimonials() {
       viewport.style.cursor = "grab";
 
       try {
-        viewport.releasePointerCapture(e.pointerId);
+        viewport.releasePointerCapture(
+          e.pointerId
+        );
       } catch {
         // Ignore pointer release errors
       }
@@ -159,7 +154,8 @@ export default function Testimonials() {
     isDragging.current = false;
 
     if (viewportRef.current) {
-      viewportRef.current.style.cursor = "grab";
+      viewportRef.current.style.cursor =
+        "grab";
     }
   };
 
@@ -170,17 +166,17 @@ export default function Testimonials() {
   const scrollCards = (
     direction: "left" | "right"
   ) => {
-    const viewport = viewportRef.current;
+    const viewport =
+      viewportRef.current;
 
     if (!viewport) return;
 
-    const cardWidth =
-      viewport.clientWidth /
-      (isMobile ? 3 : 4);
+    const isMobile =
+      window.innerWidth < 768;
 
-    const gap = isMobile ? 12 : 20;
-
-    const amount = cardWidth + gap;
+    const amount = isMobile
+      ? 220
+      : 320;
 
     viewport.scrollBy({
       left:
@@ -197,6 +193,7 @@ export default function Testimonials() {
       className="
         bg-slate-50/50
         py-16
+        md:py-16
         overflow-hidden
       "
     >
@@ -222,6 +219,8 @@ export default function Testimonials() {
           "
         >
 
+          {/* Label */}
+
           <div
             className="
               inline-flex
@@ -246,6 +245,9 @@ export default function Testimonials() {
               Feedback & Reviews
             </span>
           </div>
+
+
+          {/* Heading */}
 
           <h2
             className="
@@ -273,6 +275,9 @@ export default function Testimonials() {
             </span>
           </h2>
 
+
+          {/* Description */}
+
           <p
             className="
               text-slate-600
@@ -283,20 +288,27 @@ export default function Testimonials() {
               leading-relaxed
             "
           >
-            Real patient experiences and recovery stories.
+            Real patient experiences and recovery
+            stories.
           </p>
 
         </div>
 
 
         {/* =====================================================
-            LOADING / EMPTY / CONTENT
+            CONTENT
         ===================================================== */}
 
         {loading ? (
 
           <div className="text-center py-12">
-            <p className="text-sm text-slate-500 font-medium">
+            <p
+              className="
+                text-sm
+                text-slate-500
+                font-medium
+              "
+            >
               Loading testimonials...
             </p>
           </div>
@@ -304,8 +316,15 @@ export default function Testimonials() {
         ) : testimonials.length === 0 ? (
 
           <div className="text-center py-12">
-            <p className="text-sm text-slate-500 font-medium">
-              No testimonials available right now.
+            <p
+              className="
+                text-sm
+                text-slate-500
+                font-medium
+              "
+            >
+              No testimonials available right
+              now.
             </p>
           </div>
 
@@ -317,13 +336,16 @@ export default function Testimonials() {
                 LEFT ARROW
             ================================================= */}
 
-            {testimonials.length > (isMobile ? 3 : 4) && (
+            {testimonials.length > 1 && (
               <button
                 type="button"
-                onClick={() => scrollCards("left")}
+                onClick={() =>
+                  scrollCards("left")
+                }
                 aria-label="Previous testimonials"
                 className="
                   absolute
+
                   left-0
                   md:left-1
 
@@ -332,22 +354,21 @@ export default function Testimonials() {
 
                   z-40
 
-                  w-9
-                  h-9
+                  w-10
+                  h-10
                   md:w-10
                   md:h-10
 
                   rounded-full
 
-                  bg-white/95
-                  backdrop-blur-md
+                  bg-white
 
                   border
                   border-slate-200
 
                   text-teal-700
 
-                  shadow-[0_5px_18px_rgba(15,23,42,0.12)]
+                  shadow-[0_4px_16px_rgba(15,23,42,0.12)]
 
                   flex
                   items-center
@@ -364,7 +385,10 @@ export default function Testimonials() {
                 "
               >
                 <ChevronLeft
-                  className="w-4 h-4 md:w-5 md:h-5"
+                  className="
+                    w-5
+                    h-5
+                  "
                   strokeWidth={2.5}
                 />
               </button>
@@ -375,13 +399,16 @@ export default function Testimonials() {
                 RIGHT ARROW
             ================================================= */}
 
-            {testimonials.length > (isMobile ? 3 : 4) && (
+            {testimonials.length > 1 && (
               <button
                 type="button"
-                onClick={() => scrollCards("right")}
+                onClick={() =>
+                  scrollCards("right")
+                }
                 aria-label="Next testimonials"
                 className="
                   absolute
+
                   right-0
                   md:right-1
 
@@ -390,22 +417,21 @@ export default function Testimonials() {
 
                   z-40
 
-                  w-9
-                  h-9
+                  w-10
+                  h-10
                   md:w-10
                   md:h-10
 
                   rounded-full
 
-                  bg-white/95
-                  backdrop-blur-md
+                  bg-white
 
                   border
                   border-slate-200
 
                   text-teal-700
 
-                  shadow-[0_5px_18px_rgba(15,23,42,0.12)]
+                  shadow-[0_4px_16px_rgba(15,23,42,0.12)]
 
                   flex
                   items-center
@@ -422,7 +448,10 @@ export default function Testimonials() {
                 "
               >
                 <ChevronRight
-                  className="w-4 h-4 md:w-5 md:h-5"
+                  className="
+                    w-5
+                    h-5
+                  "
                   strokeWidth={2.5}
                 />
               </button>
@@ -430,16 +459,26 @@ export default function Testimonials() {
 
 
             {/* =================================================
-                SCROLLABLE TESTIMONIAL AREA
+                SCROLLABLE CARDS
             ================================================= */}
 
             <div
               ref={viewportRef}
-              onPointerDown={handlePointerDown}
-              onPointerMove={handlePointerMove}
-              onPointerUp={handlePointerUp}
-              onPointerCancel={handlePointerCancel}
-              onPointerLeave={handlePointerCancel}
+              onPointerDown={
+                handlePointerDown
+              }
+              onPointerMove={
+                handlePointerMove
+              }
+              onPointerUp={
+                handlePointerUp
+              }
+              onPointerCancel={
+                handlePointerCancel
+              }
+              onPointerLeave={
+                handlePointerCancel
+              }
               className="
                 overflow-x-auto
                 overflow-y-hidden
@@ -459,340 +498,418 @@ export default function Testimonials() {
                 [-ms-overflow-style:none]
                 [scrollbar-width:none]
                 [&::-webkit-scrollbar]:hidden
-
-                snap-x
-                snap-mandatory
               "
             >
 
               <div
                 className="
                   flex
-                  gap-3
+                  gap-4
                   md:gap-5
                 "
               >
 
-                {testimonials.map((testimonial) => {
+                {testimonials.map(
+                  (testimonial) => {
 
-                  const isExpanded =
-                    !!expandedIds[testimonial._id];
+                    const isExpanded =
+                      !!expandedIds[
+                        testimonial._id
+                      ];
 
-                  const isLongText =
-                    (testimonial.review?.length || 0) > 100;
+                    const isLongText =
+                      (
+                        testimonial.review
+                          ?.length || 0
+                      ) > 100;
 
-                  const imageUrl =
-                    testimonial.image?.url &&
-                    testimonial.image.url.trim() !== ""
-                      ? testimonial.image.url
-                      : "/patients/default.png";
+                    const imageUrl =
+                      testimonial.image?.url &&
+                      testimonial.image.url.trim() !== ""
+                        ? testimonial.image.url
+                        : "/patients/default.png";
 
-                  return (
-                    <div
-                      key={testimonial._id}
-                      className="
-                        flex-none
-
-                        w-[calc((100vw-68px)/3)]
-                        md:w-[calc((100%-60px)/4)]
-
-                        min-w-[105px]
-                        md:min-w-0
-
-                        bg-white
-
-                        rounded-xl
-                        md:rounded-2xl
-
-                        px-3
-                        py-3.5
-                        md:p-5
-
-                        border
-                        border-slate-100
-
-                        shadow-[0_3px_12px_rgba(15,23,42,0.06)]
-
-                        hover:border-teal-200
-
-                        hover:shadow-[0_10px_28px_rgba(13,148,136,0.10)]
-
-                        transition-all
-                        duration-300
-
-                        /* Mobile slightly taller */
-                        h-[245px]
-                        md:h-[300px]
-
-                        flex
-                        flex-col
-
-                        snap-start
-                      "
-                    >
-
-                      {/* =================================================
-                          PROFILE
-                      ================================================= */}
-
+                    return (
                       <div
+                        key={
+                          testimonial._id
+                        }
                         className="
-                          flex
-                          items-center
-                          gap-2
-                          md:gap-3
+                          flex-none
 
-                          min-w-0
-                          flex-shrink-0
+                          /* =================================
+                             MOBILE
+                          ================================= */
+
+                          w-[205px]
+
+                          h-[250px]
+
+                          px-3
+                          py-3.5
+
+                          rounded-xl
+
+                          /* =================================
+                             DESKTOP
+                          ================================= */
+
+                          md:w-[calc((100%-60px)/4)]
+
+                          md:h-[300px]
+
+                          md:p-5
+
+                          md:rounded-2xl
+
+                          bg-white
+
+                          border
+                          border-slate-100
+
+                          shadow-[0_3px_12px_rgba(15,23,42,0.06)]
+
+                          hover:border-teal-200
+
+                          hover:shadow-[0_10px_28px_rgba(13,148,136,0.10)]
+
+                          transition-all
+                          duration-300
+
+                          flex
+                          flex-col
                         "
                       >
 
+                        {/* =================================
+                            PROFILE HEADER
+                        ================================= */}
+
                         <div
                           className="
-                            relative
+                            flex
+                            items-center
 
-                            w-9
-                            h-9
-                            md:w-10
-                            md:h-10
+                            gap-2.5
+                            md:gap-3
 
-                            rounded-full
-                            overflow-hidden
+                            min-w-0
 
                             flex-shrink-0
-
-                            bg-slate-100
-                            border
-                            border-slate-100
                           "
                         >
-                          <Image
-                            src={imageUrl}
-                            alt={testimonial.name}
-                            fill
-                            unoptimized
-                            draggable={false}
-                            className="object-cover"
-                          />
+
+                          {/* IMAGE */}
+
+                          <div
+                            className="
+                              relative
+
+                              w-10
+                              h-10
+
+                              md:w-10
+                              md:h-10
+
+                              rounded-full
+
+                              overflow-hidden
+
+                              flex-shrink-0
+
+                              bg-slate-100
+
+                              border
+                              border-slate-100
+                            "
+                          >
+                            <Image
+                              src={imageUrl}
+                              alt={
+                                testimonial.name
+                              }
+                              fill
+                              unoptimized
+                              draggable={false}
+                              className="
+                                object-cover
+                              "
+                            />
+                          </div>
+
+
+                          {/* NAME */}
+
+                          <div
+                            className="
+                              min-w-0
+                              flex-1
+                            "
+                          >
+
+                            <h3
+                              className="
+                                text-xs
+                                md:text-sm
+
+                                font-bold
+                                text-slate-900
+
+                                truncate
+
+                                leading-tight
+                              "
+                            >
+                              {
+                                testimonial.name
+                              }
+                            </h3>
+
+                            <p
+                              className="
+                                text-[10px]
+                                md:text-[11px]
+
+                                text-slate-400
+
+                                font-medium
+
+                                truncate
+
+                                leading-tight
+
+                                mt-0.5
+                              "
+                            >
+                              {
+                                testimonial.condition
+                              }
+                            </p>
+
+                          </div>
+
                         </div>
 
-                        <div className="min-w-0 flex-1">
 
-                          <h3
-                            className="
-                              text-[11px]
-                              md:text-sm
+                        {/* =================================
+                            STARS
+                        ================================= */}
 
-                              font-bold
-                              text-slate-900
+                        <div
+                          className="
+                            flex
+                            gap-0.5
 
-                              truncate
-                              leading-tight
-                            "
-                          >
-                            {testimonial.name}
-                          </h3>
+                            mt-3
+                            mb-2.5
+
+                            flex-shrink-0
+                          "
+                        >
+                          {[
+                            ...Array(5),
+                          ].map(
+                            (_, index) => (
+                              <Star
+                                key={
+                                  index
+                                }
+                                size={
+                                  14
+                                }
+                                className={
+                                  index <
+                                  (
+                                    testimonial.rating ||
+                                    5
+                                  )
+                                    ? `
+                                      fill-amber-400
+                                      text-amber-400
+                                    `
+                                    : `
+                                      fill-slate-200
+                                      text-slate-200
+                                    `
+                                }
+                              />
+                            )
+                          )}
+                        </div>
+
+
+                        {/* =================================
+                            REVIEW
+                        ================================= */}
+
+                        <div
+                          className="
+                            flex-1
+                            min-h-0
+
+                            overflow-hidden
+
+                            mb-1
+                          "
+                        >
 
                           <p
-                            className="
-                              text-[9px]
-                              md:text-[11px]
+                            className={`
+                              text-slate-600
 
-                              text-slate-400
+                              text-[12px]
 
-                              font-medium
+                              md:text-[13px]
 
-                              truncate
-                              leading-tight
+                              leading-[1.55]
 
-                              mt-0.5
-                            "
+                              break-words
+
+                              [word-break:break-word]
+
+                              ${
+                                !isExpanded
+                                  ? "line-clamp-5"
+                                  : `
+                                    max-h-[165px]
+                                    overflow-y-auto
+                                    pr-1
+                                    scrollbar-thin
+                                  `
+                              }
+                            `}
                           >
-                            {testimonial.condition}
+                            "{testimonial.review}"
                           </p>
 
                         </div>
 
-                      </div>
 
+                        {/* =================================
+                            READ MORE
+                        ================================= */}
 
-                      {/* =================================================
-                          STARS
-                      ================================================= */}
+                        <div
+                          className="
+                            flex-shrink-0
 
-                      <div
-                        className="
-                          flex
-                          gap-0.5
+                            mt-auto
 
-                          mt-2
-                          mb-2
+                            pt-2
 
-                          flex-shrink-0
-                        "
-                      >
-                        {[...Array(5)].map((_, index) => (
-                          <Star
-                            key={index}
-                            size={13}
-                            className={
-                              index <
-                              (testimonial.rating || 5)
-                                ? "fill-amber-400 text-amber-400"
-                                : "fill-slate-200 text-slate-200"
-                            }
-                          />
-                        ))}
-                      </div>
+                            min-h-[28px]
 
-
-                      {/* =================================================
-                          REVIEW TEXT
-                      ================================================= */}
-
-                      <div
-                        className="
-                          flex-1
-                          min-h-0
-                          overflow-hidden
-                          mb-1
-                        "
-                      >
-
-                        <p
-                          className={`
-                            text-slate-600
-
-                            text-[11.5px]
-                            md:text-[13px]
-
-                            leading-[1.55]
-
-                            break-words
-                            [word-break:break-word]
-
-                            ${
-                              !isExpanded
-                                ? "line-clamp-5"
-                                : "max-h-[175px] overflow-y-auto pr-1 scrollbar-thin"
-                            }
-                          `}
+                            flex
+                            items-center
+                          "
+                          onPointerDown={(
+                            e
+                          ) => {
+                            e.stopPropagation();
+                          }}
+                          onPointerMove={(
+                            e
+                          ) => {
+                            e.stopPropagation();
+                          }}
                         >
-                          "{testimonial.review}"
-                        </p>
 
-                      </div>
+                          {isLongText ? (
 
+                            <button
+                              type="button"
 
-                      {/* =================================================
-                          READ MORE BUTTON
-                      ================================================= */}
+                              onPointerDown={(
+                                e
+                              ) => {
+                                e.stopPropagation();
+                              }}
 
-                      <div
-                        className="
-                          flex-shrink-0
-                          mt-auto
-                          pt-2
-                          min-h-[28px]
-                          flex
-                          items-center
-                        "
-                        onPointerDown={(e) => {
-                          e.stopPropagation();
-                        }}
-                        onPointerMove={(e) => {
-                          e.stopPropagation();
-                        }}
-                      >
+                              onPointerUp={(
+                                e
+                              ) => {
+                                e.stopPropagation();
+                              }}
 
-                        {isLongText ? (
+                              onClick={(
+                                e
+                              ) => {
+                                e.preventDefault();
+                                e.stopPropagation();
 
-                          <button
-                            type="button"
+                                toggleReadMore(
+                                  testimonial._id
+                                );
+                              }}
 
-                            onPointerDown={(e) => {
-                              e.stopPropagation();
-                            }}
+                              aria-expanded={
+                                isExpanded
+                              }
 
-                            onPointerUp={(e) => {
-                              e.stopPropagation();
-                            }}
+                              className="
+                                relative
+                                z-50
 
-                            onClick={(e) => {
-                              e.preventDefault();
-                              e.stopPropagation();
+                                text-[#0f969c]
 
-                              toggleReadMore(
-                                testimonial._id
-                              );
-                            }}
+                                hover:text-[#0b7276]
 
-                            aria-expanded={isExpanded}
+                                text-xs
 
-                            className="
-                              relative
-                              z-50
+                                font-semibold
 
-                              text-[#0f969c]
+                                flex
+                                items-center
 
-                              hover:text-[#0b7276]
+                                gap-1
 
-                              text-[11px]
-                              md:text-xs
+                                cursor-pointer
 
-                              font-semibold
+                                select-none
 
-                              flex
-                              items-center
+                                transition-colors
 
-                              gap-1
+                                focus:outline-none
+                              "
+                            >
 
-                              cursor-pointer
+                              <span>
+                                {isExpanded
+                                  ? "Show less"
+                                  : "Read more"}
+                              </span>
 
-                              select-none
+                              {isExpanded ? (
+                                <ChevronUp
+                                  size={13}
+                                />
+                              ) : (
+                                <ChevronDown
+                                  size={13}
+                                />
+                              )}
 
-                              transition-colors
+                            </button>
 
-                              focus:outline-none
-                            "
-                          >
+                          ) : (
 
-                            <span>
-                              {isExpanded
-                                ? "Show less"
-                                : "Read more"}
+                            <span
+                              className="
+                                text-xs
+                                text-transparent
+                              "
+                            >
+                              Read more
                             </span>
 
-                            {isExpanded ? (
-                              <ChevronUp
-                                size={12}
-                              />
-                            ) : (
-                              <ChevronDown
-                                size={12}
-                              />
-                            )}
+                          )}
 
-                          </button>
-
-                        ) : (
-
-                          <span
-                            className="
-                              text-[11px]
-                              text-transparent
-                            "
-                          >
-                            Read more
-                          </span>
-
-                        )}
+                        </div>
 
                       </div>
-
-                    </div>
-                  );
-                })}
+                    );
+                  }
+                )}
 
               </div>
             </div>

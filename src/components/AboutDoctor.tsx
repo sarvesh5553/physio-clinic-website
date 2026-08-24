@@ -21,6 +21,7 @@ export default function AboutDoctor() {
       className="relative bg-gradient-to-b from-slate-50/60 via-white to-slate-50/30 py-16 md:py-24 scroll-mt-20 overflow-hidden"
     >
       {/* Subtle Ambient Background Mesh */}
+
       <div className="absolute top-1/4 -left-32 w-80 h-80 bg-teal-200/20 rounded-full blur-3xl pointer-events-none" />
 
       <div className="absolute bottom-10 right-0 w-96 h-96 bg-cyan-200/20 rounded-full blur-3xl pointer-events-none" />
@@ -33,19 +34,23 @@ export default function AboutDoctor() {
 
         <div className="text-center mb-10 md:mb-12">
           <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-teal-50 border border-teal-100 text-teal-700 text-xs font-bold uppercase tracking-wider shadow-sm">
+
             <Sparkles className="w-3.5 h-3.5 text-teal-600" />
 
             <span>
               About The Physiotherapist
             </span>
+
           </div>
         </div>
+
 
         {/* =====================================================
             MAIN CONTENT
         ===================================================== */}
 
         <div className="grid lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+
 
           {/* =================================================
               LEFT: DOCTOR IMAGE
@@ -59,6 +64,7 @@ export default function AboutDoctor() {
               {/* Image Backdrop Glow */}
 
               <div className="absolute -inset-2 bg-gradient-to-tr from-teal-500/20 to-cyan-400/20 rounded-[32px] blur-xl opacity-70" />
+
 
               {/* Main Photo Card */}
 
@@ -83,9 +89,13 @@ export default function AboutDoctor() {
                 {/* Vignette Gradient Overlay */}
 
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950/30 via-transparent to-transparent opacity-60 pointer-events-none" />
+
               </div>
 
-              {/* Floating Experience Badge */}
+
+              {/* =================================================
+                  Floating Experience Badge
+              ================================================= */}
 
               <div className="absolute -bottom-6 -left-2 sm:-left-6 bg-white/95 backdrop-blur-md rounded-2xl shadow-xl border border-slate-100 p-3.5 sm:p-4 flex items-center gap-3.5 z-20 hover:scale-105 transition-transform duration-300">
 
@@ -94,20 +104,27 @@ export default function AboutDoctor() {
                 </div>
 
                 <div>
+
                   <p className="font-bold text-slate-800 text-sm leading-tight flex items-center gap-1">
+
                     Years Experience
 
                     <Award className="w-4 h-4 text-amber-500" />
+
                   </p>
 
                   <p className="text-xs text-slate-500 font-medium mt-0.5">
                     Trusted Physiotherapy Care
                   </p>
+
                 </div>
 
               </div>
+
             </div>
+
           </div>
+
 
           {/* =================================================
               RIGHT: DOCTOR BIO & CERTIFICATIONS
@@ -115,9 +132,10 @@ export default function AboutDoctor() {
 
           <div className="lg:col-span-7 pt-0 lg:pt-4">
 
+
             {/* =================================================
                 MOBILE ONLY:
-                SMALL DOCTOR PHOTO + NAME
+                SLIGHTLY LARGER DOCTOR PHOTO + NAME
             ================================================= */}
 
             <div className="lg:hidden flex items-center gap-4 mb-6">
@@ -127,8 +145,8 @@ export default function AboutDoctor() {
               <div
                 className="
                   relative
-                  w-[82px]
-                  h-[82px]
+                  w-[94px]
+                  h-[94px]
                   flex-none
                   rounded-2xl
                   overflow-hidden
@@ -138,12 +156,15 @@ export default function AboutDoctor() {
                   bg-slate-100
                 "
               >
+
                 <img
                   src="/bhagyashri1.png"
                   alt="Dr. Bhagyashri Salunke (PT)"
                   className="w-full h-full object-cover object-top"
                 />
+
               </div>
+
 
               {/* Mobile Name & Title */}
 
@@ -160,9 +181,11 @@ export default function AboutDoctor() {
                   "
                 >
                   Dr. Bhagyashri{" "}
+
                   <span className="text-teal-600">
                     Salunke (PT)
                   </span>
+
                 </h2>
 
                 <p
@@ -180,7 +203,9 @@ export default function AboutDoctor() {
                 </p>
 
               </div>
+
             </div>
+
 
             {/* =================================================
                 DESKTOP ONLY:
@@ -202,10 +227,13 @@ export default function AboutDoctor() {
               "
             >
               Dr. Bhagyashri{" "}
+
               <span className="text-teal-600">
                 Salunke (PT)
               </span>
+
             </h2>
+
 
             {/* Desktop Professional Title */}
 
@@ -222,6 +250,7 @@ export default function AboutDoctor() {
             >
               Physiotherapist & Rehabilitation Specialist
             </p>
+
 
             {/* =================================================
                 BIO PARAGRAPH
@@ -247,6 +276,7 @@ export default function AboutDoctor() {
               mobility, build strength, and foster long-term physical health.
             </p>
 
+
             {/* =================================================
                 CERTIFICATIONS
             ================================================= */}
@@ -268,18 +298,22 @@ export default function AboutDoctor() {
                   gap-1.5
                 "
               >
+
                 <ShieldCheck className="w-4 h-4 text-teal-600" />
 
                 <span>
                   Professional Certifications
                 </span>
+
               </h3>
+
 
               {/* Certification Cards */}
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
 
                 {certifications.map((cert) => (
+
                   <div
                     key={cert}
                     className="
@@ -301,6 +335,7 @@ export default function AboutDoctor() {
                       group
                     "
                   >
+
                     <CheckCircle2
                       className="
                         w-4
@@ -323,15 +358,21 @@ export default function AboutDoctor() {
                     >
                       {cert}
                     </span>
+
                   </div>
+
                 ))}
 
               </div>
+
             </div>
 
           </div>
+
         </div>
+
       </div>
+
     </section>
   );
 }
