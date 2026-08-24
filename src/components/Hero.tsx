@@ -19,132 +19,443 @@ export default function Hero() {
   return (
     <section
       id="home"
-      className="relative bg-gradient-to-br from-teal-600 via-teal-650 to-cyan-600 pt-28 sm:pt-32 pb-24 sm:pb-28 overflow-hidden"
+      className="relative overflow-hidden bg-gradient-to-br from-teal-600 via-teal-650 to-cyan-600 pt-28 pb-24 sm:pt-32 sm:pb-28"
     >
       {/* ── Ambient Background Mesh Glows ── */}
-      <div className="absolute -top-24 -right-24 w-96 h-96 bg-cyan-400/20 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-teal-300/15 rounded-full blur-3xl pointer-events-none" />
+      <div className="pointer-events-none absolute -right-24 -top-24 h-96 w-96 rounded-full bg-cyan-400/20 blur-3xl" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-12 lg:gap-16 items-center relative z-10">
+      <div className="pointer-events-none absolute -bottom-24 -left-24 h-96 w-96 rounded-full bg-teal-300/15 blur-3xl" />
 
-        {/* ── LEFT COLUMN: HEADLINE & CREDENTIALS ── */}
+      <div className="relative z-10 mx-auto grid max-w-7xl items-center gap-12 px-4 sm:px-6 lg:grid-cols-2 lg:gap-16 lg:px-8">
+
+        {/* =====================================================
+            LEFT COLUMN
+        ===================================================== */}
+
         <div className="text-left">
+
           {/* Top Trust Badge */}
-          <div className="inline-flex items-center gap-2 bg-white/15 backdrop-blur-md border border-white/25 px-4 py-1.5 rounded-full text-white text-xs sm:text-sm font-semibold mb-6 shadow-sm">
-            <span className="w-2 h-2 rounded-full bg-lime-400 animate-pulse" />
+          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/15 px-4 py-1.5 text-xs font-semibold text-white shadow-sm backdrop-blur-md sm:text-sm">
+            <span className="h-2 w-2 animate-pulse rounded-full bg-lime-400" />
+
             <span>Trusted by 200+ Patients</span>
           </div>
 
           {/* Main Headline */}
-          <h1 className="text-5xl sm:text-6xl md:text-7xl font-black text-white leading-[1.05] tracking-tight mb-6">
+          <h1 className="mb-6 text-5xl font-black leading-[1.05] tracking-tight text-white sm:text-6xl md:text-7xl">
             Move Better.
             <br />
-            <span className="text-teal-100">Live Better.</span>
+
+            <span className="text-teal-100">
+              Live Better.
+            </span>
           </h1>
 
           {/* Hero Subtitle */}
-          <p className="text-base sm:text-lg text-white/90 leading-relaxed max-w-xl mb-6 font-normal">
-            Personalized physiotherapy and rehabilitation care that meets you where you
-            are — relieve pain, rebuild strength, and move through life with confidence
-            again.
+          <p className="mb-6 max-w-xl text-base font-normal leading-relaxed text-white/90 sm:text-lg">
+            Personalized physiotherapy and rehabilitation care that meets you
+            where you are — relieve pain, rebuild strength, and move through
+            life with confidence again.
           </p>
 
-          {/* ── CUT-TO-CUT COMPACT GLASS DOCTOR BADGE ── */}
-          <div className="inline-flex items-center gap-2.5 bg-white/10 backdrop-blur-md border border-white/20 p-2 sm:p-2.5 rounded-2xl max-w-fit mb-8 shadow-inner transition-all hover:bg-white/15">
-            {/* Inner "BS" Box */}
-            <div className="w-9 h-9 rounded-xl bg-white/15 border border-white/25 flex items-center justify-center text-white font-extrabold text-xs flex-none shadow-sm">
+          {/* ── DOCTOR BADGE ── */}
+          <div className="mb-8 inline-flex max-w-fit items-center gap-2.5 rounded-2xl border border-white/20 bg-white/10 p-2 shadow-inner backdrop-blur-md transition-all hover:bg-white/15 sm:p-2.5">
+
+            {/* BS Box */}
+            <div className="flex h-9 w-9 flex-none items-center justify-center rounded-xl border border-white/25 bg-white/15 text-xs font-extrabold text-white shadow-sm">
               BS
             </div>
 
             {/* Doctor Info */}
             <div className="pr-1">
-              <p className="text-white font-bold text-sm sm:text-base leading-none">
+
+              <p className="text-sm font-bold leading-none text-white sm:text-base">
                 Dr. Bhagyashri Salunke (PT)
               </p>
 
-              <p className="text-white/80 text-[11px] sm:text-xs font-medium leading-tight mt-1">
+              <p className="mt-1 text-[11px] font-medium leading-tight text-white/80 sm:text-xs">
                 Bachelor of Physiotherapy
               </p>
 
-              <p className="text-white/70 text-[10px] font-semibold leading-tight tracking-tight">
+              <p className="text-[10px] font-semibold leading-tight tracking-tight text-white/70">
                 CDCT, CDNT, CIAFMT, CKTP
               </p>
+
             </div>
           </div>
 
-          {/* CTA Buttons */}
+          {/* ── CTA BUTTONS ── */}
           <div className="flex flex-wrap items-center gap-4">
+
             <a
               href="#contact"
-              className="inline-flex items-center justify-center gap-2 bg-white text-teal-700 font-bold px-6 py-3.5 rounded-xl shadow-lg hover:bg-teal-50 hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300 text-sm sm:text-base"
+              className="inline-flex items-center justify-center gap-2 rounded-xl bg-white px-6 py-3.5 text-sm font-bold text-teal-700 shadow-lg transition-all duration-300 hover:-translate-y-0.5 hover:bg-teal-50 hover:shadow-xl active:translate-y-0 sm:text-base"
             >
-              <CalendarCheck className="w-5 h-5 text-teal-600" />
+              <CalendarCheck className="h-5 w-5 text-teal-600" />
               Book Appointment
             </a>
 
             <a
               href="tel:+919322518895"
-              className="inline-flex items-center justify-center gap-2 bg-transparent border-2 border-white/70 text-white font-bold px-6 py-3.5 rounded-xl hover:bg-white/10 hover:border-white hover:-translate-y-0.5 transition-all duration-300 text-sm sm:text-base backdrop-blur-sm"
+              className="inline-flex items-center justify-center gap-2 rounded-xl border-2 border-white/70 bg-transparent px-6 py-3.5 text-sm font-bold text-white backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-white hover:bg-white/10 sm:text-base"
             >
-              <PhoneCall className="w-5 h-5" />
+              <PhoneCall className="h-5 w-5" />
               Call Now
             </a>
+
           </div>
         </div>
 
-        {/* ── RIGHT COLUMN: PROFESSIONAL PHYSIO VISUAL ── */}
-        <div className="relative mb-6 sm:mb-12 lg:mb-0 flex justify-center">
+        {/* =====================================================
+            RIGHT COLUMN
+        ===================================================== */}
 
-          {/* Outer Glass Card Container */}
-          <div className="relative rounded-3xl bg-slate-900/10 border border-white/30 shadow-2xl shadow-teal-950/30 overflow-hidden w-full max-w-md lg:max-w-xl aspect-[4/3] sm:aspect-[14/10] flex items-center justify-center group">
-            
-            {/* Primary High-Resolution Clinical Care Visual */}
-            <img
-              src="/pppp1.png"
-              alt="Dr. Bhagyashri PhysioCare Treatment"
-              className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
-            />
+        <div className="relative mb-6 flex justify-center sm:mb-12 lg:mb-0">
 
-            {/* Subtle Gradient Overlay for Depth */}
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/50 via-transparent to-black/10 pointer-events-none" />
+          {/* =================================================
+              IMAGE WRAPPER
 
-            {/* Top Right: Recoveries Glass Pill */}
-            <div className="absolute top-4 right-4 sm:top-5 sm:right-5 bg-white/90 backdrop-blur-md text-teal-900 border border-white/70 font-bold text-xs sm:text-sm px-3.5 py-1.5 rounded-full shadow-lg flex items-center gap-1.5 z-10">
-              <Award className="w-4 h-4 text-teal-600" />
-              <span>200+ Recoveries</span>
+              IMPORTANT:
+              No overflow-hidden here.
+
+              This allows the top badges to extend outside
+              the image card.
+          ================================================= */}
+
+          <div className="relative w-full max-w-md sm:max-w-lg lg:max-w-xl">
+
+            {/* =================================================
+                EVIDENCE-BASED CARE
+
+                50% OUTSIDE
+                50% INSIDE
+            ================================================= */}
+
+            <div
+              className="
+                absolute
+                left-4
+                top-0
+                z-30
+
+                -translate-y-1/2
+
+                flex
+                items-center
+                gap-2
+
+                rounded-xl
+
+                border
+                border-white/20
+
+                bg-slate-900/85
+
+                px-3
+                py-1.5
+
+                text-[11px]
+                font-medium
+                text-white
+
+                shadow-lg
+
+                backdrop-blur-md
+
+                sm:left-5
+                sm:text-xs
+              "
+            >
+              <Activity
+                className="
+                  h-3.5
+                  w-3.5
+                  text-lime-400
+                  animate-pulse
+                "
+              />
+
+              <span className="whitespace-nowrap">
+                Evidence-Based Care
+              </span>
             </div>
 
-            {/* Top Left Floating Indicator Badge */}
-            <div className="absolute top-4 left-4 sm:top-5 sm:left-5 bg-slate-900/80 backdrop-blur-md text-white border border-white/20 font-medium text-[11px] sm:text-xs px-3 py-1.5 rounded-xl shadow-lg flex items-center gap-2 z-10">
-              <Activity className="w-3.5 h-3.5 text-lime-400 animate-pulse" />
-              <span>Evidence-Based Care</span>
+            {/* =================================================
+                200+ RECOVERIES
+
+                50% OUTSIDE
+                50% INSIDE
+            ================================================= */}
+
+            <div
+              className="
+                absolute
+                right-4
+                top-0
+                z-30
+
+                -translate-y-1/2
+
+                flex
+                items-center
+                gap-1.5
+
+                rounded-full
+
+                border
+                border-white/70
+
+                bg-white/90
+
+                px-3.5
+                py-1.5
+
+                text-xs
+                font-bold
+                text-teal-900
+
+                shadow-lg
+
+                backdrop-blur-md
+
+                sm:right-5
+                sm:text-sm
+              "
+            >
+              <Award className="h-4 w-4 text-teal-600" />
+
+              <span className="whitespace-nowrap">
+                200+ Recoveries
+              </span>
             </div>
 
-            {/* Bottom Floating Rating Pill */}
-            <div className="absolute bottom-12 left-4 bg-white/90 backdrop-blur-md px-3 py-1.5 rounded-xl border border-white/80 shadow-md hidden sm:flex items-center gap-1.5 z-10">
-              <div className="flex text-amber-400">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-3 h-3 fill-current" />
+            {/* =================================================
+                IMAGE CARD
+            ================================================= */}
+
+            <div
+              className="
+                group
+                relative
+                w-full
+
+                overflow-hidden
+
+                rounded-3xl
+
+                border
+                border-white/30
+
+                bg-white
+
+                shadow-2xl
+                shadow-teal-950/30
+
+                aspect-[3/2]
+              "
+            >
+
+              {/* Complete Image */}
+              <img
+                src="/pppp1.png"
+                alt="Dr. Bhagyashri PhysioCare Treatment"
+                className="
+                  absolute
+                  inset-0
+
+                  h-full
+                  w-full
+
+                  object-contain
+
+                  bg-white
+
+                  transition-transform
+                  duration-700
+                  ease-out
+
+                  group-hover:scale-[1.015]
+                "
+              />
+
+              {/* Subtle Inner Border */}
+              <div
+                className="
+                  pointer-events-none
+                  absolute
+                  inset-0
+                  rounded-3xl
+                  ring-1
+                  ring-inset
+                  ring-white/70
+                "
+              />
+
+              {/* =================================================
+                  PROFESSIONAL RATING
+              ================================================= */}
+
+              <div
+                className="
+                  absolute
+                  bottom-4
+                  left-3
+                  z-10
+
+                  flex
+                  items-center
+                  gap-1.5
+
+                  rounded-xl
+
+                  border
+                  border-white/80
+
+                  bg-white/95
+
+                  px-2.5
+                  py-1.5
+
+                  shadow-lg
+
+                  backdrop-blur-md
+
+                  sm:bottom-5
+                  sm:left-4
+                "
+              >
+
+                {/* Stars */}
+                <div className="flex gap-0.5 text-amber-400">
+
+                  {[...Array(5)].map((_, i) => (
+                    <Star
+                      key={i}
+                      className="
+                        h-2.5
+                        w-2.5
+                        fill-current
+                        sm:h-3
+                        sm:w-3
+                      "
+                    />
+                  ))}
+
+                </div>
+
+                {/* Rating */}
+                <div className="flex items-center gap-1 whitespace-nowrap">
+
+                  <span className="text-[10px] font-extrabold text-slate-900 sm:text-[11px]">
+                    5.0
+                  </span>
+
+                  <span className="text-[8px] font-semibold text-slate-500 sm:text-[10px]">
+                    Patient Care
+                  </span>
+
+                </div>
+              </div>
+
+            </div>
+
+            {/* =====================================================
+                BOTTOM CHECKLIST
+            ===================================================== */}
+
+            <div
+              className="
+                absolute
+                -bottom-8
+                left-2
+                right-2
+                z-30
+
+                rounded-2xl
+
+                border
+                border-white/80
+
+                bg-white/95
+
+                px-2
+                py-3
+
+                shadow-xl
+
+                backdrop-blur-md
+
+                sm:left-6
+                sm:right-6
+              "
+            >
+
+              <div
+                className="
+                  flex
+                  w-full
+                  flex-row
+                  items-center
+                  justify-between
+                  gap-1
+                "
+              >
+
+                {checklist.map((item) => (
+                  <div
+                    key={item}
+                    className="
+                      flex
+                      min-w-0
+                      flex-1
+                      items-center
+                      justify-center
+                      gap-1
+                    "
+                  >
+
+                    {/* Check */}
+                    <span
+                      className="
+                        flex
+                        h-5
+                        w-5
+                        flex-none
+                        items-center
+                        justify-center
+                        rounded-full
+                        border
+                        border-teal-100
+                        bg-teal-50
+                        text-teal-600
+                      "
+                    >
+                      <Check
+                        className="h-3 w-3"
+                        strokeWidth={3}
+                      />
+                    </span>
+
+                    {/* Text */}
+                    <span
+                      className="
+                        whitespace-nowrap
+                        text-[8px]
+                        font-semibold
+                        text-slate-800
+                        sm:text-xs
+                      "
+                    >
+                      {item}
+                    </span>
+
+                  </div>
                 ))}
+
               </div>
-              <span className="text-[11px] font-bold text-slate-800">5.0 Patient Care</span>
             </div>
-          </div>
 
-          {/* ── BOTTOM OVERLAY CHECKLIST STRIP ── */}
-          <div className="absolute -bottom-8 left-2 right-2 sm:left-6 sm:right-6 bg-white/95 backdrop-blur-md rounded-2xl shadow-xl border border-white/80 p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6 sm:justify-between z-20">
-            {checklist.map((item) => (
-              <div key={item} className="flex items-center gap-2.5">
-                <span className="w-5 h-5 rounded-full bg-teal-50 text-teal-600 flex items-center justify-center flex-none border border-teal-100">
-                  <Check className="w-3.5 h-3.5" strokeWidth={3} />
-                </span>
-                <span className="text-slate-800 font-semibold text-xs sm:text-sm whitespace-nowrap">
-                  {item}
-                </span>
-              </div>
-            ))}
           </div>
-
         </div>
 
       </div>

@@ -414,340 +414,343 @@ export default function AdminInvoiceGenerator() {
           </div>
         </div>
 
-        {/* Printable Invoice Sheet */}
-        <div className="invoice-card w-full max-w-[820px] min-h-[1120px] bg-white p-2 shadow-md text-slate-800 text-[11px] leading-tight flex flex-col justify-between box-border">
-          <div>
-            {/* Header */}
-            <div className="mb-4">
-              <div className="grid grid-cols-2 gap-2 items-center pb-2 border-b-2 border-[#003366] mb-2">
-                {/* Logo Section with blend mode to eliminate background rectangle */}
-                <div className="flex justify-start items-center">
-                  <Image 
-                    src="/logo.png" 
-                    alt="PhysioCare Logo" 
-                    width={180} 
-                    height={50} 
-                    priority 
-                    className="object-contain h-auto mix-blend-multiply filter contrast-125 brightness-105" 
-                  />
-                </div>
-                
-                {/* Contact Section */}
-                <div className="flex justify-end">
-                  <div className="w-52 text-[11px] font-medium text-slate-700 space-y-0.5">
-                    {/* Address */}
-                    <div className="flex items-center gap-2">
-                      <div className="w-4 h-4 flex items-center justify-center shrink-0 text-[#003366]">
-                        <MapPin className="w-3.5 h-3.5" />
-                      </div>
-                      <input
-                        type="text"
-                        placeholder="Address"
-                        value={headerInfo.address}
-                        onChange={(e) => setHeaderInfo({ ...headerInfo, address: e.target.value })}
-                        className="w-full bg-transparent focus:outline-none hover:bg-slate-50/80 rounded px-1 py-0 border-0 text-slate-700 font-normal tracking-tight truncate leading-none"
-                      />
-                    </div>
-
-                    {/* Phone */}
-                    <div className="flex items-center gap-2">
-                      <div className="w-4 h-4 flex items-center justify-center shrink-0 text-[#003366]">
-                        <Phone className="w-3.5 h-3.5" />
-                      </div>
-                      <input
-                        type="text"
-                        placeholder="Phone"
-                        value={headerInfo.phone}
-                        onChange={(e) => setHeaderInfo({ ...headerInfo, phone: e.target.value })}
-                        className="w-full bg-transparent focus:outline-none hover:bg-slate-50/80 rounded px-1 py-0 border-0 text-slate-700 font-normal tracking-tight leading-none"
-                      />
-                    </div>
-
-                    {/* Email */}
-                    <div className="flex items-center gap-2">
-                      <div className="w-4 h-4 flex items-center justify-center shrink-0 text-[#003366]">
-                        <Mail className="w-3.5 h-3.5" />
-                      </div>
-                      <input
-                        type="text"
-                        placeholder="Email"
-                        value={headerInfo.email}
-                        onChange={(e) => setHeaderInfo({ ...headerInfo, email: e.target.value })}
-                        className="w-full bg-transparent focus:outline-none hover:bg-slate-50/80 rounded px-1 py-0 border-0 text-slate-700 font-normal tracking-tight leading-none truncate"
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="flex justify-between items-start mb-2">
-                <div>
-                  <h2 className="text-lg font-black text-[#003366] tracking-tight">PHYSIOTHERAPY BILL</h2>
-                  <div className="flex items-center gap-1 text-[#003366] text-[10px] font-semibold">
-                    <Leaf className="w-3 h-3 text-[#008080]" />
-                    <input
-                      type="text"
-                      placeholder="Tagline / Motto"
-                      value={headerInfo.motto}
-                      onChange={(e) => setHeaderInfo({ ...headerInfo, motto: e.target.value })}
-                      className="focus:outline-none hover:bg-slate-50 w-40"
+        {/* Horizontal Scroll Wrapper for Mobile View */}
+        <div className="w-full overflow-x-auto pb-4">
+          {/* Printable Invoice Sheet */}
+          <div className="invoice-card min-w-[820px] w-[820px] min-h-[1120px] bg-white p-2 shadow-md text-slate-800 text-[11px] leading-tight flex flex-col justify-between box-border mx-auto">
+            <div>
+              {/* Header */}
+              <div className="mb-4">
+                <div className="grid grid-cols-2 gap-2 items-center pb-2 border-b-2 border-[#003366] mb-2">
+                  {/* Logo Section with blend mode to eliminate background rectangle */}
+                  <div className="flex justify-start items-center">
+                    <Image 
+                      src="/logo.png" 
+                      alt="PhysioCare Logo" 
+                      width={180} 
+                      height={50} 
+                      priority 
+                      className="object-contain h-auto mix-blend-multiply filter contrast-125 brightness-105" 
                     />
                   </div>
-                  <div className="w-8 h-0.5 bg-[#2563EB] mt-0.5 rounded-full"></div>
-                </div>
+                  
+                  {/* Contact Section */}
+                  <div className="flex justify-end">
+                    <div className="w-52 text-[11px] font-medium text-slate-700 space-y-0.5">
+                      {/* Address */}
+                      <div className="flex items-center gap-2">
+                        <div className="w-4 h-4 flex items-center justify-center shrink-0 text-[#003366]">
+                          <MapPin className="w-3.5 h-3.5" />
+                        </div>
+                        <input
+                          type="text"
+                          placeholder="Address"
+                          value={headerInfo.address}
+                          onChange={(e) => setHeaderInfo({ ...headerInfo, address: e.target.value })}
+                          className="w-full bg-transparent focus:outline-none hover:bg-slate-50/80 rounded px-1 py-0 border-0 text-slate-700 font-normal tracking-tight truncate leading-none"
+                        />
+                      </div>
 
-                {/* Invoice No Block */}
-                <div className="text-[10.5px] space-y-0 font-medium text-[#003366] w-52">
-                  <div className="grid grid-cols-[95px_10px_1fr] items-center">
-                    <span className="font-semibold text-slate-800">Invoice No.</span>
-                    <span>:</span>
-                    <input type="text" placeholder="Invoice No." value={headerInfo.invoiceNo} onChange={(e) => setHeaderInfo({ ...headerInfo, invoiceNo: e.target.value })} className="font-bold text-left focus:outline-none hover:bg-slate-50" />
-                  </div>
-                  <div className="grid grid-cols-[95px_10px_1fr] items-center">
-                    <span className="font-semibold text-slate-800">Invoice Date</span>
-                    <span>:</span>
-                    <input type="text" placeholder="Date" value={headerInfo.invoiceDate} onChange={(e) => setHeaderInfo({ ...headerInfo, invoiceDate: e.target.value })} className="text-left focus:outline-none hover:bg-slate-50" />
-                  </div>
-                  <div className="grid grid-cols-[95px_10px_1fr] items-center">
-                    <span className="font-semibold text-slate-800">Place of Service</span>
-                    <span>:</span>
-                    <input type="text" placeholder="Place" value={headerInfo.placeOfService} onChange={(e) => setHeaderInfo({ ...headerInfo, placeOfService: e.target.value })} className="text-left focus:outline-none hover:bg-slate-50" />
-                  </div>
-                  <div className="grid grid-cols-[95px_10px_1fr] items-center">
-                    <span className="font-semibold text-slate-800">Due Date</span>
-                    <span>:</span>
-                    <input type="text" placeholder="Due Date" value={headerInfo.dueDate} onChange={(e) => setHeaderInfo({ ...headerInfo, dueDate: e.target.value })} className="text-left focus:outline-none hover:bg-slate-50" />
-                  </div>
-                </div>
-              </div>
+                      {/* Phone */}
+                      <div className="flex items-center gap-2">
+                        <div className="w-4 h-4 flex items-center justify-center shrink-0 text-[#003366]">
+                          <Phone className="w-3.5 h-3.5" />
+                        </div>
+                        <input
+                          type="text"
+                          placeholder="Phone"
+                          value={headerInfo.phone}
+                          onChange={(e) => setHeaderInfo({ ...headerInfo, phone: e.target.value })}
+                          className="w-full bg-transparent focus:outline-none hover:bg-slate-50/80 rounded px-1 py-0 border-0 text-slate-700 font-normal tracking-tight leading-none"
+                        />
+                      </div>
 
-              {/* Patient Info */}
-              <div className="border border-[#2563EB]/40 rounded-lg p-2.5 bg-white text-[10.5px] grid grid-cols-2 gap-x-6 text-[#003366]">
-                <div className="space-y-1">
-                  <div className="grid grid-cols-[110px_12px_1fr] items-center">
-                    <span className="font-bold text-slate-900 leading-none">Patient Name</span>
-                    <span className="text-slate-600 font-bold leading-none text-center">:</span>
-                    <input type="text" placeholder="Patient Name" value={details.patientName} onChange={(e) => setDetails({ ...details, patientName: e.target.value })} className="font-bold text-slate-900 w-full focus:outline-none hover:bg-slate-50 px-1 py-0.5 rounded leading-none" />
-                  </div>
-                  <div className="grid grid-cols-[110px_12px_1fr] items-center">
-                    <select value={details.idLabel} onChange={(e) => setDetails({ ...details, idLabel: e.target.value })} className="font-bold text-slate-900 bg-transparent focus:outline-none hover:bg-slate-50 cursor-pointer border-none p-0 m-0 appearance-none leading-none w-full shadow-none outline-none">
-                      <option value="Patient ID">Patient ID</option>
-                      <option value="MRD ID">MRD ID</option>
-                      <option value="OPD ID">OPD ID</option>
-                    </select>
-                    <span className="text-slate-600 font-bold leading-none text-center">:</span>
-                    <input type="text" placeholder="ID Value" value={details.patientId} onChange={(e) => setDetails({ ...details, patientId: e.target.value })} className="w-full focus:outline-none hover:bg-slate-50 font-medium px-1 py-0.5 rounded leading-none text-slate-900" />
-                  </div>
-                  <div className="grid grid-cols-[110px_12px_1fr] items-center">
-                    <span className="font-bold text-slate-900 leading-none">Age / Gender</span>
-                    <span className="text-slate-600 font-bold leading-none text-center">:</span>
-                    <input type="text" placeholder="Age / Gender" value={details.ageGender} onChange={(e) => setDetails({ ...details, ageGender: e.target.value })} className="w-full focus:outline-none hover:bg-slate-50 font-medium px-1 py-0.5 rounded leading-none text-slate-900" />
-                  </div>
-                  <div className="grid grid-cols-[110px_12px_1fr] items-start">
-                    <span className="font-bold text-slate-900 pt-1 leading-none">Address</span>
-                    <span className="text-slate-600 font-bold pt-1 leading-none text-center">:</span>
-                    <textarea rows={2} placeholder="Address" value={details.address} onChange={(e) => setDetails({ ...details, address: e.target.value })} className="w-full focus:outline-none hover:bg-slate-50 font-medium resize-none bg-transparent leading-tight px-1 py-0.5 rounded text-slate-900" />
+                      {/* Email */}
+                      <div className="flex items-center gap-2">
+                        <div className="w-4 h-4 flex items-center justify-center shrink-0 text-[#003366]">
+                          <Mail className="w-3.5 h-3.5" />
+                        </div>
+                        <input
+                          type="text"
+                          placeholder="Email"
+                          value={headerInfo.email}
+                          onChange={(e) => setHeaderInfo({ ...headerInfo, email: e.target.value })}
+                          className="w-full bg-transparent focus:outline-none hover:bg-slate-50/80 rounded px-1 py-0 border-0 text-slate-700 font-normal tracking-tight leading-none truncate"
+                        />
+                      </div>
+                    </div>
                   </div>
                 </div>
 
-                <div className="space-y-1">
-                  <div className="grid grid-cols-[130px_12px_1fr] items-center">
-                    <span className="font-bold text-slate-900 leading-none">Physiotherapist</span>
-                    <span className="text-slate-600 font-bold leading-none text-center">:</span>
-                    <input type="text" placeholder="Physio Name" value={details.physiotherapist} onChange={(e) => setDetails({ ...details, physiotherapist: e.target.value })} className="font-bold text-[#003366] w-full focus:outline-none hover:bg-slate-50 px-1 py-0.5 rounded leading-none" />
-                  </div>
-                  <div className="grid grid-cols-[130px_12px_1fr] items-center">
-                    <span className="font-bold text-slate-900 leading-none">Contact No.</span>
-                    <span className="text-slate-600 font-bold leading-none text-center">:</span>
-                    <input type="text" placeholder="Contact No." value={details.contactNo} onChange={(e) => setDetails({ ...details, contactNo: e.target.value })} className="w-full focus:outline-none hover:bg-slate-50 font-medium px-1 py-0.5 rounded leading-none text-slate-900" />
-                  </div>
-                  <div className="grid grid-cols-[130px_12px_1fr] items-start">
-                    <span className="font-bold text-slate-900 pt-1 leading-none">Treatment Plan</span>
-                    <span className="text-slate-600 font-bold pt-1 leading-none text-center">:</span>
-                    <textarea rows={2} placeholder="Treatment Plan Details" value={details.treatmentPlan} onChange={(e) => setDetails({ ...details, treatmentPlan: e.target.value })} className="w-full focus:outline-none hover:bg-slate-50 font-medium resize-none bg-transparent leading-tight px-1 py-0.5 rounded text-slate-900" />
-                  </div>
-                  <div className="grid grid-cols-[130px_12px_1fr] items-center pt-0.5">
-                    <span className="font-bold text-slate-900 leading-none">Total Prescribed</span>
-                    <span className="text-slate-600 font-bold leading-none text-center">:</span>
-                    <input type="text" placeholder="Sessions" value={details.totalSessionsPrescribed} onChange={(e) => setDetails({ ...details, totalSessionsPrescribed: e.target.value })} className="font-bold text-[#003366] focus:outline-none hover:bg-slate-50 px-1 py-0.5 rounded leading-none w-full" />
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Table */}
-            <table className="w-full text-[10.5px] text-left border-collapse mb-4">
-              <thead>
-                <tr className="bg-[#003366] text-white text-center font-semibold">
-                  <th className="py-1.5 px-1 border border-[#003366] w-8">S. No.</th>
-                  <th className="py-1.5 px-1 border border-[#003366] w-20">Date</th>
-                  <th className="py-1.5 px-1 border border-[#003366] w-16">Day</th>
-                  <th className="py-1.5 px-2 border border-[#003366] text-left">Session / Description</th>
-                  <th className="py-1.5 px-1 border border-[#003366] w-20">Type of Visit</th>
-                  <th className="py-1.5 px-1 border border-[#003366] w-20">Home Visit (₹)</th>
-                  <th className="py-1.5 px-1 border border-[#003366] w-20">Physio Fee (₹)</th>
-                  <th className="py-1.5 px-1 border border-[#003366] w-20">Total (₹)</th>
-                  <th className="py-1.5 px-0.5 border border-[#003366] w-5 print:hidden"></th>
-                </tr>
-              </thead>
-              <tbody>
-                {items.length === 0 ? (
-                  <tr className="border border-blue-200 text-center text-slate-400">
-                    <td colSpan={9} className="py-4 text-xs italic">
-                      No sessions added yet. Click <strong>"Add Row"</strong> above to begin.
-                    </td>
-                  </tr>
-                ) : (
-                  items.map((item, index) => {
-                    const rowCalc = (Number(item.homeCharges) || 0) + (Number(item.physioCharges) || 0);
-                    const rowTotal = item.totalOverride !== undefined && item.totalOverride !== '' ? item.totalOverride : rowCalc > 0 ? rowCalc : '';
-                    const isCompact = items.length > 10;
-                    return (
-                      <tr key={item.id} className="border border-blue-200 text-center text-slate-800">
-                        <td className={`${isCompact ? 'py-0.5' : 'py-1'} px-1 border-r border-blue-200`}>{index + 1}</td>
-                        <td className={`${isCompact ? 'py-0.5' : 'py-1'} px-1 border-r border-blue-200`}>
-                          <input type="text" placeholder="Date" value={item.date} onChange={(e) => handleItemChange(item.id, 'date', e.target.value)} className="w-full text-center bg-transparent focus:outline-none" />
-                        </td>
-                        <td className={`${isCompact ? 'py-0.5' : 'py-1'} px-1 border-r border-blue-200`}>
-                          <input type="text" placeholder="Day" value={item.day} onChange={(e) => handleItemChange(item.id, 'day', e.target.value)} className="w-full text-center bg-transparent focus:outline-none" />
-                        </td>
-                        <td className={`${isCompact ? 'py-0.5' : 'py-1'} px-2 border-r border-blue-200 text-left`}>
-                          <input type="text" placeholder="Description" value={item.description} onChange={(e) => handleItemChange(item.id, 'description', e.target.value)} className="w-full text-left bg-transparent focus:outline-none" />
-                        </td>
-                        <td className={`${isCompact ? 'py-0.5' : 'py-1'} px-1 border-r border-blue-200`}>
-                          <input type="text" placeholder="Visit Type" value={item.visitType} onChange={(e) => handleItemChange(item.id, 'visitType', e.target.value)} className="w-full text-center bg-transparent focus:outline-none" />
-                        </td>
-                        <td className={`${isCompact ? 'py-0.5' : 'py-1'} px-1 border-r border-blue-200`}>
-                          <input type="number" placeholder="0" value={item.homeCharges} onChange={(e) => handleItemChange(item.id, 'homeCharges', e.target.value)} className="w-full text-center bg-transparent focus:outline-none" />
-                        </td>
-                        <td className={`${isCompact ? 'py-0.5' : 'py-1'} px-1 border-r border-blue-200`}>
-                          <input type="number" placeholder="0" value={item.physioCharges} onChange={(e) => handleItemChange(item.id, 'physioCharges', e.target.value)} className="w-full text-center bg-transparent focus:outline-none" />
-                        </td>
-                        <td className={`${isCompact ? 'py-0.5' : 'py-1'} px-1 border-r border-blue-200 font-bold text-slate-900`}>
-                          <input type="text" placeholder="0" value={rowTotal} onChange={(e) => handleItemChange(item.id, 'totalOverride', e.target.value)} className="w-full text-center bg-transparent font-bold focus:outline-none" />
-                        </td>
-                        <td className={`${isCompact ? 'py-0.5' : 'py-1'} px-0.5 print:hidden text-center`}>
-                          <button onClick={() => removeItem(item.id)} className="text-slate-300 hover:text-rose-600 cursor-pointer">
-                            <Trash2 className="w-3 h-3" />
-                          </button>
-                        </td>
-                      </tr>
-                    );
-                  })
-                )}
-                <tr className="bg-blue-50/30 font-bold border-2 border-blue-200 text-[#003366]">
-                  <td colSpan={4} className="py-1.5 px-3 text-center">Total Scheduled Sessions</td>
-                  <td className="py-1.5 text-center">{items.length}</td>
-                  <td className="py-1.5 text-center">
-                    <input type="text" placeholder="0" value={totalHomeCharges} onChange={(e) => setOverrideTotalHome(e.target.value)} className="w-full text-center bg-transparent font-bold focus:outline-none" />
-                  </td>
-                  <td className="py-1.5 text-center">
-                    <input type="text" placeholder="0" value={totalPhysioCharges} onChange={(e) => setOverrideTotalPhysio(e.target.value)} className="w-full text-center bg-transparent font-bold focus:outline-none" />
-                  </td>
-                  <td className="py-1.5 text-center text-slate-900 font-black">
-                    <input type="text" placeholder="0" value={grandTotal} onChange={(e) => setOverrideGrandTotal(e.target.value)} className="w-full text-center bg-transparent font-black text-slate-900 focus:outline-none" />
-                  </td>
-                  <td className="print:hidden"></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          {/* Footer */}
-          <div className="grid grid-cols-12 gap-5 items-start mt-auto">
-            <div className="col-span-7 space-y-2.5 text-[10.5px]">
-              <div>
-                <h4 className="font-bold text-[#2563EB] mb-0.5 text-xs">Notes:</h4>
-                <ul className="list-disc list-inside space-y-0.5 text-slate-800">
-                  {notes.map((note, idx) => (
-                    <li key={idx}>
+                <div className="flex justify-between items-start mb-2">
+                  <div>
+                    <h2 className="text-lg font-black text-[#003366] tracking-tight">PHYSIOTHERAPY BILL</h2>
+                    <div className="flex items-center gap-1 text-[#003366] text-[10px] font-semibold">
+                      <Leaf className="w-3 h-3 text-[#008080]" />
                       <input
                         type="text"
-                        placeholder={`Note #${idx + 1}`}
-                        value={note}
-                        onChange={(e) => {
-                          const newNotes = [...notes];
-                          newNotes[idx] = e.target.value;
-                          setNotes(newNotes);
-                        }}
-                        className="w-11/12 bg-transparent focus:outline-none hover:bg-slate-50"
+                        placeholder="Tagline / Motto"
+                        value={headerInfo.motto}
+                        onChange={(e) => setHeaderInfo({ ...headerInfo, motto: e.target.value })}
+                        className="focus:outline-none hover:bg-slate-50 w-40"
                       />
-                    </li>
-                  ))}
-                </ul>
-              </div>
+                    </div>
+                    <div className="w-8 h-0.5 bg-[#2563EB] mt-0.5 rounded-full"></div>
+                  </div>
 
-              <div>
-                <h4 className="font-bold text-[#2563EB] mb-0.5 text-xs">Payment Details:</h4>
-                <div className="space-y-0.5 text-slate-800 font-medium">
-                  <div className="grid grid-cols-[90px_10px_1fr] items-center">
-                    <span className="text-slate-700">Bank Name</span>
-                    <span>:</span>
-                    <input type="text" value={paymentDetails.bankName} onChange={(e) => setPaymentDetails({ ...paymentDetails, bankName: e.target.value })} className="bg-transparent focus:outline-none" />
+                  {/* Invoice No Block */}
+                  <div className="text-[10.5px] space-y-0 font-medium text-[#003366] w-52">
+                    <div className="grid grid-cols-[95px_10px_1fr] items-center">
+                      <span className="font-semibold text-slate-800">Invoice No.</span>
+                      <span>:</span>
+                      <input type="text" placeholder="Invoice No." value={headerInfo.invoiceNo} onChange={(e) => setHeaderInfo({ ...headerInfo, invoiceNo: e.target.value })} className="font-bold text-left focus:outline-none hover:bg-slate-50" />
+                    </div>
+                    <div className="grid grid-cols-[95px_10px_1fr] items-center">
+                      <span className="font-semibold text-slate-800">Invoice Date</span>
+                      <span>:</span>
+                      <input type="text" placeholder="Date" value={headerInfo.invoiceDate} onChange={(e) => setHeaderInfo({ ...headerInfo, invoiceDate: e.target.value })} className="text-left focus:outline-none hover:bg-slate-50" />
+                    </div>
+                    <div className="grid grid-cols-[95px_10px_1fr] items-center">
+                      <span className="font-semibold text-slate-800">Place of Service</span>
+                      <span>:</span>
+                      <input type="text" placeholder="Place" value={headerInfo.placeOfService} onChange={(e) => setHeaderInfo({ ...headerInfo, placeOfService: e.target.value })} className="text-left focus:outline-none hover:bg-slate-50" />
+                    </div>
+                    <div className="grid grid-cols-[95px_10px_1fr] items-center">
+                      <span className="font-semibold text-slate-800">Due Date</span>
+                      <span>:</span>
+                      <input type="text" placeholder="Due Date" value={headerInfo.dueDate} onChange={(e) => setHeaderInfo({ ...headerInfo, dueDate: e.target.value })} className="text-left focus:outline-none hover:bg-slate-50" />
+                    </div>
                   </div>
-                  <div className="grid grid-cols-[90px_10px_1fr] items-center">
-                    <span className="text-slate-700">Account Name</span>
-                    <span>:</span>
-                    <input type="text" value={paymentDetails.accountName} onChange={(e) => setPaymentDetails({ ...paymentDetails, accountName: e.target.value })} className="bg-transparent focus:outline-none w-full" />
+                </div>
+
+                {/* Patient Info */}
+                <div className="border border-[#2563EB]/40 rounded-lg p-2.5 bg-white text-[10.5px] grid grid-cols-2 gap-x-6 text-[#003366]">
+                  <div className="space-y-1">
+                    <div className="grid grid-cols-[110px_12px_1fr] items-center">
+                      <span className="font-bold text-slate-900 leading-none">Patient Name</span>
+                      <span className="text-slate-600 font-bold leading-none text-center">:</span>
+                      <input type="text" placeholder="Patient Name" value={details.patientName} onChange={(e) => setDetails({ ...details, patientName: e.target.value })} className="font-bold text-slate-900 w-full focus:outline-none hover:bg-slate-50 px-1 py-0.5 rounded leading-none" />
+                    </div>
+                    <div className="grid grid-cols-[110px_12px_1fr] items-center">
+                      <select value={details.idLabel} onChange={(e) => setDetails({ ...details, idLabel: e.target.value })} className="font-bold text-slate-900 bg-transparent focus:outline-none hover:bg-slate-50 cursor-pointer border-none p-0 m-0 appearance-none leading-none w-full shadow-none outline-none">
+                        <option value="Patient ID">Patient ID</option>
+                        <option value="MRD ID">MRD ID</option>
+                        <option value="OPD ID">OPD ID</option>
+                      </select>
+                      <span className="text-slate-600 font-bold leading-none text-center">:</span>
+                      <input type="text" placeholder="ID Value" value={details.patientId} onChange={(e) => setDetails({ ...details, patientId: e.target.value })} className="w-full focus:outline-none hover:bg-slate-50 font-medium px-1 py-0.5 rounded leading-none text-slate-900" />
+                    </div>
+                    <div className="grid grid-cols-[110px_12px_1fr] items-center">
+                      <span className="font-bold text-slate-900 leading-none">Age / Gender</span>
+                      <span className="text-slate-600 font-bold leading-none text-center">:</span>
+                      <input type="text" placeholder="Age / Gender" value={details.ageGender} onChange={(e) => setDetails({ ...details, ageGender: e.target.value })} className="w-full focus:outline-none hover:bg-slate-50 font-medium px-1 py-0.5 rounded leading-none text-slate-900" />
+                    </div>
+                    <div className="grid grid-cols-[110px_12px_1fr] items-start">
+                      <span className="font-bold text-slate-900 pt-1 leading-none">Address</span>
+                      <span className="text-slate-600 font-bold pt-1 leading-none text-center">:</span>
+                      <textarea rows={2} placeholder="Address" value={details.address} onChange={(e) => setDetails({ ...details, address: e.target.value })} className="w-full focus:outline-none hover:bg-slate-50 font-medium resize-none bg-transparent leading-tight px-1 py-0.5 rounded text-slate-900" />
+                    </div>
                   </div>
-                  <div className="grid grid-cols-[90px_10px_1fr] items-center">
-                    <span className="text-slate-700">Account No.</span>
-                    <span>:</span>
-                    <input type="text" value={paymentDetails.accountNo} onChange={(e) => setPaymentDetails({ ...paymentDetails, accountNo: e.target.value })} className="bg-transparent focus:outline-none" />
-                  </div>
-                  <div className="grid grid-cols-[90px_10px_1fr] items-center">
-                    <span className="text-slate-700">IFSC Code</span>
-                    <span>:</span>
-                    <input type="text" value={paymentDetails.ifscCode} onChange={(e) => setPaymentDetails({ ...paymentDetails, ifscCode: e.target.value })} className="bg-transparent focus:outline-none" />
-                  </div>
-                  <div className="grid grid-cols-[90px_10px_1fr] items-center">
-                    <span className="text-slate-700">UPI ID</span>
-                    <span>:</span>
-                    <input type="text" value={paymentDetails.upiId} onChange={(e) => setPaymentDetails({ ...paymentDetails, upiId: e.target.value })} className="bg-transparent focus:outline-none" />
+
+                  <div className="space-y-1">
+                    <div className="grid grid-cols-[130px_12px_1fr] items-center">
+                      <span className="font-bold text-slate-900 leading-none">Physiotherapist</span>
+                      <span className="text-slate-600 font-bold leading-none text-center">:</span>
+                      <input type="text" placeholder="Physio Name" value={details.physiotherapist} onChange={(e) => setDetails({ ...details, physiotherapist: e.target.value })} className="font-bold text-[#003366] w-full focus:outline-none hover:bg-slate-50 px-1 py-0.5 rounded leading-none" />
+                    </div>
+                    <div className="grid grid-cols-[130px_12px_1fr] items-center">
+                      <span className="font-bold text-slate-900 leading-none">Contact No.</span>
+                      <span className="text-slate-600 font-bold leading-none text-center">:</span>
+                      <input type="text" placeholder="Contact No." value={details.contactNo} onChange={(e) => setDetails({ ...details, contactNo: e.target.value })} className="w-full focus:outline-none hover:bg-slate-50 font-medium px-1 py-0.5 rounded leading-none text-slate-900" />
+                    </div>
+                    <div className="grid grid-cols-[130px_12px_1fr] items-start">
+                      <span className="font-bold text-slate-900 pt-1 leading-none">Treatment Plan</span>
+                      <span className="text-slate-600 font-bold pt-1 leading-none text-center">:</span>
+                      <textarea rows={2} placeholder="Treatment Plan Details" value={details.treatmentPlan} onChange={(e) => setDetails({ ...details, treatmentPlan: e.target.value })} className="w-full focus:outline-none hover:bg-slate-50 font-medium resize-none bg-transparent leading-tight px-1 py-0.5 rounded text-slate-900" />
+                    </div>
+                    <div className="grid grid-cols-[130px_12px_1fr] items-center pt-0.5">
+                      <span className="font-bold text-slate-900 leading-none">Total Prescribed</span>
+                      <span className="text-slate-600 font-bold leading-none text-center">:</span>
+                      <input type="text" placeholder="Sessions" value={details.totalSessionsPrescribed} onChange={(e) => setDetails({ ...details, totalSessionsPrescribed: e.target.value })} className="font-bold text-[#003366] focus:outline-none hover:bg-slate-50 px-1 py-0.5 rounded leading-none w-full" />
+                    </div>
                   </div>
                 </div>
               </div>
+
+              {/* Table */}
+              <table className="w-full text-[10.5px] text-left border-collapse mb-4">
+                <thead>
+                  <tr className="bg-[#003366] text-white text-center font-semibold">
+                    <th className="py-1.5 px-1 border border-[#003366] w-8">S. No.</th>
+                    <th className="py-1.5 px-1 border border-[#003366] w-20">Date</th>
+                    <th className="py-1.5 px-1 border border-[#003366] w-16">Day</th>
+                    <th className="py-1.5 px-2 border border-[#003366] text-left">Session / Description</th>
+                    <th className="py-1.5 px-1 border border-[#003366] w-20">Type of Visit</th>
+                    <th className="py-1.5 px-1 border border-[#003366] w-20">Home Visit (₹)</th>
+                    <th className="py-1.5 px-1 border border-[#003366] w-20">Physio Fee (₹)</th>
+                    <th className="py-1.5 px-1 border border-[#003366] w-20">Total (₹)</th>
+                    <th className="py-1.5 px-0.5 border border-[#003366] w-5 print:hidden"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {items.length === 0 ? (
+                    <tr className="border border-blue-200 text-center text-slate-400">
+                      <td colSpan={9} className="py-4 text-xs italic">
+                        No sessions added yet. Click <strong>"Add Row"</strong> above to begin.
+                      </td>
+                    </tr>
+                  ) : (
+                    items.map((item, index) => {
+                      const rowCalc = (Number(item.homeCharges) || 0) + (Number(item.physioCharges) || 0);
+                      const rowTotal = item.totalOverride !== undefined && item.totalOverride !== '' ? item.totalOverride : rowCalc > 0 ? rowCalc : '';
+                      const isCompact = items.length > 10;
+                      return (
+                        <tr key={item.id} className="border border-blue-200 text-center text-slate-800">
+                          <td className={`${isCompact ? 'py-0.5' : 'py-1'} px-1 border-r border-blue-200`}>{index + 1}</td>
+                          <td className={`${isCompact ? 'py-0.5' : 'py-1'} px-1 border-r border-blue-200`}>
+                            <input type="text" placeholder="Date" value={item.date} onChange={(e) => handleItemChange(item.id, 'date', e.target.value)} className="w-full text-center bg-transparent focus:outline-none" />
+                          </td>
+                          <td className={`${isCompact ? 'py-0.5' : 'py-1'} px-1 border-r border-blue-200`}>
+                            <input type="text" placeholder="Day" value={item.day} onChange={(e) => handleItemChange(item.id, 'day', e.target.value)} className="w-full text-center bg-transparent focus:outline-none" />
+                          </td>
+                          <td className={`${isCompact ? 'py-0.5' : 'py-1'} px-2 border-r border-blue-200 text-left`}>
+                            <input type="text" placeholder="Description" value={item.description} onChange={(e) => handleItemChange(item.id, 'description', e.target.value)} className="w-full text-left bg-transparent focus:outline-none" />
+                          </td>
+                          <td className={`${isCompact ? 'py-0.5' : 'py-1'} px-1 border-r border-blue-200`}>
+                            <input type="text" placeholder="Visit Type" value={item.visitType} onChange={(e) => handleItemChange(item.id, 'visitType', e.target.value)} className="w-full text-center bg-transparent focus:outline-none" />
+                          </td>
+                          <td className={`${isCompact ? 'py-0.5' : 'py-1'} px-1 border-r border-blue-200`}>
+                            <input type="number" placeholder="0" value={item.homeCharges} onChange={(e) => handleItemChange(item.id, 'homeCharges', e.target.value)} className="w-full text-center bg-transparent focus:outline-none" />
+                          </td>
+                          <td className={`${isCompact ? 'py-0.5' : 'py-1'} px-1 border-r border-blue-200`}>
+                            <input type="number" placeholder="0" value={item.physioCharges} onChange={(e) => handleItemChange(item.id, 'physioCharges', e.target.value)} className="w-full text-center bg-transparent focus:outline-none" />
+                          </td>
+                          <td className={`${isCompact ? 'py-0.5' : 'py-1'} px-1 border-r border-blue-200 font-bold text-slate-900`}>
+                            <input type="text" placeholder="0" value={rowTotal} onChange={(e) => handleItemChange(item.id, 'totalOverride', e.target.value)} className="w-full text-center bg-transparent font-bold focus:outline-none" />
+                          </td>
+                          <td className={`${isCompact ? 'py-0.5' : 'py-1'} px-0.5 print:hidden text-center`}>
+                            <button onClick={() => removeItem(item.id)} className="text-slate-300 hover:text-rose-600 cursor-pointer">
+                              <Trash2 className="w-3 h-3" />
+                            </button>
+                          </td>
+                        </tr>
+                      );
+                    })
+                  )}
+                  <tr className="bg-blue-50/30 font-bold border-2 border-blue-200 text-[#003366]">
+                    <td colSpan={4} className="py-1.5 px-3 text-center">Total Scheduled Sessions</td>
+                    <td className="py-1.5 text-center">{items.length}</td>
+                    <td className="py-1.5 text-center">
+                      <input type="text" placeholder="0" value={totalHomeCharges} onChange={(e) => setOverrideTotalHome(e.target.value)} className="w-full text-center bg-transparent font-bold focus:outline-none" />
+                    </td>
+                    <td className="py-1.5 text-center">
+                      <input type="text" placeholder="0" value={totalPhysioCharges} onChange={(e) => setOverrideTotalPhysio(e.target.value)} className="w-full text-center bg-transparent font-bold focus:outline-none" />
+                    </td>
+                    <td className="py-1.5 text-center text-slate-900 font-black">
+                      <input type="text" placeholder="0" value={grandTotal} onChange={(e) => setOverrideGrandTotal(e.target.value)} className="w-full text-center bg-transparent font-black text-slate-900 focus:outline-none" />
+                    </td>
+                    <td className="print:hidden"></td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
 
-            <div className="col-span-5 space-y-2.5">
-              <div className="border border-[#2563EB]/40 rounded-lg overflow-hidden text-[10.5px]">
-                <div className="p-2 bg-white space-y-1 text-slate-800 font-semibold">
-                  <div className="flex justify-between items-center">
-                    <span>Total Home Visit</span>
-                    <div className="flex items-center gap-1">
-                      <span>₹</span>
-                      <input type="text" placeholder="0" value={totalHomeCharges} onChange={(e) => setOverrideTotalHome(e.target.value)} className="w-20 text-right bg-transparent font-semibold focus:outline-none" />
-                    </div>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span>Total Physio Charges</span>
-                    <div className="flex items-center gap-1">
-                      <span>₹</span>
-                      <input type="text" placeholder="0" value={totalPhysioCharges} onChange={(e) => setOverrideTotalPhysio(e.target.value)} className="w-20 text-right bg-transparent font-semibold focus:outline-none" />
-                    </div>
-                  </div>
+            {/* Footer */}
+            <div className="grid grid-cols-12 gap-5 items-start mt-auto">
+              <div className="col-span-7 space-y-2.5 text-[10.5px]">
+                <div>
+                  <h4 className="font-bold text-[#2563EB] mb-0.5 text-xs">Notes:</h4>
+                  <ul className="list-disc list-inside space-y-0.5 text-slate-800">
+                    {notes.map((note, idx) => (
+                      <li key={idx}>
+                        <input
+                          type="text"
+                          placeholder={`Note #${idx + 1}`}
+                          value={note}
+                          onChange={(e) => {
+                            const newNotes = [...notes];
+                            newNotes[idx] = e.target.value;
+                            setNotes(newNotes);
+                          }}
+                          className="w-11/12 bg-transparent focus:outline-none hover:bg-slate-50"
+                        />
+                      </li>
+                    ))}
+                  </ul>
                 </div>
 
-                <div className="bg-[#003366] text-white p-2 flex justify-between items-center font-black text-xs">
-                  <span>Grand Total</span>
-                  <div className="flex items-center gap-1">
-                    <span>₹</span>
-                    <input type="text" placeholder="0" value={grandTotal} onChange={(e) => setOverrideGrandTotal(e.target.value)} className="w-24 text-right bg-transparent font-black text-white focus:outline-none" />
+                <div>
+                  <h4 className="font-bold text-[#2563EB] mb-0.5 text-xs">Payment Details:</h4>
+                  <div className="space-y-0.5 text-slate-800 font-medium">
+                    <div className="grid grid-cols-[90px_10px_1fr] items-center">
+                      <span className="text-slate-700">Bank Name</span>
+                      <span>:</span>
+                      <input type="text" value={paymentDetails.bankName} onChange={(e) => setPaymentDetails({ ...paymentDetails, bankName: e.target.value })} className="bg-transparent focus:outline-none" />
+                    </div>
+                    <div className="grid grid-cols-[90px_10px_1fr] items-center">
+                      <span className="text-slate-700">Account Name</span>
+                      <span>:</span>
+                      <input type="text" value={paymentDetails.accountName} onChange={(e) => setPaymentDetails({ ...paymentDetails, accountName: e.target.value })} className="bg-transparent focus:outline-none w-full" />
+                    </div>
+                    <div className="grid grid-cols-[90px_10px_1fr] items-center">
+                      <span className="text-slate-700">Account No.</span>
+                      <span>:</span>
+                      <input type="text" value={paymentDetails.accountNo} onChange={(e) => setPaymentDetails({ ...paymentDetails, accountNo: e.target.value })} className="bg-transparent focus:outline-none" />
+                    </div>
+                    <div className="grid grid-cols-[90px_10px_1fr] items-center">
+                      <span className="text-slate-700">IFSC Code</span>
+                      <span>:</span>
+                      <input type="text" value={paymentDetails.ifscCode} onChange={(e) => setPaymentDetails({ ...paymentDetails, ifscCode: e.target.value })} className="bg-transparent focus:outline-none" />
+                    </div>
+                    <div className="grid grid-cols-[90px_10px_1fr] items-center">
+                      <span className="text-slate-700">UPI ID</span>
+                      <span>:</span>
+                      <input type="text" value={paymentDetails.upiId} onChange={(e) => setPaymentDetails({ ...paymentDetails, upiId: e.target.value })} className="bg-transparent focus:outline-none" />
+                    </div>
                   </div>
-                </div>
-
-                <div className="p-2 bg-blue-50/30 text-[#003366] text-[10.5px] font-semibold space-y-1">
-                  <div className="text-slate-600 font-medium">Amount in Words:</div>
-                  <input type="text" placeholder="Amount in Words" value={amountInWords} onChange={(e) => setOverrideWords(e.target.value)} className="font-bold text-[#003366] w-full bg-transparent focus:outline-none hover:bg-white" />
                 </div>
               </div>
 
-              {/* Signature Block */}
-              <div className="flex flex-col items-end pt-2 space-y-0.5 text-[10.5px]">
-                <div className="h-8 w-48 border-b-2 border-slate-300 border-dashed mb-1"></div>
-                <input type="text" placeholder="Doctor Name" value={doctorSig.name} onChange={(e) => setDoctorSig({ ...doctorSig, name: e.target.value })} className="font-bold text-[#003366] text-right w-48 bg-transparent focus:outline-none" />
-                <input type="text" placeholder="Title / Designation" value={doctorSig.title} onChange={(e) => setDoctorSig({ ...doctorSig, title: e.target.value })} className="text-slate-600 text-right w-48 bg-transparent focus:outline-none" />
-                <input type="text" placeholder="Registration No." value={doctorSig.regNo} onChange={(e) => setDoctorSig({ ...doctorSig, regNo: e.target.value })} className="text-slate-600 text-right w-48 bg-transparent focus:outline-none" />
+              <div className="col-span-5 space-y-2.5">
+                <div className="border border-[#2563EB]/40 rounded-lg overflow-hidden text-[10.5px]">
+                  <div className="p-2 bg-white space-y-1 text-slate-800 font-semibold">
+                    <div className="flex justify-between items-center">
+                      <span>Total Home Visit</span>
+                      <div className="flex items-center gap-1">
+                        <span>₹</span>
+                        <input type="text" placeholder="0" value={totalHomeCharges} onChange={(e) => setOverrideTotalHome(e.target.value)} className="w-20 text-right bg-transparent font-semibold focus:outline-none" />
+                      </div>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span>Total Physio Charges</span>
+                      <div className="flex items-center gap-1">
+                        <span>₹</span>
+                        <input type="text" placeholder="0" value={totalPhysioCharges} onChange={(e) => setOverrideTotalPhysio(e.target.value)} className="w-20 text-right bg-transparent font-semibold focus:outline-none" />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="bg-[#003366] text-white p-2 flex justify-between items-center font-black text-xs">
+                    <span>Grand Total</span>
+                    <div className="flex items-center gap-1">
+                      <span>₹</span>
+                      <input type="text" placeholder="0" value={grandTotal} onChange={(e) => setOverrideGrandTotal(e.target.value)} className="w-24 text-right bg-transparent font-black text-white focus:outline-none" />
+                    </div>
+                  </div>
+
+                  <div className="p-2 bg-blue-50/30 text-[#003366] text-[10.5px] font-semibold space-y-1">
+                    <div className="text-slate-600 font-medium">Amount in Words:</div>
+                    <input type="text" placeholder="Amount in Words" value={amountInWords} onChange={(e) => setOverrideWords(e.target.value)} className="font-bold text-[#003366] w-full bg-transparent focus:outline-none hover:bg-white" />
+                  </div>
+                </div>
+
+                {/* Signature Block */}
+                <div className="flex flex-col items-end pt-2 space-y-0.5 text-[10.5px]">
+                  <div className="h-8 w-48 border-b-2 border-slate-300 border-dashed mb-1"></div>
+                  <input type="text" placeholder="Doctor Name" value={doctorSig.name} onChange={(e) => setDoctorSig({ ...doctorSig, name: e.target.value })} className="font-bold text-[#003366] text-right w-48 bg-transparent focus:outline-none" />
+                  <input type="text" placeholder="Title / Designation" value={doctorSig.title} onChange={(e) => setDoctorSig({ ...doctorSig, title: e.target.value })} className="text-slate-600 text-right w-48 bg-transparent focus:outline-none" />
+                  <input type="text" placeholder="Registration No." value={doctorSig.regNo} onChange={(e) => setDoctorSig({ ...doctorSig, regNo: e.target.value })} className="text-slate-600 text-right w-48 bg-transparent focus:outline-none" />
+                </div>
               </div>
             </div>
           </div>
