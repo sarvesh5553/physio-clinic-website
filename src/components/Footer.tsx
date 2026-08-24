@@ -363,7 +363,9 @@ export default function Footer() {
                 "
               >
 
-                {/* WHATSAPP */}
+                {/* =================================================
+                    WHATSAPP
+                ================================================= */}
 
                 <a
                   href="https://wa.me/919322518895"
@@ -385,7 +387,9 @@ export default function Footer() {
                 </a>
 
 
-                {/* INSTAGRAM */}
+                {/* =================================================
+                    INSTAGRAM
+                ================================================= */}
 
                 <a
                   href="https://www.instagram.com/drbhagyashrisphysiocare?igsh=MTRycWlocjhjcWE5Yw=="
@@ -407,7 +411,33 @@ export default function Footer() {
                 </a>
 
 
-                {/* YOUTUBE */}
+                {/* =================================================
+                    GMAIL
+                    NOW BEFORE YOUTUBE
+                ================================================= */}
+
+                <a
+                  href="mailto:drbhagyashrisalunkept@gmail.com"
+                  aria-label="Gmail"
+                  className="
+                    text-slate-300
+                    hover:text-red-400
+                    hover:scale-110
+                    transition-all
+                    duration-300
+                    flex
+                    items-center
+                    justify-center
+                  "
+                >
+                  <SiGmail size={23} />
+                </a>
+
+
+                {/* =================================================
+                    YOUTUBE
+                    NOW RIGHT OF GMAIL
+                ================================================= */}
 
                 <a
                   href="https://youtube.com/@physiocare18?si=H9QicGVIeZN2LUwB"
@@ -428,29 +458,10 @@ export default function Footer() {
                   <FaYoutube size={23} />
                 </a>
 
-
-                {/* GMAIL */}
-
-                <a
-                  href="mailto:drbhagyashrisalunkept@gmail.com"
-                  aria-label="Gmail"
-                  className="
-                    text-slate-300
-                    hover:text-red-400
-                    hover:scale-110
-                    transition-all
-                    duration-300
-                    flex
-                    items-center
-                    justify-center
-                  "
-                >
-                  <SiGmail size={23} />
-                </a>
-
               </div>
 
             </div>
+
           </div>
 
         </div>
@@ -474,12 +485,17 @@ export default function Footer() {
           "
         >
           <p className="leading-relaxed">
+
             © {new Date().getFullYear()} PhysioCare. All Rights Reserved
-            <span className="hidden sm:inline"> | </span>
+
+            <span className="hidden sm:inline">
+              {" | "}
+            </span>
 
             <span className="block sm:inline">
               Professional Physiotherapy Services
             </span>
+
           </p>
         </div>
 
