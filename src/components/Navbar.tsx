@@ -189,6 +189,7 @@ export default function Navbar() {
         }
       `}
     >
+
       {/* =====================================================
           MAIN NAVBAR
       ===================================================== */}
@@ -210,6 +211,7 @@ export default function Navbar() {
           justify-between
         "
       >
+
         {/* =================================================
             WEBSITE LOGO
         ================================================= */}
@@ -239,10 +241,12 @@ export default function Navbar() {
 
               object-contain
               block
+
               bg-transparent
             "
           />
         </a>
+
 
         {/* =================================================
             DESKTOP NAV LINKS
@@ -312,6 +316,7 @@ export default function Navbar() {
           )}
         </div>
 
+
         {/* =================================================
             RIGHT SIDE
         ================================================= */}
@@ -326,6 +331,7 @@ export default function Navbar() {
             lg:gap-4
           "
         >
+
           {/* =================================================
               SOCIAL ICONS
           ================================================= */}
@@ -340,6 +346,7 @@ export default function Navbar() {
               lg:gap-4
             "
           >
+
             {/* WhatsApp */}
 
             <a
@@ -368,6 +375,7 @@ export default function Navbar() {
             >
               <FaWhatsapp className="w-5 h-5" />
             </a>
+
 
             {/* Instagram */}
 
@@ -398,34 +406,11 @@ export default function Navbar() {
               <FaInstagram className="w-5 h-5" />
             </a>
 
-            {/* YouTube */}
 
-            <a
-              href="https://youtube.com/@physiocare18?si=H9QicGVIeZN2LUwB"
-              aria-label="YouTube"
-              className="
-                w-6
-                h-6
-
-                flex
-                items-center
-                justify-center
-
-                text-red-500
-
-                opacity-90
-
-                hover:opacity-100
-                hover:scale-110
-
-                transition-all
-                duration-300
-              "
-            >
-              <FaYoutube className="w-5 h-5" />
-            </a>
-
-            {/* Gmail */}
+            {/* =================================================
+                GMAIL
+                MOVED BEFORE YOUTUBE
+            ================================================= */}
 
             <a
               href="mailto:drbhagyashrisalunkept@gmail.com"
@@ -449,7 +434,42 @@ export default function Navbar() {
             >
               <GmailIcon size={21} />
             </a>
+
+
+            {/* =================================================
+                YOUTUBE
+                NOW RIGHT OF GMAIL
+            ================================================= */}
+
+            <a
+              href="https://youtube.com/@physiocare18?si=H9QicGVIeZN2LUwB"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="YouTube"
+              className="
+                w-6
+                h-6
+
+                flex
+                items-center
+                justify-center
+
+                text-red-500
+
+                opacity-90
+
+                hover:opacity-100
+                hover:scale-110
+
+                transition-all
+                duration-300
+              "
+            >
+              <FaYoutube className="w-5 h-5" />
+            </a>
+
           </div>
+
 
           {/* =================================================
               DIVIDER
@@ -468,6 +488,7 @@ export default function Navbar() {
               ml-1
             "
           />
+
 
           {/* =================================================
               BOOK NOW
@@ -532,6 +553,7 @@ export default function Navbar() {
             />
           </a>
 
+
           {/* =================================================
               MOBILE MENU BUTTON
           ================================================= */}
@@ -571,8 +593,11 @@ export default function Navbar() {
               <HiMenu size={25} />
             )}
           </button>
+
         </div>
+
       </div>
+
 
       {/* =====================================================
           MOBILE MENU
@@ -600,6 +625,7 @@ export default function Navbar() {
           border-slate-100/50
         `}
       >
+
         <div
           className="
             px-4
@@ -612,6 +638,7 @@ export default function Navbar() {
             gap-1
           "
         >
+
           {/* Mobile Navigation Links */}
 
           {navLinks.map(
@@ -644,6 +671,7 @@ export default function Navbar() {
             )
           )}
 
+
           {/* Divider */}
 
           <div
@@ -654,6 +682,7 @@ export default function Navbar() {
               my-2.5
             "
           />
+
 
           {/* Mobile Book Now */}
 
@@ -700,8 +729,11 @@ export default function Navbar() {
 
             <HiArrowRight className="w-5 h-5" />
           </a>
+
         </div>
+
       </div>
+
     </nav>
   );
 }
