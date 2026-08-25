@@ -290,7 +290,7 @@ export default function Contact() {
           </h2>
 
           <p className="text-slate-600 max-w-2xl mx-auto text-base leading-relaxed">
-            Connect with our professional team and begin your personalized recovery journey. We're here to support your wellness goals.
+            Begin your healing experience with us today!
           </p>
         </div>
 

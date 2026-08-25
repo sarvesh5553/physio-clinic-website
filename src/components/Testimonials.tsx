@@ -83,7 +83,7 @@ export default function Testimonials() {
   };
 
   /* =========================================================
-     DRAG / SWIPE
+     HORIZONTAL MOUSE / TOUCH DRAG
   ========================================================= */
 
   const handlePointerDown = (
@@ -91,25 +91,34 @@ export default function Testimonials() {
   ) => {
     const target = e.target as HTMLElement;
 
-    // Don't activate carousel dragging on buttons
-    if (
-      target.closest("button") ||
-      target.closest("a")
-    ) {
+    /*
+      Don't start horizontal dragging when the user
+      clicks Read More / Show Less.
+    */
+    if (target.closest("button")) {
       return;
     }
 
     const viewport = viewportRef.current;
 
-    if (!viewport) return;
+    if (!viewport) {
+      return;
+    }
 
     isDragging.current = true;
 
     startX.current = e.clientX;
+
     startScrollLeft.current =
       viewport.scrollLeft;
 
-    viewport.setPointerCapture(e.pointerId);
+    try {
+      viewport.setPointerCapture(
+        e.pointerId
+      );
+    } catch {
+      // Ignore pointer capture errors
+    }
 
     viewport.style.cursor = "grabbing";
   };
@@ -119,7 +128,10 @@ export default function Testimonials() {
   ) => {
     const viewport = viewportRef.current;
 
-    if (!viewport || !isDragging.current) {
+    if (
+      !viewport ||
+      !isDragging.current
+    ) {
       return;
     }
 
@@ -160,7 +172,7 @@ export default function Testimonials() {
   };
 
   /* =========================================================
-     ARROW SCROLL
+     LEFT / RIGHT ARROWS
   ========================================================= */
 
   const scrollCards = (
@@ -169,7 +181,9 @@ export default function Testimonials() {
     const viewport =
       viewportRef.current;
 
-    if (!viewport) return;
+    if (!viewport) {
+      return;
+    }
 
     const isMobile =
       window.innerWidth < 768;
@@ -218,9 +232,6 @@ export default function Testimonials() {
             md:mb-14
           "
         >
-
-          {/* Label */}
-
           <div
             className="
               inline-flex
@@ -245,9 +256,6 @@ export default function Testimonials() {
               Feedback & Reviews
             </span>
           </div>
-
-
-          {/* Heading */}
 
           <h2
             className="
@@ -275,9 +283,6 @@ export default function Testimonials() {
             </span>
           </h2>
 
-
-          {/* Description */}
-
           <p
             className="
               text-slate-600
@@ -291,12 +296,11 @@ export default function Testimonials() {
             Real patient experiences and recovery
             stories.
           </p>
-
         </div>
 
 
         {/* =====================================================
-            CONTENT
+            LOADING
         ===================================================== */}
 
         {loading ? (
@@ -323,8 +327,7 @@ export default function Testimonials() {
                 font-medium
               "
             >
-              No testimonials available right
-              now.
+              No testimonials available right now.
             </p>
           </div>
 
@@ -345,7 +348,6 @@ export default function Testimonials() {
                 aria-label="Previous testimonials"
                 className="
                   absolute
-
                   left-0
                   md:left-1
 
@@ -356,8 +358,6 @@ export default function Testimonials() {
 
                   w-10
                   h-10
-                  md:w-10
-                  md:h-10
 
                   rounded-full
 
@@ -385,10 +385,7 @@ export default function Testimonials() {
                 "
               >
                 <ChevronLeft
-                  className="
-                    w-5
-                    h-5
-                  "
+                  className="w-5 h-5"
                   strokeWidth={2.5}
                 />
               </button>
@@ -408,7 +405,6 @@ export default function Testimonials() {
                 aria-label="Next testimonials"
                 className="
                   absolute
-
                   right-0
                   md:right-1
 
@@ -419,8 +415,6 @@ export default function Testimonials() {
 
                   w-10
                   h-10
-                  md:w-10
-                  md:h-10
 
                   rounded-full
 
@@ -448,10 +442,7 @@ export default function Testimonials() {
                 "
               >
                 <ChevronRight
-                  className="
-                    w-5
-                    h-5
-                  "
+                  className="w-5 h-5"
                   strokeWidth={2.5}
                 />
               </button>
@@ -459,29 +450,35 @@ export default function Testimonials() {
 
 
             {/* =================================================
-                SCROLLABLE CARDS
+                HORIZONTAL TESTIMONIAL SCROLLER
             ================================================= */}
 
             <div
               ref={viewportRef}
+
               onPointerDown={
                 handlePointerDown
               }
+
               onPointerMove={
                 handlePointerMove
               }
+
               onPointerUp={
                 handlePointerUp
               }
+
               onPointerCancel={
                 handlePointerCancel
               }
+
               onPointerLeave={
                 handlePointerCancel
               }
+
               className="
                 overflow-x-auto
-                overflow-y-hidden
+                overflow-y-visible
 
                 mx-5
                 md:mx-7
@@ -530,36 +527,32 @@ export default function Testimonials() {
                         : "/patients/default.png";
 
                     return (
+
                       <div
                         key={
                           testimonial._id
                         }
+
+                        /*
+                          IMPORTANT:
+                          EXACT SAME CARD SIZE
+                        */
+
                         className="
                           flex-none
 
-                          /* =================================
-                             MOBILE
-                          ================================= */
-
                           w-[205px]
-
                           h-[250px]
+
+                          md:w-[calc((100%-60px)/4)]
+                          md:h-[300px]
 
                           px-3
                           py-3.5
 
-                          rounded-xl
-
-                          /* =================================
-                             DESKTOP
-                          ================================= */
-
-                          md:w-[calc((100%-60px)/4)]
-
-                          md:h-[300px]
-
                           md:p-5
 
+                          rounded-xl
                           md:rounded-2xl
 
                           bg-white
@@ -581,9 +574,9 @@ export default function Testimonials() {
                         "
                       >
 
-                        {/* =================================
+                        {/* =====================================
                             PROFILE HEADER
-                        ================================= */}
+                        ===================================== */}
 
                         <div
                           className="
@@ -598,8 +591,6 @@ export default function Testimonials() {
                             flex-shrink-0
                           "
                         >
-
-                          {/* IMAGE */}
 
                           <div
                             className="
@@ -638,10 +629,10 @@ export default function Testimonials() {
                           </div>
 
 
-                          {/* NAME */}
-
                           <div
                             className="
+                              overflow-hidden
+
                               min-w-0
                               flex-1
                             "
@@ -653,6 +644,7 @@ export default function Testimonials() {
                                 md:text-sm
 
                                 font-bold
+
                                 text-slate-900
 
                                 truncate
@@ -691,9 +683,9 @@ export default function Testimonials() {
                         </div>
 
 
-                        {/* =================================
+                        {/* =====================================
                             STARS
-                        ================================= */}
+                        ===================================== */}
 
                         <div
                           className="
@@ -710,47 +702,66 @@ export default function Testimonials() {
                             ...Array(5),
                           ].map(
                             (_, index) => (
+
                               <Star
-                                key={
-                                  index
-                                }
-                                size={
-                                  14
-                                }
+                                key={index}
+
+                                size={14}
+
                                 className={
                                   index <
                                   (
                                     testimonial.rating ||
                                     5
                                   )
-                                    ? `
-                                      fill-amber-400
-                                      text-amber-400
-                                    `
-                                    : `
-                                      fill-slate-200
-                                      text-slate-200
-                                    `
+                                    ? "fill-amber-400 text-amber-400"
+                                    : "fill-slate-200 text-slate-200"
                                 }
                               />
+
                             )
                           )}
                         </div>
 
 
-                        {/* =================================
-                            REVIEW
-                        ================================= */}
+                        {/* =====================================
+                            FEEDBACK TEXT BOX
+
+                            THIS IS THE ONLY PART THAT CHANGES
+                            AFTER READ MORE.
+
+                            CARD HEIGHT DOES NOT CHANGE.
+                        ===================================== */}
 
                         <div
-                          className="
+                          className={`
                             flex-1
                             min-h-0
 
-                            overflow-hidden
-
                             mb-1
-                          "
+
+                            ${
+                              isExpanded
+                                ? `
+                                  overflow-y-auto
+
+                                  pr-1
+
+                                  touch-pan-y
+
+                                  overscroll-contain
+
+                                  scrollbar-thin
+
+                                  scrollbar-thumb-slate-300
+
+                                  scrollbar-track-transparent
+                                `
+                                : `
+                                  overflow-hidden
+                                `
+                            }
+                          `}
                         >
 
                           <p
@@ -770,12 +781,7 @@ export default function Testimonials() {
                               ${
                                 !isExpanded
                                   ? "line-clamp-5"
-                                  : `
-                                    max-h-[165px]
-                                    overflow-y-auto
-                                    pr-1
-                                    scrollbar-thin
-                                  `
+                                  : ""
                               }
                             `}
                           >
@@ -785,9 +791,9 @@ export default function Testimonials() {
                         </div>
 
 
-                        {/* =================================
-                            READ MORE
-                        ================================= */}
+                        {/* =====================================
+                            READ MORE BUTTON
+                        ===================================== */}
 
                         <div
                           className="
@@ -880,27 +886,28 @@ export default function Testimonials() {
                               </span>
 
                               {isExpanded ? (
+
                                 <ChevronUp
                                   size={13}
                                 />
+
                               ) : (
+
                                 <ChevronDown
                                   size={13}
                                 />
+
                               )}
 
                             </button>
 
                           ) : (
 
-                            <span
+                            <div
                               className="
-                                text-xs
-                                text-transparent
+                                h-4
                               "
-                            >
-                              Read more
-                            </span>
+                            />
 
                           )}
 
@@ -912,6 +919,7 @@ export default function Testimonials() {
                 )}
 
               </div>
+
             </div>
 
           </div>
