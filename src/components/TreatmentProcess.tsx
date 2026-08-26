@@ -73,274 +73,79 @@ export default function TreatmentProcess() {
 
         {/* =====================================================
             MOBILE VIEW
-        ===================================================== */}
+            All 5 treatment steps visible together
+            ===================================================== */}
 
         <div className="md:hidden">
+          <div className="space-y-3">
+            {steps.map((step, index) => (
+              <div
+                key={step.number}
+                className="
+                  relative
+                  bg-white
+                  rounded-2xl
+                  border border-slate-100
+                  shadow-[0_5px_20px_rgba(15,23,42,0.06)]
+                  overflow-hidden
+                "
+              >
+                {/* Small step accent */}
+                <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-teal-500 to-cyan-500" />
 
-          {/* Progress Navigation */}
-
-          <div className="relative mb-8">
-
-            {/* Background Line */}
-
-            <div className="absolute left-5 right-5 top-5 h-[2px] bg-slate-200" />
-
-            {/* Active Line */}
-
-            <div
-              className="absolute left-5 top-5 h-[2px] bg-gradient-to-r from-teal-500 to-cyan-500 transition-all duration-500"
-              style={{
-                width:
-                  activeStep === 0
-                    ? "0%"
-                    : `${(activeStep / 4) * 87}%`,
-              }}
-            />
-
-            {/* Number Buttons */}
-
-            <div className="relative flex justify-between">
-
-              {steps.map((step, index) => {
-
-                const active = index === activeStep;
-                const completed = index < activeStep;
-
-                return (
-                  <button
-                    key={step.number}
-                    type="button"
-                    onClick={() => setActiveStep(index)}
-                    aria-label={`Go to ${step.title}`}
-                    className="relative z-10"
-                  >
-                    <span
-                      className={`
-                        flex
-                        items-center
-                        justify-center
-
-                        w-10
-                        h-10
-
-                        rounded-full
-
-                        border-4
-                        border-white
-
-                        text-xs
-                        font-bold
-
-                        shadow-sm
-
-                        transition-all
-                        duration-300
-
-                        ${
-                          active
-                            ? "bg-gradient-to-br from-teal-600 to-cyan-600 text-white scale-110 shadow-lg"
-                            : completed
-                            ? "bg-teal-500 text-white"
-                            : "bg-white text-slate-400 border-slate-200"
-                        }
-                      `}
-                    >
-                      {completed ? (
-                        <Check className="w-4 h-4" strokeWidth={3} />
-                      ) : (
-                        step.number
-                      )}
-                    </span>
-                  </button>
-                );
-              })}
-
-            </div>
-          </div>
-
-
-          {/* =====================================================
-              MOBILE ACTIVE CARD
-          ===================================================== */}
-
-          <div
-            className="
-              relative
-              bg-white
-              rounded-3xl
-              border
-              border-slate-100
-              shadow-[0_12px_40px_rgba(15,23,42,0.08)]
-              overflow-hidden
-            "
-          >
-
-            {/* Top Gradient */}
-
-            <div className="h-1.5 bg-gradient-to-r from-teal-500 via-cyan-500 to-teal-400" />
-
-            <div className="p-6">
-
-              {/* Step Information */}
-
-              <div className="flex items-center justify-between mb-6">
-
-                <span
-                  className="
-                    text-[10px]
-                    font-bold
-                    uppercase
-                    tracking-[0.15em]
-                    text-teal-700
-                    bg-teal-50
-                    px-3
-                    py-1.5
-                    rounded-full
-                  "
-                >
-                  Step {currentStep.number}
-                </span>
-
-                <span className="text-xs font-medium text-slate-400">
-                  {activeStep + 1} / 5
-                </span>
-
-              </div>
-
-
-              {/* Number + Title */}
-
-              <div className="flex items-center gap-4">
-
-                <div
-                  className="
-                    flex-none
-                    w-14
-                    h-14
-                    rounded-2xl
-                    bg-gradient-to-br
-                    from-teal-600
-                    to-cyan-600
-                    text-white
-                    flex
-                    items-center
-                    justify-center
-                    text-xl
-                    font-black
-                    shadow-[0_8px_20px_rgba(13,148,136,0.22)]
-                  "
-                >
-                  {currentStep.number}
-                </div>
-
-                <h3 className="text-xl font-bold text-slate-900 leading-tight">
-                  {currentStep.title}
-                </h3>
-
-              </div>
-
-
-              {/* Description */}
-
-              <p className="text-sm text-slate-600 leading-7 mt-5">
-                {currentStep.description}
-              </p>
-
-
-              {/* Bottom Navigation */}
-
-              <div className="mt-7 pt-5 border-t border-slate-100 flex items-center justify-between">
-
-                {/* Previous */}
-
-                <button
-                  type="button"
-                  disabled={activeStep === 0}
-                  onClick={() =>
-                    setActiveStep((value) =>
-                      value > 0 ? value - 1 : 0
-                    )
-                  }
-                  className="
-                    text-xs
-                    font-bold
-                    text-slate-400
-                    disabled:opacity-30
-                    hover:text-teal-600
-                    transition-colors
-                  "
-                >
-                  ← Previous
-                </button>
-
-
-                {/* Next / Final */}
-
-                {activeStep === 4 ? (
-                  <span
+                <div className="flex items-center gap-3 px-4 py-3.5">
+                  {/* Number */}
+                  <div
                     className="
-                      inline-flex
-                      items-center
-                      justify-center
-                      text-xs
-                      font-bold
-                      text-teal-700
-                      bg-teal-50
-                      border
-                      border-teal-100
-                      px-4
-                      py-2.5
+                      flex-none
+                      w-10
+                      h-10
                       rounded-xl
-                    "
-                  >
-                    Final Step
-                  </span>
-                ) : (
-                  <button
-                    type="button"
-                    onClick={() =>
-                      setActiveStep((value) =>
-                        value < 4 ? value + 1 : 4
-                      )
-                    }
-                    className="
-                      inline-flex
-                      items-center
-                      gap-2
-                      text-xs
-                      font-bold
-                      text-white
-                      bg-gradient-to-r
+                      bg-gradient-to-br
                       from-teal-600
                       to-cyan-600
-                      px-4
-                      py-2.5
-                      rounded-xl
-                      shadow-md
-                      shadow-teal-500/20
-                      hover:-translate-y-0.5
-                      transition-all
+                      text-white
+                      flex
+                      items-center
+                      justify-center
+                      text-base
+                      font-black
+                      shadow-[0_5px_14px_rgba(13,148,136,0.18)]
                     "
                   >
-                    Next Step
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </button>
-                )}
+                    {step.number}
+                  </div>
 
+                  {/* Content */}
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-center gap-2">
+                      <span className="text-[9px] font-bold uppercase tracking-[0.14em] text-teal-700 bg-teal-50 px-2 py-1 rounded-full whitespace-nowrap">
+                        Step {step.number}
+                      </span>
+
+                      <h3 className="text-[15px] font-bold text-slate-900 leading-tight truncate">
+                        {step.title}
+                      </h3>
+                    </div>
+
+                    <p className="text-[11.5px] text-slate-600 leading-[1.45] mt-1.5">
+                      {step.description}
+                    </p>
+                  </div>
+
+                  {/* Progress indicator */}
+                  <div className="flex-none text-[9px] font-semibold text-slate-300">
+                    {index + 1}/5
+                  </div>
+                </div>
               </div>
-
-            </div>
+            ))}
           </div>
 
-
-          {/* Mobile Hint */}
-
           <p className="text-center text-[10px] text-slate-400 font-medium mt-4">
-            Tap a number above to explore your recovery journey
+            A simple 5-step approach from assessment to recovery
           </p>
-
         </div>
-
 
         {/* =====================================================
             DESKTOP VIEW
