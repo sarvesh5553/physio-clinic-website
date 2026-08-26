@@ -354,11 +354,13 @@ export default function Testimonials() {
                 aria-label="Previous patient reviews"
                 className="
                   absolute
-                  left-1
+                  left-2
                   md:left-1
 
-                  top-1/2
-                  -translate-y-1/2
+                  bottom-2
+                  md:top-1/2
+                  md:bottom-auto
+                  md:-translate-y-1/2
 
                   z-40
 
@@ -415,11 +417,13 @@ export default function Testimonials() {
                 aria-label="Next patient reviews"
                 className="
                   absolute
-                  right-1
+                  right-2
                   md:right-1
 
-                  top-1/2
-                  -translate-y-1/2
+                  bottom-2
+                  md:top-1/2
+                  md:bottom-auto
+                  md:-translate-y-1/2
 
                   z-40
 
@@ -494,11 +498,13 @@ export default function Testimonials() {
                 overflow-x-auto
                 overflow-y-visible
 
-                -mx-4
+                mx-0
                 md:mx-7
 
                 pt-2
                 pb-4
+                px-1
+                md:px-0
 
                 cursor-grab
 
