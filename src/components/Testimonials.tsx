@@ -190,7 +190,7 @@ export default function Testimonials() {
       window.innerWidth < 768;
 
     const amount = isMobile
-      ? 220
+      ? 170
       : 320;
 
     viewport.scrollBy({
@@ -354,7 +354,7 @@ export default function Testimonials() {
                 aria-label="Previous patient reviews"
                 className="
                   absolute
-                  left-0
+                  left-1
                   md:left-1
 
                   top-1/2
@@ -362,36 +362,40 @@ export default function Testimonials() {
 
                   z-40
 
-                  w-10
-                  h-10
+                  w-8
+                  h-8
+                  md:w-10
+                  md:h-10
 
                   rounded-full
 
-                  bg-white
+                  bg-white/45
+                  backdrop-blur-xl
 
                   border
-                  border-slate-200
+                  border-white/80
 
                   text-teal-700
 
-                  shadow-[0_4px_16px_rgba(15,23,42,0.12)]
+                  shadow-[0_6px_20px_rgba(13,148,136,0.14)]
+                  ring-1
+                  ring-teal-100/60
 
                   flex
                   items-center
                   justify-center
 
-                  hover:bg-teal-600
-                  hover:text-white
-                  hover:border-teal-600
+                  hover:bg-white/70
+                  hover:text-teal-600
 
-                  active:scale-95
+                  active:scale-90
 
                   transition-all
                   duration-300
                 "
               >
                 <ChevronLeft
-                  className="w-5 h-5"
+                  className="w-4 h-4 md:w-5 md:h-5"
                   strokeWidth={2.5}
                 />
               </button>
@@ -411,7 +415,7 @@ export default function Testimonials() {
                 aria-label="Next patient reviews"
                 className="
                   absolute
-                  right-0
+                  right-1
                   md:right-1
 
                   top-1/2
@@ -419,36 +423,40 @@ export default function Testimonials() {
 
                   z-40
 
-                  w-10
-                  h-10
+                  w-8
+                  h-8
+                  md:w-10
+                  md:h-10
 
                   rounded-full
 
-                  bg-white
+                  bg-white/45
+                  backdrop-blur-xl
 
                   border
-                  border-slate-200
+                  border-white/80
 
                   text-teal-700
 
-                  shadow-[0_4px_16px_rgba(15,23,42,0.12)]
+                  shadow-[0_6px_20px_rgba(13,148,136,0.14)]
+                  ring-1
+                  ring-teal-100/60
 
                   flex
                   items-center
                   justify-center
 
-                  hover:bg-teal-600
-                  hover:text-white
-                  hover:border-teal-600
+                  hover:bg-white/70
+                  hover:text-teal-600
 
-                  active:scale-95
+                  active:scale-90
 
                   transition-all
                   duration-300
                 "
               >
                 <ChevronRight
-                  className="w-5 h-5"
+                  className="w-4 h-4 md:w-5 md:h-5"
                   strokeWidth={2.5}
                 />
               </button>
@@ -486,7 +494,7 @@ export default function Testimonials() {
                 overflow-x-auto
                 overflow-y-visible
 
-                mx-5
+                -mx-4
                 md:mx-7
 
                 pt-2
@@ -507,7 +515,7 @@ export default function Testimonials() {
               <div
                 className="
                   flex
-                  gap-4
+                  gap-3
                   md:gap-5
                 "
               >
@@ -547,8 +555,8 @@ export default function Testimonials() {
                         className="
                           flex-none
 
-                          w-[205px]
-                          h-[250px]
+                          w-[150px]
+                          h-[235px]
 
                           md:w-[calc((100%-60px)/4)]
                           md:h-[300px]
