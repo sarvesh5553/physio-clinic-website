@@ -527,284 +527,206 @@ export default function FAQ() {
 
 
         {/* =====================================================
-            CHATBOT POPUP — SAME WINDOW AS THE MAIN FLOATING CHATBOT
+            CHATBOT POPUP
         ===================================================== */}
 
         {isChatOpen && (
+
           <div
             className="
               fixed
-
-              right-6
-              bottom-6
-
-              z-[70]
-
-              w-[calc(100vw-2rem)]
+              bottom-4
+              left-3
+              right-3
+              z-50
+              sm:left-auto
+              sm:right-5
+              sm:bottom-5
+              w-[calc(100vw-1.5rem)]
               max-w-[320px]
-
-              overflow-hidden
-
-              rounded-[22px]
-
-              border
-              border-slate-200
-
-              bg-white
-
-              shadow-[0_14px_45px_rgba(15,23,42,0.16)]
-
-              sm:right-6
-              sm:bottom-6
+              sm:w-[320px]
             "
           >
+
             <div
               className="
-                flex
-                h-[min(440px,calc(100dvh-90px))]
-                max-h-[440px]
-
-                flex-col
-
                 overflow-hidden
-
-                sm:h-[440px]
+                rounded-[20px]
+                border
+                border-slate-200/80
+                bg-white
+                shadow-[0_14px_45px_rgba(15,23,42,0.16)]
               "
             >
+
+              <div className="flex h-[min(440px,calc(100dvh-90px))] max-h-[440px] flex-col overflow-hidden sm:h-[440px]">
+
               {/* =================================================
                   CHAT HEADER
-              ================================================= */}
+              ================================================== */}
 
               <div
                 className="
-                  flex-shrink-0
-
+                  relative
+                  overflow-hidden
                   bg-gradient-to-br
                   from-white
                   via-teal-50
                   to-cyan-50
                   border-b
                   border-teal-100
-
                   px-4
                   py-3
                 "
               >
-                {/* Header top */}
 
-                <div
-                  className="
-                    flex
-                    items-center
-                    justify-between
-                  "
-                >
-                  <div
-                    className="
-                      flex
-                      min-w-0
-                      items-center
-                      gap-3
-                    "
-                  >
-                    {/* Bot logo */}
+                <div className="relative flex items-center justify-between">
+
+                  {/* Doctor assistant */}
+
+                  <div className="flex items-center gap-3">
 
                     <div
                       className="
                         relative
-
                         flex
-                        h-10
-                        w-10
-
-                        flex-shrink-0
-
+                        h-9
+                        w-9
                         items-center
                         justify-center
-
                         rounded-2xl
-
                         bg-gradient-to-br
                         from-teal-400
                         to-cyan-500
-
                         text-white
-
                         shadow-lg
                       "
                     >
+
                       <Bot className="h-6 w-6" />
 
                       <span
                         className="
                           absolute
-
-                          right-[-2px]
-                          top-[-2px]
-
-                          h-4
-                          w-4
-
+                          -right-1
+                          -top-1
+                          h-3.5
+                          w-3.5
                           rounded-full
-
                           border-2
                           border-white
-
                           bg-emerald-400
                         "
                       />
+
                     </div>
 
-                    {/* Title */}
+                    <div>
 
-                    <div className="min-w-0">
-                      <div
-                        className="
-                          flex
-                          items-center
-                          gap-2
-                        "
-                      >
-                        <h3
-                          className="
-                            truncate
+                      <div className="flex items-center gap-2">
 
-                            text-base
-                            font-bold
-
-                            text-slate-900
-                          "
-                        >
+                        <h3 className="text-sm font-bold text-slate-900">
                           PhysioCare Assistant
                         </h3>
 
-                        <Sparkles
-                          className="
-                            h-4
-                            w-4
+                        <Sparkles className="h-3.5 w-3.5 text-teal-500" />
 
-                            flex-shrink-0
-
-                            text-teal-500
-                          "
-                        />
                       </div>
 
-                      <p
-                        className="
-                          mt-1
-
-                          text-xs
-
-                          text-slate-300
-                        "
-                      >
-                        Ask about Dr. Bhagyashri's
-                        services
+                      <p className="mt-0.5 text-[11px] text-slate-500">
+                        Ask about Dr. Bhagyashri's services
                       </p>
+
                     </div>
+
                   </div>
 
-                  {/* Close */}
 
-                  <button
-                    type="button"
-                    onClick={() =>
-                      setIsChatOpen(false)
-                    }
-                    aria-label="Close chatbot"
-                    className="
-                      ml-3
+                  {/* Clear + Close */}
 
-                      flex
-                      h-9
-                      w-9
+                  <div className="flex items-center gap-1">
 
-                      flex-shrink-0
+                    {messages.length > 0 && (
+                      <button
+                        type="button"
+                        onClick={clearChat}
+                        aria-label="Clear conversation"
+                        className="
+                          flex
+                          h-8
+                          w-8
+                          items-center
+                          justify-center
+                          rounded-lg
+                          text-slate-400
+                          transition
+                          hover:bg-white/10
+                          hover:text-white
+                        "
+                      >
+                        <MessageCircle className="h-4 w-4" />
+                      </button>
+                    )}
 
-                      items-center
-                      justify-center
-
-                      rounded-xl
-
-                      text-slate-400
-
-                      hover:bg-white/10
-                      hover:text-teal-700
-                    "
-                  >
-                    <X className="h-5 w-5" />
-                  </button>
-                </div>
-
-                {/* Header description */}
-
-                <p
-                  className="
-                    mt-4
-
-                    text-xs
-                    leading-relaxed
-
-                    text-slate-300
-                  "
-                >
-                  Physiotherapy services • Conditions
-                  • Timings • Home visits • Online
-                  consultations
-                </p>
-              </div>
-
-              {/* =================================================
-                  CHAT CONTENT
-              ================================================= */}
-
-              <div
-                className="
-                  min-h-0
-                  flex-1
-
-                  overflow-y-auto
-
-                  overscroll-contain
-
-                  bg-white
-
-                  p-4
-                "
-              >
-                {/* =================================================
-                    EMPTY STATE
-                ================================================= */}
-
-                {messages.length === 0 && (
-                  <div>
-                    {/* Welcome */}
-
-                    <div
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setIsChatOpen(false)
+                      }
+                      aria-label="Close chatbot"
                       className="
-                        mb-6
-
                         flex
-                        items-start
-                        gap-3
+                        h-8
+                        w-8
+                        items-center
+                        justify-center
+                        rounded-lg
+                        text-slate-400
+                        transition
+                        hover:bg-white/10
+                        hover:text-white
                       "
                     >
+                      <X className="h-4 w-4" />
+                    </button>
+
+                  </div>
+
+                </div>
+
+                <p className="relative mt-3 text-[11px] leading-relaxed text-slate-300">
+                  Physiotherapy services • Conditions • Timings • Home visits • Online consultations
+                </p>
+
+              </div>
+
+
+              {/* =================================================
+                  CHAT BODY
+              ================================================== */}
+
+              <div className="bg-white p-4 md:p-5">
+
+                {/* =================================================
+                    EMPTY STATE
+                ================================================== */}
+
+                {messages.length === 0 && (
+
+                  <div>
+
+                    <div className="mb-5 flex items-start gap-3">
+
                       <div
                         className="
                           flex
                           h-8
                           w-8
-
                           flex-shrink-0
-
                           items-center
                           justify-center
-
                           rounded-full
-
                           bg-teal-50
-
                           text-teal-600
                         "
                       >
@@ -813,154 +735,148 @@ export default function FAQ() {
 
                       <div
                         className="
+                          max-w-[90%]
                           rounded-2xl
                           rounded-tl-md
-
                           border
                           border-slate-100
-
                           bg-slate-50
-
                           px-4
                           py-3
                         "
                       >
-                        <p
-                          className="
-                            mb-1
 
-                            text-sm
-                            font-semibold
-
-                            text-slate-800
-                          "
-                        >
+                        <p className="mb-1 text-sm font-semibold text-slate-800">
                           How can I help you?
                         </p>
 
-                        <p
-                          className="
-                            text-sm
-                            leading-relaxed
-
-                            text-slate-500
-                          "
-                        >
+                        <p className="text-xs leading-relaxed text-slate-500 md:text-sm">
                           Ask about Dr. Bhagyashri's
-                          physiotherapy services,
-                          conditions, timings,
-                          home visits or online
+                          physiotherapy services, conditions,
+                          timings, home visits or online
                           consultations.
                         </p>
+
                       </div>
+
                     </div>
 
-                    {/* Popular questions */}
 
-                    <p
-                      className="
-                        mb-3
+                    {/* =================================================
+                        POPULAR QUESTIONS
+                    ================================================== */}
 
-                        text-xs
-                        font-bold
-                        uppercase
-                        tracking-wider
+                    <div>
 
-                        text-slate-400
-                      "
-                    >
-                      Popular questions
-                    </p>
+                      <p
+                        className="
+                          mb-2.5
+                          text-[10px]
+                          font-bold
+                          uppercase
+                          tracking-wider
+                          text-slate-400
+                          md:text-xs
+                        "
+                      >
+                        Popular questions
+                      </p>
 
-                    <div
-                      className="
-                        grid
-                        grid-cols-1
-                        gap-2
+                      <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
 
-                        sm:grid-cols-2
-                      "
-                    >
-                      {[
-                        "Do you provide home visits in Pune?",
-                        "What conditions does the doctor treat?",
-                        "What physiotherapy services are available?",
-                        "Can patients outside Pune get online physiotherapy?",
-                      ].map((item) => (
-                        <button
-                          key={item}
-                          type="button"
-                          onClick={() =>
-                            chooseQuestion(item)
-                          }
-                          className="
-                            flex
-                            min-h-[58px]
+                        {[
+                          "Do you provide home visits in Pune?",
+                          "What conditions does the doctor treat?",
+                          "What physiotherapy services are available?",
+                          "Can patients outside Pune get online physiotherapy?",
+                        ].map(
+                          (suggestion) => (
 
-                            items-center
-                            gap-3
+                            <button
+                              key={suggestion}
+                              type="button"
+                              onClick={() =>
+                                useSuggestedQuestion(
+                                  suggestion
+                                )
+                              }
+                              className="
+                                group
+                                rounded-xl
+                                border
+                                border-slate-200
+                                bg-white
+                                px-3.5
+                                py-3
+                                text-left
+                                text-xs
+                                font-medium
+                                text-slate-700
+                                transition-all
+                                duration-200
+                                hover:border-teal-200
+                                hover:bg-teal-50/50
+                                hover:text-teal-700
+                                md:text-sm
+                              "
+                            >
 
-                            rounded-2xl
+                              <span className="flex items-center gap-2">
 
-                            border
-                            border-slate-200
+                                <MessageCircle
+                                  className="
+                                    h-3.5
+                                    w-3.5
+                                    flex-shrink-0
+                                    text-teal-500
+                                  "
+                                />
 
-                            bg-white
+                                <span>
+                                  {suggestion}
+                                </span>
 
-                            px-4
-                            py-3
+                              </span>
 
-                            text-left
+                            </button>
 
-                            text-sm
-                            font-medium
+                          )
+                        )}
 
-                            leading-relaxed
+                      </div>
 
-                            text-slate-700
-
-                            hover:border-teal-200
-                            hover:bg-teal-50
-                            hover:text-teal-700
-                          "
-                        >
-                          <MessageCircle
-                            className="
-                              h-4
-                              w-4
-
-                              flex-shrink-0
-
-                              text-teal-500
-                            "
-                          />
-
-                          <span>
-                            {item}
-                          </span>
-                        </button>
-                      ))}
                     </div>
+
                   </div>
+
                 )}
 
+
                 {/* =================================================
-                    MESSAGES
-                ================================================= */}
+                    CHAT MESSAGES
+                ================================================== */}
 
                 {messages.length > 0 && (
+
                   <div
                     className="
+                      mb-5
+                      max-h-[340px]
                       space-y-4
+                      overflow-y-auto
+                      pr-1
+                      scroll-smooth
                     "
                   >
+
                     {messages.map(
                       (message, index) => (
+
                         <div
                           key={index}
                           className={`
                             flex
-                            gap-2
+                            gap-2.5
 
                             ${
                               message.role ===
@@ -970,66 +886,52 @@ export default function FAQ() {
                             }
                           `}
                         >
+
                           {/* Assistant icon */}
 
                           {message.role ===
                             "assistant" && (
+
                             <div
                               className="
                                 flex
                                 h-8
                                 w-8
-
                                 flex-shrink-0
-
                                 items-center
                                 justify-center
-
                                 rounded-full
-
                                 bg-teal-50
-
                                 text-teal-600
                               "
                             >
                               <Bot className="h-4 w-4" />
                             </div>
+
                           )}
+
 
                           {/* Message */}
 
                           <div
                             className={`
                               max-w-[82%]
-
                               rounded-2xl
-
                               px-4
                               py-3
-
-                              text-sm
+                              text-xs
                               leading-relaxed
+                              md:text-sm
 
                               ${
                                 message.role ===
                                 "user"
-                                  ? `
-                                    rounded-br-md
-                                    bg-gradient-to-r
-                                    from-teal-600
-                                    to-cyan-600
-                                    text-white
-                                  `
-                                  : `
-                                    rounded-bl-md
-                                    border
-                                    border-slate-100
-                                    bg-slate-50
-                                    text-slate-700
-                                  `
+                                  ? "rounded-br-md bg-gradient-to-r from-teal-600 to-cyan-600 text-white shadow-sm"
+                                  : "rounded-bl-md border border-slate-100 bg-slate-50 text-slate-700"
                               }
                             `}
                           >
+
                             {message.content
                               .split("\n")
                               .map(
@@ -1037,11 +939,13 @@ export default function FAQ() {
                                   line,
                                   lineIndex
                                 ) => (
+
                                   <span
                                     key={
                                       lineIndex
                                     }
                                   >
+
                                     {line}
 
                                     {lineIndex <
@@ -1051,63 +955,61 @@ export default function FAQ() {
                                         1 && (
                                       <br />
                                     )}
+
                                   </span>
+
                                 )
                               )}
+
                           </div>
+
 
                           {/* User icon */}
 
                           {message.role ===
                             "user" && (
+
                             <div
                               className="
                                 flex
                                 h-8
                                 w-8
-
                                 flex-shrink-0
-
                                 items-center
                                 justify-center
-
                                 rounded-full
-
                                 bg-slate-900
-
                                 text-white
                               "
                             >
                               <User className="h-4 w-4" />
                             </div>
+
                           )}
+
                         </div>
+
                       )
                     )}
 
-                    {/* Typing */}
+
+                    {/* =================================================
+                        TYPING INDICATOR
+                    ================================================== */}
 
                     {isSending && (
-                      <div
-                        className="
-                          flex
-                          items-center
-                          gap-2
-                        "
-                      >
+
+                      <div className="flex items-center gap-2.5">
+
                         <div
                           className="
                             flex
                             h-8
                             w-8
-
                             items-center
                             justify-center
-
                             rounded-full
-
                             bg-teal-50
-
                             text-teal-600
                           "
                         >
@@ -1118,85 +1020,46 @@ export default function FAQ() {
                           className="
                             rounded-2xl
                             rounded-bl-md
-
+                            border
+                            border-slate-100
                             bg-slate-50
-
                             px-4
                             py-3
                           "
                         >
-                          <div
-                            className="
-                              flex
-                              gap-1
-                            "
-                          >
-                            <span
-                              className="
-                                h-1.5
-                                w-1.5
 
-                                rounded-full
+                          <div className="flex gap-1">
 
-                                bg-teal-400
-                              "
-                            />
+                            <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-teal-400" />
 
-                            <span
-                              className="
-                                h-1.5
-                                w-1.5
+                            <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-teal-400 [animation-delay:100ms]" />
 
-                                rounded-full
+                            <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-teal-400 [animation-delay:200ms]" />
 
-                                bg-teal-400
-
-                                [animation-delay:100ms]
-                              "
-                            />
-
-                            <span
-                              className="
-                                h-1.5
-                                w-1.5
-
-                                rounded-full
-
-                                bg-teal-400
-
-                                [animation-delay:200ms]
-                              "
-                            />
                           </div>
+
                         </div>
+
                       </div>
+
                     )}
+
+                    <div ref={messagesEndRef} />
+
                   </div>
+
                 )}
-              </div>
 
-              {/* =================================================
-                  INPUT
-              ================================================= */}
 
-              <div
-                className="
-                  flex-shrink-0
+                {/* =================================================
+                    INPUT
+                ================================================== */}
 
-                  border-t
-                  border-slate-100
-
-                  bg-white
-
-                  px-4
-                  pb-3
-                  pt-3
-                "
-              >
                 <form
                   onSubmit={sendQuestion}
-                  className="relative"
+                  className="relative flex items-center"
                 >
+
                   <input
                     type="text"
                     value={question}
@@ -1205,35 +1068,28 @@ export default function FAQ() {
                         e.target.value
                       )
                     }
-                    disabled={isSending}
                     placeholder="Ask about physiotherapy..."
+                    disabled={isSending}
                     aria-label="Ask about physiotherapy"
                     className="
                       w-full
-
                       rounded-xl
-
                       border
                       border-slate-200
-
                       bg-slate-50
-
-                      py-3
+                      py-3.5
                       pl-4
-                      pr-12
-
+                      pr-14
                       text-sm
-
                       text-slate-800
-
                       outline-none
-
+                      transition-all
                       placeholder:text-slate-400
-
                       focus:border-teal-400
                       focus:bg-white
                       focus:ring-4
                       focus:ring-teal-50
+                      disabled:opacity-60
                     "
                   />
 
@@ -1246,76 +1102,63 @@ export default function FAQ() {
                     aria-label="Send question"
                     className="
                       absolute
-
                       right-1.5
-                      top-1/2
-
                       flex
                       h-9
                       w-9
-
-                      -translate-y-1/2
-
                       items-center
                       justify-center
-
                       rounded-lg
-
                       bg-gradient-to-r
                       from-teal-600
                       to-cyan-600
-
                       text-white
-
+                      shadow-sm
+                      transition-all
+                      hover:-translate-y-0.5
+                      hover:shadow-md
                       disabled:cursor-not-allowed
                       disabled:opacity-30
                     "
                   >
+
                     {isSending ? (
-                      <div
-                        className="
-                          h-4
-                          w-4
 
-                          rounded-full
+                      <div className="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white" />
 
-                          border-2
-                          border-white/30
-                          border-t-white
-                        "
-                      />
                     ) : (
-                      <Send
-                        className="
-                          h-4
-                          w-4
-                        "
-                      />
+
+                      <Send className="h-4 w-4" />
+
                     )}
+
                   </button>
+
                 </form>
 
                 <p
                   className="
-                    mt-2
-
+                    mt-3
                     text-center
-
-                    text-[9px]
-
+                    text-[10px]
                     leading-relaxed
-
                     text-slate-400
+                    md:text-xs
                   "
                 >
-                  General information only. For
-                  diagnosis or treatment decisions,
-                  please consult a qualified
+                  General information only. For diagnosis or
+                  treatment decisions, please consult a qualified
                   healthcare professional.
                 </p>
+
               </div>
+
+              </div>
+
             </div>
+
           </div>
+
         )}
 
       </div>
