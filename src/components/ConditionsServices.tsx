@@ -24,21 +24,54 @@ export default function ConditionsServices() {
     { title: "Back Pain", image: "/Conditions/backpain.png" },
     { title: "Neck Pain", image: "/Conditions/neck-pain.png" },
     { title: "Sciatica", image: "/Conditions/sciatica.png" },
-    { title: "Frozen Shoulder", image: "/Conditions/frozen-shoulder.png" },
+    {
+      title: "Frozen Shoulder",
+      image: "/Conditions/frozen-shoulder.png",
+    },
     { title: "Arthritis", image: "/Conditions/arthritis.png" },
     { title: "Knee Pain", image: "/Conditions/knee-pain.png" },
-    { title: "Shoulder Pain", image: "/Conditions/shoulder-pain.png" },
-    { title: "Tennis Elbow", image: "/Conditions/tenniselbow.png" },
+    {
+      title: "Shoulder Pain",
+      image: "/Conditions/shoulder-pain.png",
+    },
+    {
+      title: "Tennis Elbow",
+      image: "/Conditions/tenniselbow.png",
+    },
     { title: "Slip Disc", image: "/Conditions/slip-disc.png" },
-    { title: "Sports Injury", image: "/Conditions/sports-injury.png" },
+    {
+      title: "Sports Injury",
+      image: "/Conditions/sports-injury.png",
+    },
     { title: "Hip Pain", image: "/Conditions/hip-pain.png" },
-    { title: "Ankle Sprain", image: "/Conditions/ankle-sprain.png" },
-    { title: "Muscle Strain", image: "/Conditions/muscle-strain.png" },
-    { title: "Joint Stiffness", image: "/Conditions/joint-stiffness.png" },
-    { title: "Postural Problems", image: "/Conditions/postural-problems.png" },
-    { title: "Ligament Injury", image: "/Conditions/ligament-injury.png" },
-    { title: "Plantar Fasciitis", image: "/Conditions/plantar-fasciitis.png" },
-    { title: "Chronic Pain", image: "/Conditions/chronic-pain.png" },
+    {
+      title: "Ankle Sprain",
+      image: "/Conditions/ankle-sprain.png",
+    },
+    {
+      title: "Muscle Strain",
+      image: "/Conditions/muscle-strain.png",
+    },
+    {
+      title: "Joint Stiffness",
+      image: "/Conditions/joint-stiffness.png",
+    },
+    {
+      title: "Postural Problems",
+      image: "/Conditions/postural-problems.png",
+    },
+    {
+      title: "Ligament Injury",
+      image: "/Conditions/ligament-injury.png",
+    },
+    {
+      title: "Plantar Fasciitis",
+      image: "/Conditions/plantar-fasciitis.png",
+    },
+    {
+      title: "Chronic Pain",
+      image: "/Conditions/chronic-pain.png",
+    },
   ];
 
   const services = [
@@ -46,67 +79,67 @@ export default function ConditionsServices() {
       icon: <Zap className="w-4 h-4" />,
       title: "Electrotherapy",
       description:
-        "Advanced technological modalities used to suppress pain and accelerate cellular repair.",
+        "Physiotherapy electrotherapy modalities used where appropriate to support pain management, recovery, and tissue healing.",
     },
     {
       icon: <HeartPulse className="w-4 h-4" />,
       title: "Pain Management",
       description:
-        "Evidence-based clinical approaches for acute and chronic pain relief.",
+        "Evidence-based physiotherapy approaches for managing acute and chronic pain while improving movement and daily function.",
     },
     {
       icon: <Activity className="w-4 h-4" />,
       title: "Manual Therapy",
       description:
-        "Hands-on techniques to reduce pain, improve mobility and restore function.",
+        "Hands-on physiotherapy techniques to reduce pain, improve mobility, and restore functional movement.",
     },
     {
       icon: <CheckCircle2 className="w-4 h-4" />,
       title: "Exercise Therapy",
       description:
-        "Customized exercise programs to strengthen muscles and improve movement.",
+        "Customized physiotherapy exercise programs designed to improve strength, flexibility, balance, mobility, and movement.",
     },
     {
       icon: <Brain className="w-4 h-4" />,
       title: "Neuro Rehabilitation",
       description:
-        "Specialized recovery framework designed for neurological conditions.",
+        "Specialized physiotherapy rehabilitation support for neurological conditions, movement difficulties, and functional recovery.",
     },
     {
       icon: <Dumbbell className="w-4 h-4" />,
       title: "Sports Rehabilitation",
       description:
-        "Helping athletes recover safely and return to peak performance.",
+        "Sports physiotherapy and rehabilitation to help athletes recover safely from injuries and return to activity.",
     },
     {
       icon: <Building2 className="w-4 h-4" />,
       title: "Post Surgical Rehab",
       description:
-        "Structured recovery programs after orthopedic and joint surgeries.",
+        "Structured physiotherapy rehabilitation programs following appropriate orthopedic and joint surgeries.",
     },
     {
       icon: <CheckCircle2 className="w-4 h-4" />,
       title: "Posture Correction",
       description:
-        "Assessment and correction of posture-related structural dysfunctions.",
+        "Physiotherapy assessment and exercise-based strategies to improve posture, movement patterns, and related discomfort.",
     },
     {
       icon: <Syringe className="w-4 h-4" />,
       title: "Dry Needling",
       description:
-        "Targets trigger points and muscle tightness for targeted pain relief.",
+        "Physiotherapy dry needling targeting appropriate trigger points and muscle tightness as part of a personalized treatment plan.",
     },
     {
       icon: <Layers className="w-4 h-4" />,
       title: "Dry & Wet Cupping",
       description:
-        "Improves local circulation and helps relieve deep muscular tension.",
+        "Cupping therapy techniques used where appropriate to help address muscular tension and support a broader physiotherapy plan.",
     },
     {
       icon: <BriefcaseMedical className="w-4 h-4" />,
       title: "Kinesio Taping",
       description:
-        "Supports structural joints and muscles while promoting active recovery.",
+        "Kinesio taping techniques used to support selected muscles and joints while complementing active physiotherapy rehabilitation.",
     },
   ];
 
@@ -125,7 +158,17 @@ export default function ConditionsServices() {
   };
 
   return (
-    <section className="py-12 md:py-16 bg-gradient-to-b from-white via-slate-50/60 to-white overflow-hidden">
+    <section
+      className="
+        py-12
+        md:py-16
+        bg-gradient-to-b
+        from-white
+        via-slate-50/60
+        to-white
+        overflow-hidden
+      "
+    >
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* =====================================================
@@ -135,30 +178,88 @@ export default function ConditionsServices() {
         <div className="text-center mb-8 md:mb-12">
 
           <div className="inline-flex items-center justify-center mb-3">
-            <span className="text-xs font-bold tracking-[0.2em] uppercase text-teal-700 bg-teal-50 px-4 py-1.5 rounded-full">
+
+            <span
+              className="
+                text-xs
+                font-bold
+                tracking-[0.2em]
+                uppercase
+                text-teal-700
+                bg-teal-50
+                px-4
+                py-1.5
+                rounded-full
+              "
+            >
               Conditions & Services
             </span>
+
           </div>
 
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-900 mb-3 tracking-tight">
-            <span>Conditions & </span>
 
-            <span className="bg-gradient-to-r from-teal-600 to-cyan-600 bg-clip-text text-transparent">
+          <h2
+            className="
+              text-3xl
+              sm:text-4xl
+              md:text-5xl
+              font-bold
+              text-slate-900
+              mb-3
+              tracking-tight
+            "
+          >
+            <span>
+              Conditions &{" "}
+            </span>
+
+            <span
+              className="
+                bg-gradient-to-r
+                from-teal-600
+                to-cyan-600
+                bg-clip-text
+                text-transparent
+              "
+            >
               Services
             </span>
           </h2>
 
-          <p className="text-slate-600 max-w-2xl mx-auto text-sm md:text-base leading-relaxed px-2">
-            Evidence-based physiotherapy for pain relief, mobility, and better
-            quality of life.
+
+          <p
+            className="
+              text-slate-600
+              max-w-2xl
+              mx-auto
+              text-sm
+              md:text-base
+              leading-relaxed
+              px-2
+            "
+          >
+            Evidence-based physiotherapy for pain relief, mobility,
+            rehabilitation, and better quality of life in Pune,
+            with personalized treatment plans for individual needs.
           </p>
+
         </div>
+
 
         {/* =====================================================
             DUAL COLUMN LAYOUT
         ===================================================== */}
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6 items-start">
+        <div
+          className="
+            grid
+            grid-cols-1
+            lg:grid-cols-2
+            gap-4
+            lg:gap-6
+            items-start
+          "
+        >
 
           {/* =================================================
               LEFT: CONDITIONS
@@ -181,20 +282,54 @@ export default function ConditionsServices() {
 
             {/* Header */}
 
-            <div className="flex items-center justify-between mb-4 pb-2.5 border-b border-slate-100">
+            <div
+              className="
+                flex
+                items-center
+                justify-between
+                mb-4
+                pb-2.5
+                border-b
+                border-slate-100
+              "
+            >
 
-              <h3 className="text-base sm:text-lg font-bold text-slate-900 pl-2.5 border-l-4 border-teal-500">
+              <h3
+                className="
+                  text-base
+                  sm:text-lg
+                  font-bold
+                  text-slate-900
+                  pl-2.5
+                  border-l-4
+                  border-teal-500
+                "
+              >
                 Conditions We Treat
               </h3>
 
-              <span className="text-xs font-semibold text-teal-700 bg-teal-50 border border-teal-100 px-2.5 py-0.5 rounded-full">
+
+              <span
+                className="
+                  text-xs
+                  font-semibold
+                  text-teal-700
+                  bg-teal-50
+                  border
+                  border-teal-100
+                  px-2.5
+                  py-0.5
+                  rounded-full
+                "
+              >
                 {conditions.length} Conditions
               </span>
+
             </div>
+
 
             {/* =================================================
                 FIXED NAVIGATION CONTROLS
-                These stay in place while content scrolls.
             ================================================= */}
 
             <button
@@ -241,8 +376,12 @@ export default function ConditionsServices() {
                 duration-300
               "
             >
-              <ChevronUp className="w-4 h-4" strokeWidth={2.5} />
+              <ChevronUp
+                className="w-4 h-4"
+                strokeWidth={2.5}
+              />
             </button>
+
 
             <button
               type="button"
@@ -288,8 +427,12 @@ export default function ConditionsServices() {
                 duration-300
               "
             >
-              <ChevronDown className="w-4 h-4" strokeWidth={2.5} />
+              <ChevronDown
+                className="w-4 h-4"
+                strokeWidth={2.5}
+              />
             </button>
+
 
             {/* =================================================
                 SCROLLING CONTENT
@@ -310,9 +453,18 @@ export default function ConditionsServices() {
               "
             >
 
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 pr-1">
+              <div
+                className="
+                  grid
+                  grid-cols-2
+                  sm:grid-cols-4
+                  gap-2.5
+                  pr-1
+                "
+              >
 
                 {conditions.map((condition) => (
+
                   <div
                     key={condition.title}
                     className="
@@ -374,12 +526,20 @@ export default function ConditionsServices() {
                         group-hover:border-teal-100
                       "
                     >
+
                       <img
                         src={condition.image}
-                        alt={condition.title}
-                        className="w-full h-full object-contain"
+                        alt={`${condition.title} physiotherapy treatment in Pune`}
+                        loading="lazy"
+                        className="
+                          w-full
+                          h-full
+                          object-contain
+                        "
                       />
+
                     </div>
+
 
                     <span
                       className="
@@ -406,11 +566,15 @@ export default function ConditionsServices() {
                     </span>
 
                   </div>
+
                 ))}
 
               </div>
+
             </div>
+
           </div>
+
 
           {/* =================================================
               RIGHT: SERVICES
@@ -433,16 +597,51 @@ export default function ConditionsServices() {
 
             {/* Header */}
 
-            <div className="flex items-center justify-between mb-4 pb-2.5 border-b border-slate-100">
+            <div
+              className="
+                flex
+                items-center
+                justify-between
+                mb-4
+                pb-2.5
+                border-b
+                border-slate-100
+              "
+            >
 
-              <h3 className="text-base sm:text-lg font-bold text-slate-900 pl-2.5 border-l-4 border-cyan-500">
+              <h3
+                className="
+                  text-base
+                  sm:text-lg
+                  font-bold
+                  text-slate-900
+                  pl-2.5
+                  border-l-4
+                  border-cyan-500
+                "
+              >
                 Our Services
               </h3>
 
-              <span className="text-xs font-semibold text-cyan-700 bg-cyan-50 border border-cyan-100 px-2.5 py-0.5 rounded-full">
+
+              <span
+                className="
+                  text-xs
+                  font-semibold
+                  text-cyan-700
+                  bg-cyan-50
+                  border
+                  border-cyan-100
+                  px-2.5
+                  py-0.5
+                  rounded-full
+                "
+              >
                 {services.length} Services
               </span>
+
             </div>
+
 
             {/* =================================================
                 FIXED SERVICES ARROWS
@@ -492,8 +691,12 @@ export default function ConditionsServices() {
                 duration-300
               "
             >
-              <ChevronUp className="w-4 h-4" strokeWidth={2.5} />
+              <ChevronUp
+                className="w-4 h-4"
+                strokeWidth={2.5}
+              />
             </button>
+
 
             <button
               type="button"
@@ -539,8 +742,12 @@ export default function ConditionsServices() {
                 duration-300
               "
             >
-              <ChevronDown className="w-4 h-4" strokeWidth={2.5} />
+              <ChevronDown
+                className="w-4 h-4"
+                strokeWidth={2.5}
+              />
             </button>
+
 
             {/* =================================================
                 SCROLLING SERVICES
@@ -561,9 +768,17 @@ export default function ConditionsServices() {
               "
             >
 
-              <div className="flex flex-col gap-2.5 pr-1">
+              <div
+                className="
+                  flex
+                  flex-col
+                  gap-2.5
+                  pr-1
+                "
+              >
 
                 {services.map((service) => (
+
                   <div
                     key={service.title}
                     className="
@@ -593,7 +808,9 @@ export default function ConditionsServices() {
                     "
                   >
 
-                    {/* Service Icon */}
+                    {/* =================================================
+                        SERVICE ICON
+                    ================================================= */}
 
                     <div
                       className="
@@ -627,9 +844,13 @@ export default function ConditionsServices() {
                       {service.icon}
                     </div>
 
-                    {/* Service Content */}
+
+                    {/* =================================================
+                        SERVICE CONTENT
+                    ================================================= */}
 
                     <div>
+
                       <h4
                         className="
                           font-bold
@@ -646,6 +867,7 @@ export default function ConditionsServices() {
                         {service.title}
                       </h4>
 
+
                       <p
                         className="
                           text-xs
@@ -656,15 +878,21 @@ export default function ConditionsServices() {
                       >
                         {service.description}
                       </p>
+
                     </div>
 
                   </div>
+
                 ))}
 
               </div>
+
             </div>
+
           </div>
+
         </div>
+
       </div>
     </section>
   );

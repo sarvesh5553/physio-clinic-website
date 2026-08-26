@@ -95,6 +95,7 @@ export default function Testimonials() {
       Don't start horizontal dragging when the user
       clicks Read More / Show Less.
     */
+
     if (target.closest("button")) {
       return;
     }
@@ -232,6 +233,7 @@ export default function Testimonials() {
             md:mb-14
           "
         >
+
           <div
             className="
               inline-flex
@@ -253,9 +255,10 @@ export default function Testimonials() {
                 rounded-full
               "
             >
-              Feedback & Reviews
+              Patient Reviews
             </span>
           </div>
+
 
           <h2
             className="
@@ -268,7 +271,9 @@ export default function Testimonials() {
               tracking-tight
             "
           >
-            <span>What our </span>
+            <span>
+              What our{" "}
+            </span>
 
             <span
               className="
@@ -283,6 +288,7 @@ export default function Testimonials() {
             </span>
           </h2>
 
+
           <p
             className="
               text-slate-600
@@ -293,9 +299,9 @@ export default function Testimonials() {
               leading-relaxed
             "
           >
-            Real patient experiences and recovery
-            stories.
+            Real patient experiences and recovery stories.
           </p>
+
         </div>
 
 
@@ -345,7 +351,7 @@ export default function Testimonials() {
                 onClick={() =>
                   scrollCards("left")
                 }
-                aria-label="Previous testimonials"
+                aria-label="Previous patient reviews"
                 className="
                   absolute
                   left-0
@@ -402,7 +408,7 @@ export default function Testimonials() {
                 onClick={() =>
                   scrollCards("right")
                 }
-                aria-label="Next testimonials"
+                aria-label="Next patient reviews"
                 className="
                   absolute
                   right-0
@@ -616,9 +622,7 @@ export default function Testimonials() {
                           >
                             <Image
                               src={imageUrl}
-                              alt={
-                                testimonial.name
-                              }
+                              alt={`${testimonial.name} patient review for physiotherapy`}
                               fill
                               unoptimized
                               draggable={false}
@@ -698,6 +702,7 @@ export default function Testimonials() {
                             flex-shrink-0
                           "
                         >
+
                           {[
                             ...Array(5),
                           ].map(
@@ -721,16 +726,14 @@ export default function Testimonials() {
 
                             )
                           )}
+
                         </div>
 
 
                         {/* =====================================
                             FEEDBACK TEXT BOX
 
-                            THIS IS THE ONLY PART THAT CHANGES
-                            AFTER READ MORE.
-
-                            CARD HEIGHT DOES NOT CHANGE.
+                            CARD HEIGHT DOES NOT CHANGE
                         ===================================== */}
 
                         <div
@@ -924,6 +927,7 @@ export default function Testimonials() {
 
           </div>
         )}
+
       </div>
     </section>
   );

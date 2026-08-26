@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   FaWhatsapp,
   FaInstagram,
@@ -12,12 +12,15 @@ import {
   HiArrowRight,
 } from "react-icons/hi";
 
-
 /* =========================================================
    PROPER GMAIL LOGO
 ========================================================= */
 
-function GmailIcon({ size = 22 }: { size?: number }) {
+function GmailIcon({
+  size = 22,
+}: {
+  size?: number;
+}) {
   return (
     <svg
       width={size}
@@ -27,9 +30,7 @@ function GmailIcon({ size = 22 }: { size?: number }) {
       aria-hidden="true"
       className="block"
     >
-
       {/* Blue left */}
-
       <path
         fill="#4285F4"
         d="
@@ -43,9 +44,7 @@ function GmailIcon({ size = 22 }: { size?: number }) {
         "
       />
 
-
       {/* Green right */}
-
       <path
         fill="#34A853"
         d="
@@ -58,9 +57,7 @@ function GmailIcon({ size = 22 }: { size?: number }) {
         "
       />
 
-
       {/* Yellow */}
-
       <path
         fill="#FBBC04"
         d="
@@ -73,9 +70,7 @@ function GmailIcon({ size = 22 }: { size?: number }) {
         "
       />
 
-
       {/* Red */}
-
       <path
         fill="#EA4335"
         d="
@@ -89,9 +84,7 @@ function GmailIcon({ size = 22 }: { size?: number }) {
         "
       />
 
-
       {/* Dark red */}
-
       <path
         fill="#C5221F"
         d="
@@ -104,16 +97,19 @@ function GmailIcon({ size = 22 }: { size?: number }) {
           Z
         "
       />
-
     </svg>
   );
 }
 
+/* =========================================================
+   NAVBAR
+========================================================= */
 
 export default function Navbar() {
-
+  const [showNavbar, setShowNavbar] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
 
+  const lastScrollY = useRef(0);
 
   /* =========================================================
      NAVIGATION LINKS
@@ -146,98 +142,132 @@ export default function Navbar() {
     },
   ];
 
-
   /* =========================================================
-     CLOSE MOBILE MENU WHEN CLICKING OUTSIDE
+     SCROLL EFFECT
   ========================================================= */
 
   useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
 
-    const handleClickOutside = (e: MouseEvent) => {
+      if (currentScrollY <= 20) {
+        setShowNavbar(true);
+        lastScrollY.current = currentScrollY;
+        return;
+      }
 
+      if (currentScrollY > lastScrollY.current) {
+        setShowNavbar(false);
+        setMenuOpen(false);
+      } else if (
+        currentScrollY < lastScrollY.current
+      ) {
+        setShowNavbar(true);
+      }
+
+      lastScrollY.current = currentScrollY;
+    };
+
+    window.addEventListener(
+      "scroll",
+      handleScroll,
+      {
+        passive: true,
+      }
+    );
+
+    return () => {
+      window.removeEventListener(
+        "scroll",
+        handleScroll
+      );
+    };
+  }, []);
+
+  /* =========================================================
+     CLOSE MENU WHEN CLICKING OUTSIDE
+  ========================================================= */
+
+  useEffect(() => {
+    const handleClickOutside = (
+      e: MouseEvent
+    ) => {
       if (
         menuOpen &&
-        !(e.target as HTMLElement)?.closest("nav")
+        !(e.target as HTMLElement)?.closest(
+          "nav"
+        )
       ) {
         setMenuOpen(false);
       }
-
     };
-
 
     document.addEventListener(
       "mousedown",
       handleClickOutside
     );
 
-
     return () => {
-
       document.removeEventListener(
         "mousedown",
         handleClickOutside
       );
-
     };
-
   }, [menuOpen]);
 
-
   /* =========================================================
-     CLOSE MENU WHEN WINDOW BECOMES DESKTOP WIDTH
+     CLOSE MOBILE MENU WHEN WINDOW BECOMES DESKTOP
   ========================================================= */
 
   useEffect(() => {
-
     const handleResize = () => {
-
-      if (window.innerWidth >= 640) {
+      if (window.innerWidth >= 768) {
         setMenuOpen(false);
       }
-
     };
-
 
     window.addEventListener(
       "resize",
       handleResize
     );
 
-
     return () => {
-
       window.removeEventListener(
         "resize",
         handleResize
       );
-
     };
-
   }, []);
 
+  /* =========================================================
+     NAVBAR
+  ========================================================= */
 
   return (
-
     <nav
-      className="
+      className={`
         fixed
-
         top-0
         left-0
-
         w-full
-
         z-50
 
         bg-white/95
-
         backdrop-blur-md
 
         shadow-[0_2px_12px_rgba(0,0,0,0.06)]
-      "
+
+        transition-transform
+        duration-300
+        ease-in-out
+
+        ${
+          showNavbar
+            ? "translate-y-0"
+            : "-translate-y-full"
+        }
+      `}
     >
-
-
       {/* =====================================================
           MAIN NAVBAR
       ===================================================== */}
@@ -245,29 +275,20 @@ export default function Navbar() {
       <div
         className="
           max-w-7xl
-
           mx-auto
 
           px-3
-          sm:px-4
-          md:px-6
+          sm:px-6
           lg:px-8
 
-          h-[68px]
-          sm:h-20
-          md:h-24
+          h-20
+          sm:h-24
 
           flex
-
           items-center
-
           justify-between
-
-          gap-2
         "
       >
-
-
         {/* =================================================
             WEBSITE LOGO
         ================================================= */}
@@ -276,107 +297,76 @@ export default function Navbar() {
           href="#home"
           className="
             flex
-
             flex-shrink-0
-
             items-center
 
             hover:opacity-80
 
             transition
-
             duration-300
           "
         >
-
           <img
             src="/logo.svg"
             alt="Dr. Bhagyashri's PhysioCare"
-
             className="
-              h-[48px]
-
-              sm:h-[55px]
-
-              md:h-[62px]
-
-              lg:h-[70px]
+              h-[55px]
+              sm:h-[68px]
+              lg:h-[76px]
 
               w-auto
 
               object-contain
-
               block
 
               bg-transparent
             "
           />
-
         </a>
-
 
         {/* =================================================
             DESKTOP NAV LINKS
-
-            IMPORTANT:
-            sm:flex means Desktop Site on mobile will
-            receive the complete navbar instead of menu.
         ================================================= */}
 
         <div
           className="
             hidden
-
-            sm:flex
+            md:flex
 
             items-center
 
-            gap-3
-
-            md:gap-5
-
-            lg:gap-7
-
-            flex-1
-
-            justify-center
+            gap-6
+            lg:gap-8
           "
         >
-
           {navLinks.map(
-            ({ href, label }) => (
-
+            ({
+              href,
+              label,
+            }) => (
               <a
                 key={href}
                 href={href}
-
                 className="
-                  text-[11px]
-
-                  md:text-sm
-
+                  text-sm
                   lg:text-base
 
-                  text-slate-700
+                  text-black
 
                   hover:text-teal-600
 
                   transition-colors
-
                   duration-300
 
                   font-medium
 
                   relative
-
                   group
 
                   whitespace-nowrap
                 "
               >
-
                 {label}
-
 
                 {/* Underline */}
 
@@ -385,36 +375,27 @@ export default function Navbar() {
                     absolute
 
                     -bottom-1
-
                     left-0
 
                     w-0
-
                     h-0.5
 
                     rounded-full
 
                     bg-gradient-to-r
-
                     from-teal-600
-
                     to-cyan-600
 
                     group-hover:w-full
 
                     transition-all
-
                     duration-300
                   "
                 />
-
               </a>
-
             )
           )}
-
         </div>
-
 
         {/* =================================================
             RIGHT SIDE
@@ -423,22 +404,13 @@ export default function Navbar() {
         <div
           className="
             flex
-
             items-center
 
-            gap-1.5
-
-            sm:gap-2
-
-            md:gap-3
-
+            gap-2
+            sm:gap-3
             lg:gap-4
-
-            flex-shrink-0
           "
         >
-
-
           {/* =================================================
               SOCIAL ICONS
           ================================================= */}
@@ -446,39 +418,25 @@ export default function Navbar() {
           <div
             className="
               flex
-
               items-center
 
-              gap-1.5
-
-              sm:gap-2
-
-              md:gap-2.5
-
-              lg:gap-3
+              gap-2
+              sm:gap-3
+              lg:gap-4
             "
           >
-
-
-            {/* =================================================
-                WHATSAPP
-            ================================================= */}
+            {/* WhatsApp */}
 
             <a
               href="https://wa.me/+919322518895"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="WhatsApp"
-
               className="
-                w-5
-                h-5
-
-                sm:w-6
-                sm:h-6
+                w-6
+                h-6
 
                 flex
-
                 items-center
                 justify-center
 
@@ -487,47 +445,32 @@ export default function Navbar() {
                 opacity-90
 
                 hover:opacity-100
-
                 hover:scale-110
 
                 transition-all
-
                 duration-300
               "
             >
-
               <FaWhatsapp
                 className="
-                  w-4
-                  h-4
-
-                  sm:w-5
-                  sm:h-5
+                  w-5
+                  h-5
                 "
               />
-
             </a>
 
-
-            {/* =================================================
-                INSTAGRAM
-            ================================================= */}
+            {/* Instagram */}
 
             <a
               href="https://www.instagram.com/drbhagyashrisphysiocare?igsh=MTRycWlocjhjcWE5Yw=="
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Instagram"
-
               className="
-                w-5
-                h-5
-
-                sm:w-6
-                sm:h-6
+                w-6
+                h-6
 
                 flex
-
                 items-center
                 justify-center
 
@@ -536,87 +479,57 @@ export default function Navbar() {
                 opacity-90
 
                 hover:opacity-100
-
                 hover:scale-110
 
                 transition-all
-
                 duration-300
               "
             >
-
               <FaInstagram
                 className="
-                  w-4
-                  h-4
-
-                  sm:w-5
-                  sm:h-5
+                  w-5
+                  h-5
                 "
               />
-
             </a>
 
-
-            {/* =================================================
-                GMAIL
-            ================================================= */}
+            {/* Gmail */}
 
             <a
               href="mailto:drbhagyashrisalunkept@gmail.com"
               aria-label="Gmail"
-
               className="
-                w-5
-                h-5
-
-                sm:w-6
-                sm:h-6
+                w-6
+                h-6
 
                 flex
-
                 items-center
                 justify-center
 
                 opacity-90
 
                 hover:opacity-100
-
                 hover:scale-110
 
                 transition-all
-
                 duration-300
               "
             >
-
-              <GmailIcon
-                size={19}
-              />
-
+              <GmailIcon size={21} />
             </a>
 
-
-            {/* =================================================
-                YOUTUBE
-                RIGHT OF GMAIL
-            ================================================= */}
+            {/* YouTube */}
 
             <a
               href="https://youtube.com/@physiocare18?si=H9QicGVIeZN2LUwB"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="YouTube"
-
               className="
-                w-5
-                h-5
-
-                sm:w-6
-                sm:h-6
+                w-6
+                h-6
 
                 flex
-
                 items-center
                 justify-center
 
@@ -625,29 +538,20 @@ export default function Navbar() {
                 opacity-90
 
                 hover:opacity-100
-
                 hover:scale-110
 
                 transition-all
-
                 duration-300
               "
             >
-
               <FaYoutube
                 className="
-                  w-4
-                  h-4
-
-                  sm:w-5
-                  sm:h-5
+                  w-5
+                  h-5
                 "
               />
-
             </a>
-
           </div>
-
 
           {/* =================================================
               DIVIDER
@@ -656,63 +560,46 @@ export default function Navbar() {
           <div
             className="
               hidden
-
               sm:block
 
-              h-7
-
+              h-8
               w-px
 
               bg-slate-200
 
-              ml-0.5
+              ml-1
             "
           />
 
-
           {/* =================================================
               BOOK NOW
-
-              Visible in Desktop Site mode.
           ================================================= */}
 
           <a
             href="#contact"
-
             className="
               hidden
-
               sm:inline-flex
 
               items-center
               justify-center
 
-              gap-1.5
+              gap-2
 
               bg-gradient-to-r
-
               from-teal-600
-
               to-cyan-600
 
               text-white
 
-              px-3
+              px-5
+              lg:px-7
 
-              md:px-4
-
-              lg:px-6
-
-              py-2.5
-
-              md:py-3
+              py-3
 
               rounded-xl
 
-              text-[11px]
-
-              md:text-sm
-
+              text-sm
               lg:text-base
 
               font-bold
@@ -726,108 +613,80 @@ export default function Navbar() {
               active:translate-y-0
 
               transition-all
-
               duration-300
 
               whitespace-nowrap
             "
           >
-
             <span>
               Book Now
             </span>
 
-
             <HiArrowRight
               className="
-                w-3.5
-                h-3.5
-
-                md:w-4
-                md:h-4
+                w-4
+                h-4
 
                 transition-transform
-
                 duration-300
               "
             />
-
           </a>
-
 
           {/* =================================================
               MOBILE MENU BUTTON
-
-              Only appears on genuinely small mobile widths.
           ================================================= */}
 
           <button
             type="button"
-
             onClick={() =>
               setMenuOpen(
                 (prev) => !prev
               )
             }
-
             aria-label={
               menuOpen
                 ? "Close menu"
                 : "Open menu"
             }
-
             className="
-              sm:hidden
+              md:hidden
 
-              w-9
-              h-9
+              w-8
+              h-8
 
               flex
-
               items-center
               justify-center
-
-              rounded-lg
 
               text-slate-700
 
               hover:text-teal-600
 
-              hover:bg-teal-50
-
               transition
             "
           >
-
             {menuOpen ? (
               <HiX size={25} />
             ) : (
               <HiMenu size={25} />
             )}
-
           </button>
-
         </div>
-
       </div>
-
 
       {/* =====================================================
           MOBILE MENU
-
-          Only for small mobile screens.
       ===================================================== */}
 
       <div
         className={`
-          sm:hidden
+          md:hidden
 
           overflow-hidden
 
           transition-all
-
           duration-300
-
           ease-in-out
 
           ${
@@ -839,109 +698,87 @@ export default function Navbar() {
           bg-white
 
           border-t
-
           border-slate-100/50
         `}
       >
-
         <div
           className="
             px-4
-
             pb-5
-
             pt-3
 
             flex
-
             flex-col
 
             gap-1
           "
         >
-
-
-          {/* MOBILE NAVIGATION LINKS */}
+          {/* Mobile Navigation Links */}
 
           {navLinks.map(
-            ({ href, label }) => (
-
+            ({
+              href,
+              label,
+            }) => (
               <a
                 key={href}
-
                 href={href}
-
                 onClick={() =>
                   setMenuOpen(false)
                 }
-
                 className="
-                  text-slate-700
+                  text-black
 
                   hover:text-teal-600
-
                   hover:bg-teal-50
 
                   py-2.5
-
                   px-3
 
                   rounded-lg
 
                   text-base
-
                   font-medium
 
                   transition-colors
                 "
               >
-
                 {label}
-
               </a>
-
             )
           )}
 
-
-          {/* DIVIDER */}
+          {/* Divider */}
 
           <div
             className="
               border-t
-
               border-slate-100
 
               my-2.5
             "
           />
 
-
-          {/* MOBILE BOOK NOW */}
+          {/* Mobile Book Now */}
 
           <a
             href="#contact"
-
             onClick={() =>
               setMenuOpen(false)
             }
-
             className="
               mt-2
 
               w-full
 
               flex
-
               items-center
               justify-center
 
               gap-2
 
               bg-gradient-to-r
-
               from-teal-600
-
               to-cyan-600
 
               text-white
@@ -959,11 +796,9 @@ export default function Navbar() {
               hover:shadow-md
 
               transition-all
-
               duration-300
             "
           >
-
             <span>
               Book Now
             </span>
@@ -974,13 +809,9 @@ export default function Navbar() {
                 h-5
               "
             />
-
           </a>
-
         </div>
-
       </div>
-
     </nav>
   );
 }
