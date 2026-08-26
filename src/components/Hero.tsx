@@ -140,7 +140,7 @@ export default function Hero() {
           </div>
 
           {/* =================================================
-              NEW HERO HEADING
+              HERO HEADING
           ================================================ */}
 
           <div className="mb-6">
@@ -216,8 +216,11 @@ export default function Hero() {
           >
             Personalized physiotherapy and rehabilitation
             care that meets you where you are — relieve pain,
-            rebuild strength, and move through life with
-            confidence again.
+            rebuild strength, and move through
+            <br className="hidden sm:block" />
+            <span className="block sm:inline">
+              life with confidence again.
+            </span>
           </p>
 
           {/* =================================================
@@ -410,21 +413,20 @@ export default function Hero() {
             "
           >
             {/* =================================================
-                SERVICES BOXES (COMPACT, MOVED HIGHER UP)
+                SERVICES BOXES
             ================================================= */}
 
             <div
               className="
-                -mt-6
                 mb-10
                 flex
-                flex-row
+                flex-col
                 items-center
                 justify-center
                 gap-3
                 sm:-mt-8
+                sm:flex-row
                 sm:gap-5
-                whitespace-nowrap
               "
             >
               {/* HOME VISIT PHYSIOTHERAPY */}
@@ -432,7 +434,9 @@ export default function Hero() {
               <div
                 className="
                   inline-flex
+                  w-fit
                   items-center
+                  justify-center
                   gap-2
                   rounded-full
                   border
@@ -449,19 +453,18 @@ export default function Hero() {
                   duration-300
                   hover:bg-white/25
                   sm:text-sm
-                  whitespace-nowrap
                 "
               >
                 <Home
                   className="
                     h-4
                     w-4
-                    text-teal-200
                     flex-shrink-0
+                    text-teal-200
                   "
                 />
 
-                <span>
+                <span className="whitespace-nowrap">
                   Home Visit Physiotherapy
                 </span>
               </div>
@@ -471,7 +474,9 @@ export default function Hero() {
               <div
                 className="
                   inline-flex
+                  w-fit
                   items-center
+                  justify-center
                   gap-2
                   rounded-full
                   border
@@ -488,19 +493,18 @@ export default function Hero() {
                   duration-300
                   hover:bg-white/25
                   sm:text-sm
-                  whitespace-nowrap
                 "
               >
                 <Monitor
                   className="
                     h-4
                     w-4
-                    text-cyan-200
                     flex-shrink-0
+                    text-cyan-200
                   "
                 />
 
-                <span>
+                <span className="whitespace-nowrap">
                   Online Physiotherapy
                 </span>
               </div>
@@ -675,20 +679,18 @@ export default function Hero() {
                       text-amber-400
                     "
                   >
-                    {[...Array(5)].map(
-                      (_, i) => (
-                        <Star
-                          key={i}
-                          className="
-                            h-2.5
-                            w-2.5
-                            fill-current
-                            sm:h-3
-                            sm:w-3
-                          "
-                        />
-                      )
-                    )}
+                    {[...Array(5)].map((_, i) => (
+                      <Star
+                        key={i}
+                        className="
+                          h-2.5
+                          w-2.5
+                          fill-current
+                          sm:h-3
+                          sm:w-3
+                        "
+                      />
+                    ))}
                   </div>
 
                   <div
@@ -749,62 +751,59 @@ export default function Hero() {
               >
                 <div
                   className="
-                    flex
+                    grid
                     w-full
-                    flex-row
+                    grid-cols-3
                     items-center
-                    justify-between
                     gap-1
                   "
                 >
-                  {checklist.map(
-                    (item) => (
-                      <div
-                        key={item}
+                  {checklist.map((item) => (
+                    <div
+                      key={item}
+                      className="
+                        flex
+                        min-w-0
+                        items-center
+                        justify-center
+                        gap-1
+                      "
+                    >
+                      <span
                         className="
                           flex
-                          min-w-0
-                          flex-1
+                          h-5
+                          w-5
+                          flex-none
                           items-center
                           justify-center
-                          gap-1
+                          rounded-full
+                          border
+                          border-teal-100
+                          bg-teal-50
+                          text-teal-600
                         "
                       >
-                        <span
-                          className="
-                            flex
-                            h-5
-                            w-5
-                            flex-none
-                            items-center
-                            justify-center
-                            rounded-full
-                            border
-                            border-teal-100
-                            bg-teal-50
-                            text-teal-600
-                          "
-                        >
-                          <Check
-                            className="h-3 w-3"
-                            strokeWidth={3}
-                          />
-                        </span>
+                        <Check
+                          className="h-3 w-3"
+                          strokeWidth={3}
+                        />
+                      </span>
 
-                        <span
-                          className="
-                            whitespace-nowrap
-                            text-[8px]
-                            font-semibold
-                            text-slate-800
-                            sm:text-xs
-                          "
-                        >
-                          {item}
-                        </span>
-                      </div>
-                    )
-                  )}
+                      <span
+                        className="
+                          text-center
+                          text-[8px]
+                          font-semibold
+                          leading-tight
+                          text-slate-800
+                          sm:text-xs
+                        "
+                      >
+                        {item}
+                      </span>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
