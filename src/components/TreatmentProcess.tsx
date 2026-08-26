@@ -57,7 +57,7 @@ export default function TreatmentProcess() {
             </span>
           </div>
 
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-900 mb-4 tracking-tight">
+          <h2 className="text-[27px] sm:text-4xl md:text-5xl font-bold text-slate-900 mb-4 tracking-tight whitespace-nowrap">
             Your Journey To{" "}
             <span className="bg-gradient-to-r from-teal-600 to-cyan-600 bg-clip-text text-transparent">
               Recovery
@@ -82,7 +82,6 @@ export default function TreatmentProcess() {
               <div
                 key={step.number}
                 className="
-                  relative
                   bg-white
                   rounded-2xl
                   border border-slate-100
@@ -90,40 +89,38 @@ export default function TreatmentProcess() {
                   overflow-hidden
                 "
               >
-                {/* Small step accent */}
-                <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-teal-500 to-cyan-500" />
-
                 <div className="flex items-center gap-3 px-4 py-3.5">
-                  {/* Number */}
-                  <div
-                    className="
-                      flex-none
-                      w-10
-                      h-10
-                      rounded-xl
-                      bg-gradient-to-br
-                      from-teal-600
-                      to-cyan-600
-                      text-white
-                      flex
-                      items-center
-                      justify-center
-                      text-base
-                      font-black
-                      shadow-[0_5px_14px_rgba(13,148,136,0.18)]
-                    "
-                  >
-                    {step.number}
+                  {/* Small STEP label + number */}
+                  <div className="flex-none w-11 flex flex-col items-center justify-center">
+                    <span className="text-[7px] font-bold uppercase tracking-[0.16em] text-teal-600 mb-1">
+                      Step
+                    </span>
+
+                    <div
+                      className="
+                        w-10
+                        h-10
+                        rounded-xl
+                        bg-gradient-to-br
+                        from-teal-600
+                        to-cyan-600
+                        text-white
+                        flex
+                        items-center
+                        justify-center
+                        text-base
+                        font-black
+                        shadow-[0_5px_14px_rgba(13,148,136,0.18)]
+                      "
+                    >
+                      {step.number}
+                    </div>
                   </div>
 
                   {/* Content */}
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-2">
-                      <span className="text-[9px] font-bold uppercase tracking-[0.14em] text-teal-700 bg-teal-50 px-2 py-1 rounded-full whitespace-nowrap">
-                        Step {step.number}
-                      </span>
-
-                      <h3 className="text-[15px] font-bold text-slate-900 leading-tight truncate">
+                      <h3 className="text-[15px] font-bold text-slate-900 leading-tight">
                         {step.title}
                       </h3>
                     </div>
@@ -146,6 +143,7 @@ export default function TreatmentProcess() {
             A simple 5-step approach from assessment to recovery
           </p>
         </div>
+
 
         {/* =====================================================
             DESKTOP VIEW
