@@ -21,6 +21,8 @@ import {
 export default function ConditionsServices() {
   const conditionsScrollRef = useRef<HTMLDivElement>(null);
   const servicesScrollRef = useRef<HTMLDivElement>(null);
+  const mobileConditionsRef = useRef<HTMLDivElement>(null);
+  const mobileServicesRef = useRef<HTMLDivElement>(null);
 
   const conditions = [
     { title: "Back Pain", image: "/Conditions/backpain.png" },
@@ -159,6 +161,19 @@ export default function ConditionsServices() {
     }
   };
 
+  const scrollHorizontal = (
+    ref: React.RefObject<HTMLDivElement | null>,
+    direction: "left" | "right"
+  ) => {
+    if (ref.current) {
+      const amount = ref.current.clientWidth;
+      ref.current.scrollBy({
+        left: direction === "left" ? -amount : amount,
+        behavior: "smooth",
+      });
+    }
+  };
+
   return (
     <section
       className="
@@ -252,429 +267,152 @@ export default function ConditionsServices() {
         <div className="md:hidden">
 
           {/* =================================================
-              MOBILE CONDITIONS
-          ================================================= */}
-
+              MOBILE ONLY — CONDITIONS
+              Desktop version below is untouched.
+          ================================================== */}
           <div
             id="conditions"
-            className="
-              relative
-              bg-white
-              border
-              border-slate-200/80
-              rounded-2xl
-              p-4
-              shadow-sm
-              scroll-mt-24
-            "
+            className="relative bg-white border border-slate-200/80 rounded-2xl p-3.5 shadow-sm scroll-mt-24"
           >
-
-            {/* Header */}
-
-            <div
-              className="
-                flex
-                items-center
-                justify-between
-                mb-4
-                pb-2.5
-                border-b
-                border-slate-100
-              "
-            >
-
-              <h3
-                className="
-                  text-base
-                  font-bold
-                  text-slate-900
-                  pl-2.5
-                  border-l-4
-                  border-teal-500
-                "
-              >
+            <div className="flex items-center justify-between mb-3 pb-2.5 border-b border-slate-100">
+              <h3 className="text-[15px] font-bold text-slate-900 pl-2 border-l-4 border-teal-500">
                 Conditions We Treat
               </h3>
-
-              <span
-                className="
-                  text-[11px]
-                  font-semibold
-                  text-teal-700
-                  bg-teal-50
-                  border
-                  border-teal-100
-                  px-2.5
-                  py-1
-                  rounded-full
-                  whitespace-nowrap
-                "
-              >
+              <span className="text-[10px] font-semibold text-teal-700 bg-teal-50 border border-teal-100 px-2.5 py-1 rounded-full whitespace-nowrap">
                 {conditions.length} Conditions
               </span>
-
             </div>
 
+            <div className="relative">
+              <button
+                type="button"
+                onClick={() => scrollHorizontal(mobileConditionsRef, "left")}
+                aria-label="Previous conditions"
+                className="absolute left-0 top-1/2 -translate-y-1/2 z-20 w-7 h-7 rounded-full bg-white/55 backdrop-blur-md border border-white/80 text-teal-700 shadow-sm ring-1 ring-teal-100/60 flex items-center justify-center active:scale-95 transition-all"
+              >
+                <ChevronLeft className="w-4 h-4" strokeWidth={2.5} />
+              </button>
 
-            {/* =================================================
-                MOBILE CONDITIONS HORIZONTAL SLIDER
-
-                4 cards per slide
-                2 columns × 2 rows
-            ================================================= */}
-
-            <div
-              className="
-                flex
-                overflow-x-auto
-                snap-x
-                snap-mandatory
-                gap-3
-                pb-2
-                overscroll-x-contain
-                [scrollbar-width:none]
-                [&::-webkit-scrollbar]:hidden
-              "
-            >
-
-              {Array.from(
-                {
-                  length: Math.ceil(conditions.length / 4),
-                },
-                (_, slideIndex) => {
-
-                  const slideConditions = conditions.slice(
-                    slideIndex * 4,
-                    slideIndex * 4 + 4
-                  );
+              <div
+                ref={mobileConditionsRef}
+                className="flex overflow-x-auto snap-x snap-mandatory overscroll-x-contain [scrollbar-width:none] [&::-webkit-scrollbar]:hidden scroll-smooth px-1"
+              >
+                {Array.from({ length: Math.ceil(conditions.length / 6) }, (_, slideIndex) => {
+                  const slideConditions = conditions.slice(slideIndex * 6, slideIndex * 6 + 6);
 
                   return (
                     <div
                       key={slideIndex}
-                      className="
-                        min-w-full
-                        w-full
-                        snap-center
-                        grid
-                        grid-cols-2
-                        gap-2.5
-                        shrink-0
-                      "
+                      className="min-w-full w-full shrink-0 snap-center grid grid-cols-3 grid-rows-2 gap-2 px-2"
                     >
-
                       {slideConditions.map((condition) => (
-
                         <div
                           key={condition.title}
-                          className="
-                            group
-                            bg-white
-                            border
-                            border-slate-100
-                            rounded-xl
-                            p-2
-                            h-[128px]
-                            flex
-                            flex-col
-                            items-center
-                            justify-center
-                            text-center
-                            shadow-sm
-                          "
+                          className="bg-white border border-slate-100 rounded-xl p-1.5 h-[105px] flex flex-col items-center justify-center text-center shadow-sm"
                         >
-
-                          <div
-                            className="
-                              w-full
-                              h-[70px]
-                              rounded-lg
-                              bg-slate-50
-                              border
-                              border-slate-100
-                              flex
-                              items-center
-                              justify-center
-                              p-1.5
-                            "
-                          >
-
+                          <div className="w-full h-[58px] rounded-lg bg-slate-50 border border-slate-100 flex items-center justify-center p-1">
                             <img
                               src={condition.image}
                               alt={`${condition.title} physiotherapy treatment in Pune`}
                               loading="lazy"
-                              className="
-                                w-full
-                                h-full
-                                object-contain
-                              "
+                              className="w-full h-full object-contain"
                             />
-
                           </div>
-
-                          <span
-                            className="
-                              font-bold
-                              text-slate-800
-                              text-[11px]
-                              tracking-tight
-                              mt-2
-                              leading-tight
-                              line-clamp-2
-                            "
-                          >
+                          <span className="font-bold text-slate-800 text-[9.5px] tracking-tight mt-1.5 leading-tight line-clamp-2">
                             {condition.title}
                           </span>
-
                         </div>
-
                       ))}
-
                     </div>
                   );
-                }
-              )}
+                })}
+              </div>
 
+              <button
+                type="button"
+                onClick={() => scrollHorizontal(mobileConditionsRef, "right")}
+                aria-label="Next conditions"
+                className="absolute right-0 top-1/2 -translate-y-1/2 z-20 w-7 h-7 rounded-full bg-white/55 backdrop-blur-md border border-white/80 text-teal-700 shadow-sm ring-1 ring-teal-100/60 flex items-center justify-center active:scale-95 transition-all"
+              >
+                <ChevronRight className="w-4 h-4" strokeWidth={2.5} />
+              </button>
             </div>
-
-
-            {/* Swipe indicator */}
-
-            <div
-              className="
-                mt-3
-                flex
-                items-center
-                justify-center
-                gap-1.5
-                text-[10px]
-                font-semibold
-                text-slate-400
-              "
-            >
-              <ChevronLeft className="w-3.5 h-3.5" />
-              Swipe left or right for more
-              <ChevronRight className="w-3.5 h-3.5" />
-            </div>
-
           </div>
 
-
           {/* =================================================
-              MOBILE SERVICES
-          ================================================= */}
-
+              MOBILE ONLY — SERVICES
+              Desktop version below is untouched.
+          ================================================== */}
           <div
             id="services"
-            className="
-              relative
-              mt-4
-              bg-white
-              border
-              border-slate-200/80
-              rounded-2xl
-              p-4
-              shadow-sm
-              scroll-mt-24
-            "
+            className="relative mt-3.5 bg-white border border-slate-200/80 rounded-2xl p-3.5 shadow-sm scroll-mt-24"
           >
-
-            {/* Header */}
-
-            <div
-              className="
-                flex
-                items-center
-                justify-between
-                mb-4
-                pb-2.5
-                border-b
-                border-slate-100
-              "
-            >
-
-              <h3
-                className="
-                  text-base
-                  font-bold
-                  text-slate-900
-                  pl-2.5
-                  border-l-4
-                  border-cyan-500
-                "
-              >
+            <div className="flex items-center justify-between mb-3 pb-2.5 border-b border-slate-100">
+              <h3 className="text-[15px] font-bold text-slate-900 pl-2 border-l-4 border-cyan-500">
                 Our Services
               </h3>
-
-              <span
-                className="
-                  text-[11px]
-                  font-semibold
-                  text-cyan-700
-                  bg-cyan-50
-                  border
-                  border-cyan-100
-                  px-2.5
-                  py-1
-                  rounded-full
-                  whitespace-nowrap
-                "
-              >
+              <span className="text-[10px] font-semibold text-cyan-700 bg-cyan-50 border border-cyan-100 px-2.5 py-1 rounded-full whitespace-nowrap">
                 {services.length} Services
               </span>
-
             </div>
 
+            <div className="relative">
+              <button
+                type="button"
+                onClick={() => scrollHorizontal(mobileServicesRef, "left")}
+                aria-label="Previous services"
+                className="absolute left-0 top-1/2 -translate-y-1/2 z-20 w-7 h-7 rounded-full bg-white/55 backdrop-blur-md border border-white/80 text-cyan-700 shadow-sm ring-1 ring-cyan-100/60 flex items-center justify-center active:scale-95 transition-all"
+              >
+                <ChevronLeft className="w-4 h-4" strokeWidth={2.5} />
+              </button>
 
-            {/* =================================================
-                MOBILE SERVICES HORIZONTAL SLIDER
-
-                2 service cards per slide
-                Cards remain readable
-            ================================================= */}
-
-            <div
-              className="
-                flex
-                overflow-x-auto
-                snap-x
-                snap-mandatory
-                gap-3
-                pb-2
-                overscroll-x-contain
-                [scrollbar-width:none]
-                [&::-webkit-scrollbar]:hidden
-              "
-            >
-
-              {Array.from(
-                {
-                  length: Math.ceil(services.length / 2),
-                },
-                (_, slideIndex) => {
-
-                  const slideServices = services.slice(
-                    slideIndex * 2,
-                    slideIndex * 2 + 2
-                  );
+              <div
+                ref={mobileServicesRef}
+                className="flex overflow-x-auto snap-x snap-mandatory overscroll-x-contain [scrollbar-width:none] [&::-webkit-scrollbar]:hidden scroll-smooth px-1"
+              >
+                {Array.from({ length: Math.ceil(services.length / 4) }, (_, slideIndex) => {
+                  const slideServices = services.slice(slideIndex * 4, slideIndex * 4 + 4);
 
                   return (
                     <div
                       key={slideIndex}
-                      className="
-                        min-w-full
-                        w-full
-                        snap-center
-                        grid
-                        grid-cols-1
-                        gap-2.5
-                        shrink-0
-                      "
+                      className="min-w-full w-full shrink-0 snap-center grid grid-cols-2 gap-2 px-2"
                     >
-
                       {slideServices.map((service) => (
-
                         <div
                           key={service.title}
-                          className="
-                            group
-                            bg-white
-                            border
-                            border-slate-200/70
-                            rounded-xl
-                            p-3
-                            min-h-[122px]
-                            flex
-                            items-start
-                            gap-3
-                            shadow-sm
-                          "
+                          className="bg-white border border-slate-200/70 rounded-xl p-2.5 min-h-[118px] flex flex-col gap-2 shadow-sm"
                         >
-
-                          {/* Service Icon */}
-
-                          <div
-                            className="
-                              w-9
-                              h-9
-                              shrink-0
-                              rounded-lg
-                              bg-cyan-50
-                              text-cyan-600
-                              border
-                              border-cyan-100/70
-                              flex
-                              items-center
-                              justify-center
-                            "
-                          >
+                          <div className="w-8 h-8 shrink-0 rounded-lg bg-cyan-50 text-cyan-600 border border-cyan-100/70 flex items-center justify-center">
                             {service.icon}
                           </div>
 
-
-                          {/* Service Content */}
-
                           <div className="min-w-0">
-
-                            <h4
-                              className="
-                                font-bold
-                                text-slate-900
-                                text-sm
-                                mb-1
-                                tracking-tight
-                              "
-                            >
+                            <h4 className="font-bold text-slate-900 text-[11px] mb-1 tracking-tight leading-tight">
                               {service.title}
                             </h4>
-
-                            <p
-                              className="
-                                text-[11px]
-                                text-slate-500
-                                leading-[1.55]
-                                font-normal
-                              "
-                            >
+                            <p className="text-[9.5px] text-slate-500 leading-[1.45] font-normal line-clamp-4">
                               {service.description}
                             </p>
-
                           </div>
-
                         </div>
-
                       ))}
-
                     </div>
                   );
-                }
-              )}
+                })}
+              </div>
 
+              <button
+                type="button"
+                onClick={() => scrollHorizontal(mobileServicesRef, "right")}
+                aria-label="Next services"
+                className="absolute right-0 top-1/2 -translate-y-1/2 z-20 w-7 h-7 rounded-full bg-white/55 backdrop-blur-md border border-white/80 text-cyan-700 shadow-sm ring-1 ring-cyan-100/60 flex items-center justify-center active:scale-95 transition-all"
+              >
+                <ChevronRight className="w-4 h-4" strokeWidth={2.5} />
+              </button>
             </div>
-
-
-            {/* Swipe indicator */}
-
-            <div
-              className="
-                mt-3
-                flex
-                items-center
-                justify-center
-                gap-1.5
-                text-[10px]
-                font-semibold
-                text-slate-400
-              "
-            >
-              <ChevronLeft className="w-3.5 h-3.5" />
-              Swipe left or right for more
-              <ChevronRight className="w-3.5 h-3.5" />
-            </div>
-
           </div>
-
         </div>
-
 
         {/* =====================================================
             DESKTOP VERSION
