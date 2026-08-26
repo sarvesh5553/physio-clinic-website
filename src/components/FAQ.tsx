@@ -8,6 +8,9 @@ import {
   Sparkles,
   MessageCircle,
   X,
+  Clock3,
+  MapPin,
+  Stethoscope,
 } from "lucide-react";
 
 interface ChatMessage {
@@ -34,25 +37,19 @@ export default function FAQ() {
   const messagesEndRef =
     useRef<HTMLDivElement | null>(null);
 
-  /*
-  ============================================================
-  IMPORTANT FAQS
-  ============================================================
-  */
-
   const faqs = [
-    {
-      question:
-        "Do you provide home visit physiotherapy in Pune?",
-      answer:
-        "Yes. Home visit physiotherapy is available in Pune and nearby areas including Pirangut, Baner, Hinjawadi, Balewadi, Pashan, Wakad and nearby areas, subject to appointment availability.",
-    },
-
     {
       question:
         "Can I get an online physiotherapy session?",
       answer:
         "Yes. After you book the appointment with the doctor, as per your appointment schedule you will get an online consultation and treatment from the doctor.",
+    },
+
+    {
+      question:
+        "Do you provide home visit physiotherapy in Pune?",
+      answer:
+        "Yes. Home visit physiotherapy is available in Pune and nearby areas including Pirangut, Baner, Hinjawadi, Balewadi, Pashan, Wakad and nearby areas, subject to appointment availability.",
     },
 
     {
@@ -64,16 +61,16 @@ export default function FAQ() {
 
     {
       question:
-        "What conditions does the doctor treat?",
+        "How can I book a physiotherapy appointment?",
       answer:
-        "Physiotherapy can help with a wide range of musculoskeletal, neurological, sports and post-surgical conditions. Your treatment plan is decided after an appropriate assessment.",
+        "You can book a physiotherapy appointment through the website or contact us directly. Depending on your needs and availability, appointments may be provided through online consultation or home visit physiotherapy.",
     },
 
     {
       question:
-        "How can I book a physiotherapy appointment?",
+        "How many physiotherapy sessions will I need?",
       answer:
-        "You can book a physiotherapy appointment through the website or contact us directly. Depending on your needs and availability, appointments may be provided through online consultation or home visit physiotherapy.",
+        "The number of sessions depends on your condition, severity and recovery goals. After assessment, we create a personalized treatment plan.",
     },
   ];
 
@@ -202,57 +199,18 @@ export default function FAQ() {
   return (
     <section
       id="faq"
-      className="
-        relative
-        overflow-visible
-        bg-gradient-to-b
-        from-slate-50
-        to-white
-        py-12
-        md:py-10
-      "
+      className="relative overflow-visible bg-gradient-to-b from-slate-50 to-white py-12 md:py-10"
     >
-      <div
-        className="
-          mx-auto
-          max-w-4xl
-          px-4
-          md:px-6
-        "
-      >
+      <div className="mx-auto max-w-4xl px-4 md:px-6">
 
         {/* =====================================================
             FAQ HEADING
         ===================================================== */}
 
-        <div
-          className="
-            mb-12
-            text-center
-            md:mb-16
-          "
-        >
-          <div
-            className="
-              mb-4
-              inline-flex
-              items-center
-              justify-center
-            "
-          >
-            <span
-              className="
-                rounded-full
-                bg-teal-50
-                px-4
-                py-2
-                text-xs
-                font-bold
-                uppercase
-                tracking-[0.2em]
-                text-teal-700
-              "
-            >
+        <div className="mb-12 text-center md:mb-16">
+
+          <div className="mb-4 inline-flex items-center justify-center">
+            <span className="rounded-full bg-teal-50 px-4 py-2 text-xs font-bold uppercase tracking-[0.2em] text-teal-700">
               Questions & Answers
             </span>
           </div>
@@ -261,40 +219,18 @@ export default function FAQ() {
               HEADING + SMALL CHATBOT ICON
           ================================================= */}
 
-          <div
-            className="
-              flex
-              flex-wrap
-              items-center
-              justify-center
-              gap-3
-            "
-          >
-            <h2
-              className="
-                text-3xl
-                font-bold
-                tracking-tight
-                text-slate-900
-                sm:text-4xl
-                md:text-5xl
-              "
-            >
+          <div className="flex flex-wrap items-center justify-center gap-3">
+
+            <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl md:text-5xl">
+
               <span>
                 Frequently Asked{" "}
               </span>
 
-              <span
-                className="
-                  bg-gradient-to-r
-                  from-teal-600
-                  to-cyan-600
-                  bg-clip-text
-                  text-transparent
-                "
-              >
+              <span className="bg-gradient-to-r from-teal-600 to-cyan-600 bg-clip-text text-transparent">
                 Questions
               </span>
+
             </h2>
 
             {/* =================================================
@@ -302,6 +238,7 @@ export default function FAQ() {
             ================================================= */}
 
             <div className="relative">
+
               <button
                 type="button"
                 onClick={() =>
@@ -311,7 +248,6 @@ export default function FAQ() {
                 }
                 aria-label="Open Dr. Bhagyashri's assistant"
                 className="
-                  group
                   relative
                   mt-2
                   flex
@@ -326,23 +262,9 @@ export default function FAQ() {
                   text-white
                   shadow-lg
                   shadow-teal-500/20
-                  transition-all
-                  duration-300
-                  hover:-translate-y-1
-                  hover:scale-105
-                  hover:shadow-xl
                   md:mt-0
                 "
               >
-                <span
-                  className="
-                    absolute
-                    inset-0
-                    animate-pulse
-                    rounded-2xl
-                    bg-teal-400/20
-                  "
-                />
 
                 <Bot
                   className="
@@ -350,11 +272,10 @@ export default function FAQ() {
                     z-10
                     h-5
                     w-5
-                    transition-transform
-                    duration-300
-                    group-hover:scale-110
                   "
                 />
+
+                {/* Online indicator */}
 
                 <span
                   className="
@@ -370,28 +291,19 @@ export default function FAQ() {
                     bg-emerald-400
                   "
                 />
+
               </button>
+
             </div>
+
           </div>
 
-          <p
-            className="
-              mx-auto
-              mt-4
-              max-w-2xl
-              text-sm
-              leading-relaxed
-              text-slate-600
-              md:text-base
-            "
-          >
+          <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-slate-600 md:text-base">
             Get answers to common questions about our
             physiotherapy services and treatment approach.
           </p>
 
-          {/* =================================================
-              ASSISTANT LINK
-          ================================================= */}
+          {/* Small assistant link */}
 
           <button
             type="button"
@@ -420,6 +332,7 @@ export default function FAQ() {
               hover:shadow-md
             "
           >
+
             <span
               className="
                 flex
@@ -444,21 +357,21 @@ export default function FAQ() {
                 text-teal-500
               "
             />
+
           </button>
+
         </div>
+
 
         {/* =====================================================
             FAQ ACCORDION
         ===================================================== */}
 
-        <div
-          className="
-            space-y-3
-            md:space-y-4
-          "
-        >
+        <div className="space-y-3 md:space-y-4">
+
           {faqs.map(
             (faq, index) => (
+
               <div
                 key={index}
                 className={`
@@ -475,6 +388,7 @@ export default function FAQ() {
                   }
                 `}
               >
+
                 <button
                   type="button"
                   onClick={() =>
@@ -502,6 +416,7 @@ export default function FAQ() {
                     md:py-4
                   "
                 >
+
                   <span
                     className={`
                       pr-4
@@ -534,6 +449,7 @@ export default function FAQ() {
                       text-teal-600
                     "
                   >
+
                     <svg
                       className={`
                         h-4
@@ -558,7 +474,9 @@ export default function FAQ() {
                         d="M19 9l-7 7-7-7"
                       />
                     </svg>
+
                   </span>
+
                 </button>
 
                 <div
@@ -575,7 +493,9 @@ export default function FAQ() {
                     }
                   `}
                 >
+
                   <div className="overflow-hidden">
+
                     <p
                       className="
                         border-t
@@ -593,103 +513,123 @@ export default function FAQ() {
                     >
                       {faq.answer}
                     </p>
+
                   </div>
+
                 </div>
+
               </div>
+
             )
           )}
+
         </div>
 
+
         {/* =====================================================
-            CHATBOT POPUP
+            CHATBOT POPUP — SAME WINDOW AS THE MAIN FLOATING CHATBOT
         ===================================================== */}
 
         {isChatOpen && (
           <div
             className="
               fixed
-              bottom-24
-              left-3
-              right-3
-              z-[80]
-              sm:bottom-6
-              sm:left-auto
+
+              right-6
+              bottom-6
+
+              z-[70]
+
+              w-[calc(100vw-2rem)]
+              max-w-[320px]
+
+              overflow-hidden
+
+              rounded-[22px]
+
+              border
+              border-slate-200
+
+              bg-white
+
+              shadow-[0_14px_45px_rgba(15,23,42,0.16)]
+
               sm:right-6
-              sm:w-[390px]
+              sm:bottom-6
             "
           >
             <div
               className="
-                max-h-[calc(100dvh-7rem)]
+                flex
+                h-[min(440px,calc(100dvh-90px))]
+                max-h-[440px]
+
+                flex-col
+
                 overflow-hidden
-                rounded-3xl
-                border
-                border-slate-200
-                bg-white
-                shadow-[0_25px_80px_rgba(15,23,42,0.22)]
+
+                sm:h-[440px]
               "
             >
-
               {/* =================================================
                   CHAT HEADER
               ================================================= */}
 
               <div
                 className="
-                  relative
-                  overflow-hidden
+                  flex-shrink-0
+
                   bg-gradient-to-br
-                  from-slate-950
-                  via-slate-900
-                  to-teal-950
-                  px-5
-                  py-4
+                  from-white
+                  via-teal-50
+                  to-cyan-50
+                  border-b
+                  border-teal-100
+
+                  px-4
+                  py-3
                 "
               >
-                <div
-                  className="
-                    absolute
-                    -right-10
-                    -top-10
-                    h-28
-                    w-28
-                    rounded-full
-                    bg-teal-400/20
-                    blur-2xl
-                  "
-                />
+                {/* Header top */}
 
                 <div
                   className="
-                    relative
                     flex
                     items-center
                     justify-between
                   "
                 >
-
-                  {/* DOCTOR ASSISTANT */}
-
                   <div
                     className="
                       flex
+                      min-w-0
                       items-center
                       gap-3
                     "
                   >
+                    {/* Bot logo */}
+
                     <div
                       className="
                         relative
+
                         flex
-                        h-11
-                        w-11
+                        h-10
+                        w-10
+
+                        flex-shrink-0
+
                         items-center
                         justify-center
+
                         rounded-2xl
+
                         bg-gradient-to-br
                         from-teal-400
                         to-cyan-500
+
                         text-white
+
                         shadow-lg
                       "
                     >
@@ -698,19 +638,26 @@ export default function FAQ() {
                       <span
                         className="
                           absolute
-                          -right-1
-                          -top-1
-                          h-3.5
-                          w-3.5
+
+                          right-[-2px]
+                          top-[-2px]
+
+                          h-4
+                          w-4
+
                           rounded-full
+
                           border-2
-                          border-slate-900
+                          border-white
+
                           bg-emerald-400
                         "
                       />
                     </div>
 
-                    <div>
+                    {/* Title */}
+
+                    <div className="min-w-0">
                       <div
                         className="
                           flex
@@ -720,9 +667,12 @@ export default function FAQ() {
                       >
                         <h3
                           className="
-                            text-sm
+                            truncate
+
+                            text-base
                             font-bold
-                            text-white
+
+                            text-slate-900
                           "
                         >
                           PhysioCare Assistant
@@ -730,118 +680,111 @@ export default function FAQ() {
 
                         <Sparkles
                           className="
-                            h-3.5
-                            w-3.5
-                            text-teal-300
+                            h-4
+                            w-4
+
+                            flex-shrink-0
+
+                            text-teal-500
                           "
                         />
                       </div>
 
                       <p
                         className="
-                          mt-0.5
-                          text-[11px]
+                          mt-1
+
+                          text-xs
+
                           text-slate-300
                         "
                       >
-                        Ask about Dr. Bhagyashri's services
+                        Ask about Dr. Bhagyashri's
+                        services
                       </p>
                     </div>
                   </div>
 
-                  {/* CLEAR + CLOSE */}
+                  {/* Close */}
 
-                  <div
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setIsChatOpen(false)
+                    }
+                    aria-label="Close chatbot"
                     className="
+                      ml-3
+
                       flex
+                      h-9
+                      w-9
+
+                      flex-shrink-0
+
                       items-center
-                      gap-1
+                      justify-center
+
+                      rounded-xl
+
+                      text-slate-400
+
+                      hover:bg-white/10
+                      hover:text-teal-700
                     "
                   >
-                    {messages.length > 0 && (
-                      <button
-                        type="button"
-                        onClick={clearChat}
-                        aria-label="Clear conversation"
-                        className="
-                          flex
-                          h-8
-                          w-8
-                          items-center
-                          justify-center
-                          rounded-lg
-                          text-slate-400
-                          transition
-                          hover:bg-white/10
-                          hover:text-white
-                        "
-                      >
-                        <MessageCircle className="h-4 w-4" />
-                      </button>
-                    )}
-
-                    <button
-                      type="button"
-                      onClick={() =>
-                        setIsChatOpen(false)
-                      }
-                      aria-label="Close chatbot"
-                      className="
-                        flex
-                        h-8
-                        w-8
-                        items-center
-                        justify-center
-                        rounded-lg
-                        text-slate-400
-                        transition
-                        hover:bg-white/10
-                        hover:text-white
-                      "
-                    >
-                      <X className="h-4 w-4" />
-                    </button>
-                  </div>
+                    <X className="h-5 w-5" />
+                  </button>
                 </div>
+
+                {/* Header description */}
 
                 <p
                   className="
-                    relative
-                    mt-3
-                    text-[11px]
+                    mt-4
+
+                    text-xs
                     leading-relaxed
+
                     text-slate-300
                   "
                 >
-                  Physiotherapy services • Conditions •
-                  Timings • Home visits • Online consultations
+                  Physiotherapy services • Conditions
+                  • Timings • Home visits • Online
+                  consultations
                 </p>
               </div>
 
               {/* =================================================
-                  CHAT BODY
+                  CHAT CONTENT
               ================================================= */}
 
               <div
                 className="
-                  max-h-[calc(100dvh-15rem)]
+                  min-h-0
+                  flex-1
+
                   overflow-y-auto
+
+                  overscroll-contain
+
                   bg-white
+
                   p-4
-                  md:p-5
                 "
               >
-
                 {/* =================================================
                     EMPTY STATE
                 ================================================= */}
 
                 {messages.length === 0 && (
                   <div>
+                    {/* Welcome */}
 
                     <div
                       className="
-                        mb-5
+                        mb-6
+
                         flex
                         items-start
                         gap-3
@@ -852,11 +795,16 @@ export default function FAQ() {
                           flex
                           h-8
                           w-8
+
                           flex-shrink-0
+
                           items-center
                           justify-center
+
                           rounded-full
+
                           bg-teal-50
+
                           text-teal-600
                         "
                       >
@@ -865,12 +813,14 @@ export default function FAQ() {
 
                       <div
                         className="
-                          max-w-[90%]
                           rounded-2xl
                           rounded-tl-md
+
                           border
                           border-slate-100
+
                           bg-slate-50
+
                           px-4
                           py-3
                         "
@@ -878,8 +828,10 @@ export default function FAQ() {
                         <p
                           className="
                             mb-1
+
                             text-sm
                             font-semibold
+
                             text-slate-800
                           "
                         >
@@ -888,123 +840,118 @@ export default function FAQ() {
 
                         <p
                           className="
-                            text-xs
+                            text-sm
                             leading-relaxed
+
                             text-slate-500
-                            md:text-sm
                           "
                         >
                           Ask about Dr. Bhagyashri's
-                          physiotherapy services, conditions,
-                          timings, home visits or online
+                          physiotherapy services,
+                          conditions, timings,
+                          home visits or online
                           consultations.
                         </p>
                       </div>
                     </div>
 
-                    {/* =================================================
-                        POPULAR QUESTIONS
-                    ================================================== */}
+                    {/* Popular questions */}
 
-                    <div>
-                      <p
-                        className="
-                          mb-2.5
-                          text-[10px]
-                          font-bold
-                          uppercase
-                          tracking-wider
-                          text-slate-400
-                          md:text-xs
-                        "
-                      >
-                        Popular questions
-                      </p>
+                    <p
+                      className="
+                        mb-3
 
-                      <div
-                        className="
-                          grid
-                          grid-cols-1
-                          gap-2
-                          sm:grid-cols-2
-                        "
-                      >
-                        {[
-                          "Do you provide home visits in Pune?",
-                          "What conditions does the doctor treat?",
-                          "What physiotherapy services are available?",
-                          "Can patients outside Pune get online physiotherapy?",
-                        ].map(
-                          (suggestion) => (
-                            <button
-                              key={suggestion}
-                              type="button"
-                              onClick={() =>
-                                useSuggestedQuestion(
-                                  suggestion
-                                )
-                              }
-                              className="
-                                group
-                                rounded-xl
-                                border
-                                border-slate-200
-                                bg-white
-                                px-3.5
-                                py-3
-                                text-left
-                                text-xs
-                                font-medium
-                                text-slate-700
-                                transition-all
-                                duration-200
-                                hover:border-teal-200
-                                hover:bg-teal-50/50
-                                hover:text-teal-700
-                                md:text-sm
-                              "
-                            >
-                              <span
-                                className="
-                                  flex
-                                  items-center
-                                  gap-2
-                                "
-                              >
-                                <MessageCircle
-                                  className="
-                                    h-3.5
-                                    w-3.5
-                                    flex-shrink-0
-                                    text-teal-500
-                                  "
-                                />
+                        text-xs
+                        font-bold
+                        uppercase
+                        tracking-wider
 
-                                <span>
-                                  {suggestion}
-                                </span>
-                              </span>
-                            </button>
-                          )
-                        )}
-                      </div>
+                        text-slate-400
+                      "
+                    >
+                      Popular questions
+                    </p>
+
+                    <div
+                      className="
+                        grid
+                        grid-cols-1
+                        gap-2
+
+                        sm:grid-cols-2
+                      "
+                    >
+                      {[
+                        "Do you provide home visits in Pune?",
+                        "What conditions does the doctor treat?",
+                        "What physiotherapy services are available?",
+                        "Can patients outside Pune get online physiotherapy?",
+                      ].map((item) => (
+                        <button
+                          key={item}
+                          type="button"
+                          onClick={() =>
+                            chooseQuestion(item)
+                          }
+                          className="
+                            flex
+                            min-h-[58px]
+
+                            items-center
+                            gap-3
+
+                            rounded-2xl
+
+                            border
+                            border-slate-200
+
+                            bg-white
+
+                            px-4
+                            py-3
+
+                            text-left
+
+                            text-sm
+                            font-medium
+
+                            leading-relaxed
+
+                            text-slate-700
+
+                            hover:border-teal-200
+                            hover:bg-teal-50
+                            hover:text-teal-700
+                          "
+                        >
+                          <MessageCircle
+                            className="
+                              h-4
+                              w-4
+
+                              flex-shrink-0
+
+                              text-teal-500
+                            "
+                          />
+
+                          <span>
+                            {item}
+                          </span>
+                        </button>
+                      ))}
                     </div>
                   </div>
                 )}
 
                 {/* =================================================
-                    CHAT MESSAGES
-                ================================================== */}
+                    MESSAGES
+                ================================================= */}
 
                 {messages.length > 0 && (
                   <div
                     className="
-                      mb-5
-                      max-h-[340px]
                       space-y-4
-                      overflow-y-auto
-                      pr-1
-                      scroll-smooth
                     "
                   >
                     {messages.map(
@@ -1013,7 +960,7 @@ export default function FAQ() {
                           key={index}
                           className={`
                             flex
-                            gap-2.5
+                            gap-2
 
                             ${
                               message.role ===
@@ -1023,8 +970,7 @@ export default function FAQ() {
                             }
                           `}
                         >
-
-                          {/* ASSISTANT ICON */}
+                          {/* Assistant icon */}
 
                           {message.role ===
                             "assistant" && (
@@ -1033,11 +979,16 @@ export default function FAQ() {
                                 flex
                                 h-8
                                 w-8
+
                                 flex-shrink-0
+
                                 items-center
                                 justify-center
+
                                 rounded-full
+
                                 bg-teal-50
+
                                 text-teal-600
                               "
                             >
@@ -1045,23 +996,37 @@ export default function FAQ() {
                             </div>
                           )}
 
-                          {/* MESSAGE */}
+                          {/* Message */}
 
                           <div
                             className={`
                               max-w-[82%]
+
                               rounded-2xl
+
                               px-4
                               py-3
-                              text-xs
+
+                              text-sm
                               leading-relaxed
-                              md:text-sm
 
                               ${
                                 message.role ===
                                 "user"
-                                  ? "rounded-br-md bg-gradient-to-r from-teal-600 to-cyan-600 text-white shadow-sm"
-                                  : "rounded-bl-md border border-slate-100 bg-slate-50 text-slate-700"
+                                  ? `
+                                    rounded-br-md
+                                    bg-gradient-to-r
+                                    from-teal-600
+                                    to-cyan-600
+                                    text-white
+                                  `
+                                  : `
+                                    rounded-bl-md
+                                    border
+                                    border-slate-100
+                                    bg-slate-50
+                                    text-slate-700
+                                  `
                               }
                             `}
                           >
@@ -1091,7 +1056,7 @@ export default function FAQ() {
                               )}
                           </div>
 
-                          {/* USER ICON */}
+                          {/* User icon */}
 
                           {message.role ===
                             "user" && (
@@ -1100,11 +1065,16 @@ export default function FAQ() {
                                 flex
                                 h-8
                                 w-8
+
                                 flex-shrink-0
+
                                 items-center
                                 justify-center
+
                                 rounded-full
+
                                 bg-slate-900
+
                                 text-white
                               "
                             >
@@ -1115,16 +1085,14 @@ export default function FAQ() {
                       )
                     )}
 
-                    {/* =================================================
-                        TYPING INDICATOR
-                    ================================================== */}
+                    {/* Typing */}
 
                     {isSending && (
                       <div
                         className="
                           flex
                           items-center
-                          gap-2.5
+                          gap-2
                         "
                       >
                         <div
@@ -1132,10 +1100,14 @@ export default function FAQ() {
                             flex
                             h-8
                             w-8
+
                             items-center
                             justify-center
+
                             rounded-full
+
                             bg-teal-50
+
                             text-teal-600
                           "
                         >
@@ -1146,20 +1118,26 @@ export default function FAQ() {
                           className="
                             rounded-2xl
                             rounded-bl-md
-                            border
-                            border-slate-100
+
                             bg-slate-50
+
                             px-4
                             py-3
                           "
                         >
-                          <div className="flex gap-1">
+                          <div
+                            className="
+                              flex
+                              gap-1
+                            "
+                          >
                             <span
                               className="
                                 h-1.5
                                 w-1.5
-                                animate-bounce
+
                                 rounded-full
+
                                 bg-teal-400
                               "
                             />
@@ -1168,9 +1146,11 @@ export default function FAQ() {
                               className="
                                 h-1.5
                                 w-1.5
-                                animate-bounce
+
                                 rounded-full
+
                                 bg-teal-400
+
                                 [animation-delay:100ms]
                               "
                             />
@@ -1179,9 +1159,11 @@ export default function FAQ() {
                               className="
                                 h-1.5
                                 w-1.5
-                                animate-bounce
+
                                 rounded-full
+
                                 bg-teal-400
+
                                 [animation-delay:200ms]
                               "
                             />
@@ -1189,24 +1171,31 @@ export default function FAQ() {
                         </div>
                       </div>
                     )}
-
-                    <div
-                      ref={messagesEndRef}
-                    />
                   </div>
                 )}
+              </div>
 
-                {/* =================================================
-                    INPUT
-                ================================================== */}
+              {/* =================================================
+                  INPUT
+              ================================================= */}
 
+              <div
+                className="
+                  flex-shrink-0
+
+                  border-t
+                  border-slate-100
+
+                  bg-white
+
+                  px-4
+                  pb-3
+                  pt-3
+                "
+              >
                 <form
                   onSubmit={sendQuestion}
-                  className="
-                    relative
-                    flex
-                    items-center
-                  "
+                  className="relative"
                 >
                   <input
                     type="text"
@@ -1216,28 +1205,35 @@ export default function FAQ() {
                         e.target.value
                       )
                     }
-                    placeholder="Ask about physiotherapy..."
                     disabled={isSending}
+                    placeholder="Ask about physiotherapy..."
                     aria-label="Ask about physiotherapy"
                     className="
                       w-full
+
                       rounded-xl
+
                       border
                       border-slate-200
+
                       bg-slate-50
-                      py-3.5
+
+                      py-3
                       pl-4
-                      pr-14
+                      pr-12
+
                       text-sm
+
                       text-slate-800
+
                       outline-none
-                      transition-all
+
                       placeholder:text-slate-400
+
                       focus:border-teal-400
                       focus:bg-white
                       focus:ring-4
                       focus:ring-teal-50
-                      disabled:opacity-60
                     "
                   />
 
@@ -1250,22 +1246,27 @@ export default function FAQ() {
                     aria-label="Send question"
                     className="
                       absolute
+
                       right-1.5
-                      z-10
+                      top-1/2
+
                       flex
                       h-9
                       w-9
+
+                      -translate-y-1/2
+
                       items-center
                       justify-center
+
                       rounded-lg
+
                       bg-gradient-to-r
                       from-teal-600
                       to-cyan-600
+
                       text-white
-                      shadow-sm
-                      transition-all
-                      hover:-translate-y-0.5
-                      hover:shadow-md
+
                       disabled:cursor-not-allowed
                       disabled:opacity-30
                     "
@@ -1275,37 +1276,48 @@ export default function FAQ() {
                         className="
                           h-4
                           w-4
-                          animate-spin
+
                           rounded-full
+
                           border-2
                           border-white/30
                           border-t-white
                         "
                       />
                     ) : (
-                      <Send className="h-4 w-4" />
+                      <Send
+                        className="
+                          h-4
+                          w-4
+                        "
+                      />
                     )}
                   </button>
                 </form>
 
                 <p
                   className="
-                    mt-3
+                    mt-2
+
                     text-center
-                    text-[10px]
+
+                    text-[9px]
+
                     leading-relaxed
+
                     text-slate-400
-                    md:text-xs
                   "
                 >
-                  General information only. For diagnosis or
-                  treatment decisions, please consult a qualified
+                  General information only. For
+                  diagnosis or treatment decisions,
+                  please consult a qualified
                   healthcare professional.
                 </p>
               </div>
             </div>
           </div>
         )}
+
       </div>
     </section>
   );

@@ -153,7 +153,7 @@ export default function Chatbot() {
         className="
           fixed
           right-6
-          bottom-[5.25rem]
+          bottom-24
           z-[60]
         "
       >
@@ -232,7 +232,7 @@ export default function Chatbot() {
                   from-teal-500
                   to-cyan-600
 
-                  text-white
+                  text-slate-900
                 "
               >
                 <Bot className="h-4 w-4" />
@@ -268,6 +268,9 @@ export default function Chatbot() {
 
         {/* ===================================================
             FLOATING BOT BUTTON
+
+            IMPORTANT:
+            Hidden while chat is open.
         =================================================== */}
 
         {!isOpen && (
@@ -300,10 +303,6 @@ export default function Chatbot() {
 
               shadow-[0_8px_24px_rgba(13,148,136,0.25)]
 
-              transition-all
-              duration-300
-
-              hover:-translate-y-1
               hover:scale-105
 
               hover:shadow-[0_12px_28px_rgba(13,148,136,0.32)]
@@ -311,7 +310,20 @@ export default function Chatbot() {
           >
             {/* Subtle pulse */}
 
-            
+            <span
+              className="
+                absolute
+                inset-0
+
+                rounded-xl
+
+                border-2
+                border-teal-300
+
+                opacity-40
+
+              "
+            />
 
             {/* Bot */}
 
@@ -322,9 +334,6 @@ export default function Chatbot() {
 
                 h-5
                 w-5
-
-                transition-transform
-                duration-300
 
                 group-hover:scale-110
               "
@@ -368,19 +377,19 @@ export default function Chatbot() {
 
               z-[70]
 
-              w-[calc(100vw-3rem)]
-              max-w-[400px]
+              w-[calc(100vw-2rem)]
+              max-w-[320px]
 
               overflow-hidden
 
-              rounded-[28px]
+              rounded-[22px]
 
               border
               border-slate-200
 
               bg-white
 
-              shadow-[0_25px_80px_rgba(15,23,42,0.25)]
+              shadow-[0_14px_45px_rgba(15,23,42,0.16)]
 
               sm:right-6
               sm:bottom-6
@@ -389,14 +398,14 @@ export default function Chatbot() {
             <div
               className="
                 flex
-                h-[calc(100dvh-48px)]
-                max-h-[760px]
+                h-[min(440px,calc(100dvh-90px))]
+                max-h-[440px]
 
                 flex-col
 
                 overflow-hidden
 
-                sm:h-[680px]
+                sm:h-[440px]
               "
             >
               {/* =================================================
@@ -408,14 +417,18 @@ export default function Chatbot() {
                   flex-shrink-0
 
                   bg-gradient-to-br
-                  from-slate-950
-                  via-slate-900
-                  to-teal-950
+                  from-white
+                  via-teal-50
+                  to-cyan-50
+                  border-b
+                  border-teal-100
 
-                  px-5
-                  py-4
+                  px-4
+                  py-3
                 "
               >
+                {/* Header top */}
+
                 <div
                   className="
                     flex
@@ -438,8 +451,8 @@ export default function Chatbot() {
                         relative
 
                         flex
-                        h-12
-                        w-12
+                        h-10
+                        w-10
 
                         flex-shrink-0
 
@@ -472,7 +485,7 @@ export default function Chatbot() {
                           rounded-full
 
                           border-2
-                          border-slate-900
+                          border-white
 
                           bg-emerald-400
                         "
@@ -496,7 +509,7 @@ export default function Chatbot() {
                             text-base
                             font-bold
 
-                            text-white
+                            text-slate-900
                           "
                         >
                           PhysioCare Assistant
@@ -509,7 +522,7 @@ export default function Chatbot() {
 
                             flex-shrink-0
 
-                            text-teal-300
+                            text-teal-500
                           "
                         />
                       </div>
@@ -520,7 +533,7 @@ export default function Chatbot() {
 
                           text-xs
 
-                          text-slate-300
+                          text-slate-500
                         "
                       >
                         Ask about Dr. Bhagyashri's
@@ -553,10 +566,8 @@ export default function Chatbot() {
 
                       text-slate-400
 
-                      transition
-
                       hover:bg-white/10
-                      hover:text-white
+                      hover:text-teal-700
                     "
                   >
                     <X className="h-5 w-5" />
@@ -745,8 +756,6 @@ export default function Chatbot() {
 
                             text-slate-700
 
-                            transition
-
                             hover:border-teal-200
                             hover:bg-teal-50
                             hover:text-teal-700
@@ -913,7 +922,7 @@ export default function Chatbot() {
                       )
                     )}
 
-                    {/* Typing indicator */}
+                    {/* Typing */}
 
                     {isSending && (
                       <div
@@ -964,8 +973,6 @@ export default function Chatbot() {
                                 h-1.5
                                 w-1.5
 
-                                animate-bounce
-
                                 rounded-full
 
                                 bg-teal-400
@@ -976,8 +983,6 @@ export default function Chatbot() {
                               className="
                                 h-1.5
                                 w-1.5
-
-                                animate-bounce
 
                                 rounded-full
 
@@ -991,8 +996,6 @@ export default function Chatbot() {
                               className="
                                 h-1.5
                                 w-1.5
-
-                                animate-bounce
 
                                 rounded-full
 
@@ -1110,8 +1113,6 @@ export default function Chatbot() {
                         className="
                           h-4
                           w-4
-
-                          animate-spin
 
                           rounded-full
 
