@@ -357,9 +357,9 @@ export default function Testimonials() {
                   left-2
                   md:left-1
 
-                  top-1/2
-                  -translate-y-1/2
+                  top-4
                   md:top-1/2
+                  md:-translate-y-1/2
                   md:bottom-auto
                   md:-translate-y-1/2
 
@@ -421,9 +421,9 @@ export default function Testimonials() {
                   right-2
                   md:right-1
 
-                  top-1/2
-                  -translate-y-1/2
+                  top-4
                   md:top-1/2
+                  md:-translate-y-1/2
                   md:bottom-auto
                   md:-translate-y-1/2
 
@@ -564,7 +564,7 @@ export default function Testimonials() {
                           flex-none
 
                           w-[170px]
-                          h-[235px]
+                          h-[260px]
 
                           md:w-[calc((100%-60px)/4)]
                           md:h-[300px]
