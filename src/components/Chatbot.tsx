@@ -153,7 +153,7 @@ export default function Chatbot() {
         className="
           fixed
           right-6
-          bottom-24
+          bottom-21
           z-[60]
         "
       >
