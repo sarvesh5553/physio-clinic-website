@@ -101,6 +101,7 @@ function GmailIcon({
   );
 }
 
+
 /* =========================================================
    NAVBAR
 ========================================================= */
@@ -109,6 +110,13 @@ export default function Navbar() {
   const [showNavbar, setShowNavbar] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
 
+  /*
+    useRef is used instead of state for the previous
+    scroll position.
+
+    This prevents the scroll listener from being recreated
+    every time the user scrolls.
+  */
   const lastScrollY = useRef(0);
 
   /* =========================================================
@@ -142,26 +150,51 @@ export default function Navbar() {
     },
   ];
 
+
   /* =========================================================
      SCROLL EFFECT
+
+     TOP OF WEBSITE:
+     Navbar visible.
+
+     SCROLLING DOWN:
+     Navbar hides.
+
+     SCROLLING UP:
+     Navbar appears.
+
+     This is the behavior you wanted from the original navbar.
   ========================================================= */
 
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
 
+      /*
+        Always show navbar when near the top.
+      */
       if (currentScrollY <= 20) {
         setShowNavbar(true);
         lastScrollY.current = currentScrollY;
         return;
       }
 
+      /*
+        Scrolling DOWN
+      */
       if (currentScrollY > lastScrollY.current) {
         setShowNavbar(false);
+
+        /*
+          Close mobile menu when user scrolls down.
+        */
         setMenuOpen(false);
-      } else if (
-        currentScrollY < lastScrollY.current
-      ) {
+      }
+
+      /*
+        Scrolling UP
+      */
+      else if (currentScrollY < lastScrollY.current) {
         setShowNavbar(true);
       }
 
@@ -183,6 +216,7 @@ export default function Navbar() {
       );
     };
   }, []);
+
 
   /* =========================================================
      CLOSE MENU WHEN CLICKING OUTSIDE
@@ -215,6 +249,7 @@ export default function Navbar() {
     };
   }, [menuOpen]);
 
+
   /* =========================================================
      CLOSE MOBILE MENU WHEN WINDOW BECOMES DESKTOP
   ========================================================= */
@@ -238,6 +273,7 @@ export default function Navbar() {
       );
     };
   }, []);
+
 
   /* =========================================================
      NAVBAR
@@ -268,6 +304,7 @@ export default function Navbar() {
         }
       `}
     >
+
       {/* =====================================================
           MAIN NAVBAR
       ===================================================== */}
@@ -289,6 +326,7 @@ export default function Navbar() {
           justify-between
         "
       >
+
         {/* =================================================
             WEBSITE LOGO
         ================================================= */}
@@ -310,9 +348,9 @@ export default function Navbar() {
             src="/logo.svg"
             alt="Dr. Bhagyashri's PhysioCare"
             className="
-              h-[55px]
-              sm:h-[68px]
-              lg:h-[76px]
+              h-[60px]
+              sm:h-[72px]
+              lg:h-[80px]
 
               w-auto
 
@@ -323,6 +361,7 @@ export default function Navbar() {
             "
           />
         </a>
+
 
         {/* =================================================
             DESKTOP NAV LINKS
@@ -339,6 +378,7 @@ export default function Navbar() {
             lg:gap-8
           "
         >
+
           {navLinks.map(
             ({
               href,
@@ -351,7 +391,7 @@ export default function Navbar() {
                   text-sm
                   lg:text-base
 
-                  text-black
+                  text-slate-700
 
                   hover:text-teal-600
 
@@ -366,6 +406,7 @@ export default function Navbar() {
                   whitespace-nowrap
                 "
               >
+
                 {label}
 
                 {/* Underline */}
@@ -392,10 +433,13 @@ export default function Navbar() {
                     duration-300
                   "
                 />
+
               </a>
             )
           )}
+
         </div>
+
 
         {/* =================================================
             RIGHT SIDE
@@ -411,6 +455,7 @@ export default function Navbar() {
             lg:gap-4
           "
         >
+
           {/* =================================================
               SOCIAL ICONS
           ================================================= */}
@@ -425,6 +470,7 @@ export default function Navbar() {
               lg:gap-4
             "
           >
+
             {/* WhatsApp */}
 
             <a
@@ -458,6 +504,7 @@ export default function Navbar() {
                 "
               />
             </a>
+
 
             {/* Instagram */}
 
@@ -493,6 +540,7 @@ export default function Navbar() {
               />
             </a>
 
+
             {/* Gmail */}
 
             <a
@@ -517,6 +565,7 @@ export default function Navbar() {
             >
               <GmailIcon size={21} />
             </a>
+
 
             {/* YouTube */}
 
@@ -551,7 +600,9 @@ export default function Navbar() {
                 "
               />
             </a>
+
           </div>
+
 
           {/* =================================================
               DIVIDER
@@ -570,6 +621,7 @@ export default function Navbar() {
               ml-1
             "
           />
+
 
           {/* =================================================
               BOOK NOW
@@ -618,6 +670,7 @@ export default function Navbar() {
               whitespace-nowrap
             "
           >
+
             <span>
               Book Now
             </span>
@@ -631,7 +684,9 @@ export default function Navbar() {
                 duration-300
               "
             />
+
           </a>
+
 
           {/* =================================================
               MOBILE MENU BUTTON
@@ -666,14 +721,19 @@ export default function Navbar() {
               transition
             "
           >
+
             {menuOpen ? (
               <HiX size={25} />
             ) : (
               <HiMenu size={25} />
             )}
+
           </button>
+
         </div>
+
       </div>
+
 
       {/* =====================================================
           MOBILE MENU
@@ -701,6 +761,7 @@ export default function Navbar() {
           border-slate-100/50
         `}
       >
+
         <div
           className="
             px-4
@@ -713,6 +774,7 @@ export default function Navbar() {
             gap-1
           "
         >
+
           {/* Mobile Navigation Links */}
 
           {navLinks.map(
@@ -727,7 +789,7 @@ export default function Navbar() {
                   setMenuOpen(false)
                 }
                 className="
-                  text-black
+                  text-slate-700
 
                   hover:text-teal-600
                   hover:bg-teal-50
@@ -748,6 +810,7 @@ export default function Navbar() {
             )
           )}
 
+
           {/* Divider */}
 
           <div
@@ -758,6 +821,7 @@ export default function Navbar() {
               my-2.5
             "
           />
+
 
           {/* Mobile Book Now */}
 
@@ -799,6 +863,7 @@ export default function Navbar() {
               duration-300
             "
           >
+
             <span>
               Book Now
             </span>
@@ -809,9 +874,13 @@ export default function Navbar() {
                 h-5
               "
             />
+
           </a>
+
         </div>
+
       </div>
+
     </nav>
   );
 }

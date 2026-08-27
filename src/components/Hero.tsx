@@ -8,7 +8,6 @@ import {
   Star,
   Activity,
   Home,
-  Monitor,
 } from "lucide-react";
 
 export default function Hero() {
@@ -35,7 +34,7 @@ export default function Hero() {
       "
     >
       {/* =====================================================
-          BACKGROUND GLOWS
+          AMBIENT BACKGROUND MESH GLOWS
       ===================================================== */}
 
       <div
@@ -67,7 +66,7 @@ export default function Hero() {
       />
 
       {/* =====================================================
-          MAIN HERO
+          MAIN HERO CONTAINER
       ===================================================== */}
 
       <div
@@ -91,19 +90,15 @@ export default function Hero() {
         ===================================================== */}
 
         <div className="text-left">
-          {/* =================================================
-              TRUST BADGE
-          ================================================ */}
 
-          <div
-            className="
-              mb-6
-              flex
-              flex-wrap
-              items-center
-              gap-3
-            "
-          >
+          {/* =================================================
+              TRUST BADGES
+          ================================================= */}
+
+          <div className="mb-6 flex flex-wrap items-center gap-3">
+
+            {/* TRUSTED BY 200+ PATIENTS */}
+
             <div
               className="
                 inline-flex
@@ -137,71 +132,75 @@ export default function Hero() {
                 Trusted by 200+ Patients
               </span>
             </div>
-          </div>
 
-          {/* =================================================
-              HERO HEADING
-          ================================================ */}
 
-          <div className="mb-6">
-            {/* SEO EYEBROW */}
+            {/* HOME VISIT PHYSIOTHERAPY */}
 
             <div
               className="
-                mb-3
-                flex
+                inline-flex
                 items-center
-                gap-3
+                gap-2
+                rounded-full
+                border
+                border-white/25
+                bg-white/15
+                px-4
+                py-1.5
+                text-xs
+                font-semibold
+                text-white
+                shadow-sm
+                backdrop-blur-md
+                sm:text-sm
               "
             >
-              <span
+              <Home
                 className="
-                  h-[2px]
-                  w-8
-                  rounded-full
-                  bg-teal-100
+                  h-3.5
+                  w-3.5
+                  text-white
+                  sm:h-4
+                  sm:w-4
                 "
               />
 
-              <span
-                className="
-                  text-sm
-                  font-bold
-                  uppercase
-                  tracking-[0.18em]
-                  text-teal-50
-                  sm:text-base
-                "
-              >
-                Physiotherapy in Pune
+              <span>
+                Home Visit Physiotherapy
               </span>
             </div>
 
-            {/* MAIN VISUAL HEADLINE */}
-
-            <h1
-              className="
-                text-5xl
-                font-black
-                leading-[0.98]
-                tracking-tight
-                text-white
-                sm:text-6xl
-                md:text-7xl
-              "
-            >
-              Move Better.
-              <br />
-
-              <span className="text-teal-100">
-                Live Better.
-              </span>
-            </h1>
           </div>
 
+
           {/* =================================================
-              DESCRIPTION
-          ================================================ */}
+              MAIN HEADLINE
+          ================================================= */}
+
+          <h1
+            className="
+              mb-6
+              text-5xl
+              font-black
+              leading-[1.05]
+              tracking-tight
+              text-white
+              sm:text-6xl
+              md:text-7xl
+            "
+          >
+            Move Better.
+            <br />
+
+            <span className="text-teal-100">
+              Live Better.
+            </span>
+          </h1>
+
+
+          {/* =================================================
+              SUBTITLE
+          ================================================= */}
 
           <p
             className="
@@ -216,16 +215,14 @@ export default function Hero() {
           >
             Personalized physiotherapy and rehabilitation
             care that meets you where you are — relieve pain,
-            rebuild strength, and move through
-            <br className="hidden sm:block" />
-            <span className="block sm:inline">
-              life with confidence again.
-            </span>
+            rebuild strength, and move through life with
+            confidence again.
           </p>
+
 
           {/* =================================================
               DOCTOR BADGE
-          ================================================ */}
+          ================================================= */}
 
           <div
             className="
@@ -246,6 +243,7 @@ export default function Hero() {
               sm:p-2.5
             "
           >
+
             <div
               className="
                 flex
@@ -267,7 +265,9 @@ export default function Hero() {
               BS
             </div>
 
+
             <div className="pr-1">
+
               <p
                 className="
                   text-sm
@@ -279,6 +279,7 @@ export default function Hero() {
               >
                 Dr. Bhagyashri Salunke (PT)
               </p>
+
 
               <p
                 className="
@@ -293,6 +294,7 @@ export default function Hero() {
                 Bachelor of Physiotherapy
               </p>
 
+
               <p
                 className="
                   text-[10px]
@@ -304,12 +306,15 @@ export default function Hero() {
               >
                 CDCT, CDNT, CIAFMT, CKTP
               </p>
+
             </div>
+
           </div>
+
 
           {/* =================================================
               CTA BUTTONS
-          ================================================ */}
+          ================================================= */}
 
           <div
             className="
@@ -319,6 +324,7 @@ export default function Hero() {
               gap-4
             "
           >
+
             {/* BOOK APPOINTMENT */}
 
             <a
@@ -356,6 +362,7 @@ export default function Hero() {
               Book Appointment
             </a>
 
+
             {/* CALL NOW */}
 
             <a
@@ -387,8 +394,11 @@ export default function Hero() {
 
               Call Now
             </a>
+
           </div>
+
         </div>
+
 
         {/* =====================================================
             RIGHT COLUMN
@@ -404,282 +414,203 @@ export default function Hero() {
             md:mb-0
           "
         >
+
+          {/* =================================================
+              IMAGE WRAPPER
+          ================================================= */}
+
           <div
             className="
+              relative
               w-full
               max-w-md
               sm:max-w-lg
               md:max-w-xl
             "
           >
+
             {/* =================================================
-                SERVICES BOXES
+                EVIDENCE-BASED CARE
             ================================================= */}
 
             <div
               className="
-                mb-10
+                absolute
+                left-4
+                top-0
+                z-30
+                -translate-y-1/2
                 flex
-                flex-col
                 items-center
-                justify-center
-                gap-3
-                sm:-mt-8
-                sm:flex-row
-                sm:gap-5
+                gap-2
+                rounded-xl
+                border
+                border-white/20
+                bg-slate-900/85
+                px-3
+                py-1.5
+                text-[11px]
+                font-medium
+                text-white
+                shadow-lg
+                backdrop-blur-md
+                sm:left-5
+                sm:text-xs
               "
             >
-              {/* HOME VISIT PHYSIOTHERAPY */}
 
-              <div
+              <Activity
                 className="
-                  inline-flex
-                  w-fit
-                  items-center
-                  justify-center
-                  gap-2
-                  rounded-full
-                  border
-                  border-white/30
-                  bg-white/15
-                  px-4
-                  py-2
-                  text-xs
-                  font-semibold
-                  text-white
-                  shadow-md
-                  backdrop-blur-md
-                  transition-all
-                  duration-300
-                  hover:bg-white/25
-                  sm:text-sm
+                  h-3.5
+                  w-3.5
+                  text-lime-400
+                  animate-pulse
                 "
-              >
-                <Home
-                  className="
-                    h-4
-                    w-4
-                    flex-shrink-0
-                    text-teal-200
-                  "
-                />
+              />
 
-                <span className="whitespace-nowrap">
-                  Home Visit Physiotherapy
-                </span>
-              </div>
+              <span className="whitespace-nowrap">
+                Evidence-Based Care
+              </span>
 
-              {/* ONLINE PHYSIOTHERAPY */}
-
-              <div
-                className="
-                  inline-flex
-                  w-fit
-                  items-center
-                  justify-center
-                  gap-2
-                  rounded-full
-                  border
-                  border-white/30
-                  bg-white/15
-                  px-4
-                  py-2
-                  text-xs
-                  font-semibold
-                  text-white
-                  shadow-md
-                  backdrop-blur-md
-                  transition-all
-                  duration-300
-                  hover:bg-white/25
-                  sm:text-sm
-                "
-              >
-                <Monitor
-                  className="
-                    h-4
-                    w-4
-                    flex-shrink-0
-                    text-cyan-200
-                  "
-                />
-
-                <span className="whitespace-nowrap">
-                  Online Physiotherapy
-                </span>
-              </div>
             </div>
 
+
             {/* =================================================
-                PHOTO AREA
+                200+ RECOVERIES
             ================================================= */}
 
             <div
               className="
-                relative
-                w-full
+                absolute
+                right-4
+                top-0
+                z-30
+                -translate-y-1/2
+                flex
+                items-center
+                gap-1.5
+                rounded-full
+                border
+                border-white/70
+                bg-white/90
+                px-3.5
+                py-1.5
+                text-xs
+                font-bold
+                text-teal-900
+                shadow-lg
+                backdrop-blur-md
+                sm:right-5
+                sm:text-sm
               "
             >
-              {/* EVIDENCE-BASED CARE */}
 
-              <div
+              <Award
                 className="
-                  absolute
-                  left-4
-                  top-0
-                  z-30
-                  -translate-y-1/2
-                  flex
-                  items-center
-                  gap-2
-                  rounded-xl
-                  border
-                  border-white/20
-                  bg-slate-900/85
-                  px-3
-                  py-1.5
-                  text-[11px]
-                  font-medium
-                  text-white
-                  shadow-lg
-                  backdrop-blur-md
-                  sm:left-5
-                  sm:text-xs
+                  h-4
+                  w-4
+                  text-teal-600
                 "
-              >
-                <Activity
-                  className="
-                    h-3.5
-                    w-3.5
-                    animate-pulse
-                    text-lime-400
-                  "
-                />
+              />
 
-                <span className="whitespace-nowrap">
-                  Evidence-Based Care
-                </span>
-              </div>
+              <span className="whitespace-nowrap">
+                200+ Recoveries
+              </span>
 
-              {/* 200+ RECOVERIES */}
+            </div>
+
+
+            {/* =================================================
+                IMAGE CARD
+            ================================================= */}
+
+            <div
+              className="
+                group
+                relative
+                w-full
+                overflow-hidden
+                rounded-3xl
+                border
+                border-white/30
+                bg-white
+                shadow-2xl
+                shadow-teal-950/30
+                aspect-[3/2]
+              "
+            >
+
+              <img
+                src="/pppp1.png"
+                alt="Dr. Bhagyashri Salunke physiotherapy treatment"
+                className="
+                  absolute
+                  inset-0
+                  h-full
+                  w-full
+                  object-contain
+                  bg-white
+                  transition-transform
+                  duration-700
+                  ease-out
+                  group-hover:scale-[1.015]
+                "
+              />
+
+
+              {/* =================================================
+                  SUBTLE INNER BORDER
+              ================================================= */}
+
+              <div
+                className="
+                  pointer-events-none
+                  absolute
+                  inset-0
+                  rounded-3xl
+                  ring-1
+                  ring-inset
+                  ring-white/70
+                "
+              />
+
+
+              {/* =================================================
+                  PROFESSIONAL RATING
+              ================================================= */}
 
               <div
                 className="
                   absolute
-                  right-4
-                  top-0
-                  z-30
-                  -translate-y-1/2
+                  bottom-4
+                  left-3
+                  z-10
                   flex
                   items-center
                   gap-1.5
-                  rounded-full
+                  rounded-xl
                   border
-                  border-white/70
-                  bg-white/90
-                  px-3.5
+                  border-white/80
+                  bg-white/95
+                  px-2.5
                   py-1.5
-                  text-xs
-                  font-bold
-                  text-teal-900
                   shadow-lg
                   backdrop-blur-md
-                  sm:right-5
-                  sm:text-sm
+                  sm:bottom-5
+                  sm:left-4
                 "
               >
-                <Award
-                  className="
-                    h-4
-                    w-4
-                    text-teal-600
-                  "
-                />
-
-                <span className="whitespace-nowrap">
-                  200+ Recoveries
-                </span>
-              </div>
-
-              {/* PHOTO BOX */}
-
-              <div
-                className="
-                  group
-                  relative
-                  w-full
-                  overflow-hidden
-                  rounded-3xl
-                  border
-                  border-white/30
-                  bg-white
-                  shadow-2xl
-                  shadow-teal-950/30
-                  aspect-[3/2]
-                "
-              >
-                <img
-                  src="/pppp1.png"
-                  alt="Dr. Bhagyashri Salunke providing physiotherapy treatment"
-                  className="
-                    absolute
-                    inset-0
-                    h-full
-                    w-full
-                    object-contain
-                    bg-white
-                    transition-transform
-                    duration-700
-                    ease-out
-                    group-hover:scale-[1.015]
-                  "
-                />
-
-                {/* INNER BORDER */}
 
                 <div
                   className="
-                    pointer-events-none
-                    absolute
-                    inset-0
-                    rounded-3xl
-                    ring-1
-                    ring-inset
-                    ring-white/70
-                  "
-                />
-
-                {/* RATING */}
-
-                <div
-                  className="
-                    absolute
-                    bottom-4
-                    left-3
-                    z-10
                     flex
-                    items-center
-                    gap-1.5
-                    rounded-xl
-                    border
-                    border-white/80
-                    bg-white/95
-                    px-2.5
-                    py-1.5
-                    shadow-lg
-                    backdrop-blur-md
-                    sm:bottom-5
-                    sm:left-4
+                    gap-0.5
+                    text-amber-400
                   "
                 >
-                  <div
-                    className="
-                      flex
-                      gap-0.5
-                      text-amber-400
-                    "
-                  >
-                    {[...Array(5)].map((_, i) => (
+
+                  {[...Array(5)].map(
+                    (_, i) => (
                       <Star
                         key={i}
                         className="
@@ -690,85 +621,100 @@ export default function Hero() {
                           sm:w-3
                         "
                       />
-                    ))}
-                  </div>
+                    )
+                  )}
 
-                  <div
+                </div>
+
+
+                <div
+                  className="
+                    flex
+                    items-center
+                    gap-1
+                    whitespace-nowrap
+                  "
+                >
+
+                  <span
                     className="
-                      flex
-                      items-center
-                      gap-1
-                      whitespace-nowrap
+                      text-[10px]
+                      font-extrabold
+                      text-slate-900
+                      sm:text-[11px]
                     "
                   >
-                    <span
-                      className="
-                        text-[10px]
-                        font-extrabold
-                        text-slate-900
-                        sm:text-[11px]
-                      "
-                    >
-                      5.0
-                    </span>
+                    5.0
+                  </span>
 
-                    <span
-                      className="
-                        text-[8px]
-                        font-semibold
-                        text-slate-500
-                        sm:text-[10px]
-                      "
-                    >
-                      Patient Care
-                    </span>
-                  </div>
+                  <span
+                    className="
+                      text-[8px]
+                      font-semibold
+                      text-slate-500
+                      sm:text-[10px]
+                    "
+                  >
+                    Patient Care
+                  </span>
+
                 </div>
+
               </div>
 
-              {/* =================================================
-                  CHECKLIST
-              ================================================ */}
+            </div>
+
+
+            {/* =================================================
+                BOTTOM CHECKLIST
+            ================================================= */}
+
+            <div
+              className="
+                absolute
+                -bottom-8
+                left-2
+                right-2
+                z-30
+                rounded-2xl
+                border
+                border-white/80
+                bg-white/95
+                px-2
+                py-3
+                shadow-xl
+                backdrop-blur-md
+                sm:left-6
+                sm:right-6
+              "
+            >
 
               <div
                 className="
-                  absolute
-                  -bottom-8
-                  left-2
-                  right-2
-                  z-30
-                  rounded-2xl
-                  border
-                  border-white/80
-                  bg-white/95
-                  px-2
-                  py-3
-                  shadow-xl
-                  backdrop-blur-md
-                  sm:left-6
-                  sm:right-6
+                  flex
+                  w-full
+                  flex-row
+                  items-center
+                  justify-between
+                  gap-1
                 "
               >
-                <div
-                  className="
-                    grid
-                    w-full
-                    grid-cols-3
-                    items-center
-                    gap-1
-                  "
-                >
-                  {checklist.map((item) => (
+
+                {checklist.map(
+                  (item) => (
+
                     <div
                       key={item}
                       className="
                         flex
                         min-w-0
+                        flex-1
                         items-center
                         justify-center
                         gap-1
                       "
                     >
+
                       <span
                         className="
                           flex
@@ -784,32 +730,42 @@ export default function Hero() {
                           text-teal-600
                         "
                       >
+
                         <Check
                           className="h-3 w-3"
                           strokeWidth={3}
                         />
+
                       </span>
+
 
                       <span
                         className="
-                          text-center
+                          whitespace-nowrap
                           text-[8px]
                           font-semibold
-                          leading-tight
                           text-slate-800
                           sm:text-xs
                         "
                       >
                         {item}
                       </span>
+
                     </div>
-                  ))}
-                </div>
+
+                  )
+                )}
+
               </div>
+
             </div>
+
           </div>
+
         </div>
+
       </div>
+
     </section>
   );
 }

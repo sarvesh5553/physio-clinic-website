@@ -204,8 +204,9 @@ export default function AboutDoctor() {
                     w-full
                     h-[360px]
                     sm:h-[390px]
-                    object-cover
-                    object-top
+                    object-contain
+                     object-center
+                     bg-slate-100
                     transition-transform
                     duration-700
                     ease-out
