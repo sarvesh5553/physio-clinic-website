@@ -429,7 +429,7 @@ export default function Hero() {
                 sm:gap-5
               "
             >
-              {/* HOME VISIT PHYSIOTHERAPY */}
+              {/* HOME VISIT */}
 
               <div
                 className="
@@ -465,11 +465,11 @@ export default function Hero() {
                 />
 
                 <span className="whitespace-nowrap">
-                  Home Visit Physiotherapy
+                  Home Visit
                 </span>
               </div>
 
-              {/* ONLINE PHYSIOTHERAPY */}
+              {/* ONLINE REHABILITATION*/}
 
               <div
                 className="
@@ -505,7 +505,7 @@ export default function Hero() {
                 />
 
                 <span className="whitespace-nowrap">
-                  Online Physiotherapy
+                  Online Rehabilitation
                 </span>
               </div>
             </div>
